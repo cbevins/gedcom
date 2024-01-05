@@ -10,26 +10,23 @@
 		'10th GGP', '11th GGP', '12th GGP', '13th GGP', '14th GGP', '15th GGP'
 	]
 
-	// let immigrants = []
-	function ancestorHtml(subKey) {
-		// immigrants = []
+	let immigrants = ancestors(subjectNameKey)
+    $: immigrants = ancestors(subjectNameKey)
+	function ancestors(subKey) {
+		const immigrants = []
 		const ancMap = anc.ancestors(subKey)
-		let person = ged.person(anc.subjectKey())
         if (ancMap.size === 1) {
-            return `<p>No documented ancestors for ${person.name.full}</p>`
+            return immigrants
         }
 		let last = -1
-		let html = '<ul>'+ person.name.full + ' has ' + (ancMap.size-1) + ' documented ancestors:'
 		for (const [nameKey, data] of anc._ancMap.entries()) {
 			const gen = data.level
 			if (gen > last) {
-				html += '<ul>'
 				last = gen
 			} else if (gen === last) {
 			} else if (gen < last) {
 				while(gen < last) {
 					last--
-					html += '</ul>'
 				}
 			}
 			let name = data.person.keys.label
@@ -41,12 +38,22 @@
 				&& data.person.death.place.country
 				&& data.person.birth.place.country !== data.person.death.place.country) {
 				origin = ` [${data.person.birth.place.country.toUpperCase()}]`
-				// immigrants.push(data.person)
+				immigrants.push(data.person)
 			}
-			html += '<li>'+ Ancestor[gen] + ': ' + name + origin + '</li>'
+		}
+		return immigrants
+	}
+
+	function immigrantsHtml(subKey) {
+		immigrants.sort(function(a, b) {return a.birth.date.year - b.birth.date.year})
+		let person = ged.person(subKey)
+		let html = '<ul>'+ person.name.full + ' has ' + (immigrants.length) + ' documented immigrant ancestors:'
+		for(let i=0; i<immigrants.length; i++) {
+			person = immigrants[i]
+			html += `<li>${person.keys.label} ${person.birth.place.country} ${person.death.place.country}</li>`
 		}
 		return html+'</ul>'
 	}
 </script>
 
-{@html ancestorHtml(subjectNameKey)} 
+{@html immigrantsHtml(subjectNameKey)} 

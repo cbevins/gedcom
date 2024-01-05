@@ -7,7 +7,6 @@
     $: selectedSlot = selectedValue
         ? (selectedValue === 'CollinDouglasBevins1952' ? '💀' : '👍')
         : '👉'
-    
     function changed(ev) {
         if (selectedValue && $ged.persons(selectedValue))
         subjectNameKey.update(() => selectedValue)
