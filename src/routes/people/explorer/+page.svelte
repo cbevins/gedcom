@@ -1,6 +1,13 @@
 <script>
-    import PersonSelector from '$lib/svelte/PersonSelector.svelte'
-    // import { ged, subjectNameKey } from '$lib/js/store.js'
+    import RootSelector from '$lib/svelte/RootSelector.svelte'
+    import SubjectSelector from '$lib/svelte/SubjectSelector.svelte'
+    import { ged, rootNameKey, subjectNameKey } from '$lib/js/store.js'
 </script>
 <h3>People Explorer</h3>
-<PersonSelector />
+<div>
+    Subject: {$subjectNameKey}
+    <SubjectSelector />
+</div>
+<div>
+    Root: {$rootNameKey} <RootSelector />
+</div>

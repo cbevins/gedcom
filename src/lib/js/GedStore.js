@@ -9,6 +9,10 @@ export class GedStore {
     // Returns Map of [<famKey> => {family}] objects
     families() { return this._data.family }
 
+    // Returns array of all {key:, label:} objects ised in selectors
+    keyLabels() { return this._data.keyLabels }
+    setKeyLabels(keyLabels) { this._data.keyLabels = keyLabels }
+
     // Returns a nameKey like  'CollinDouglasBevins1952' given a label like
     nameKey(label) { return this._data.labels.get(label) }
 

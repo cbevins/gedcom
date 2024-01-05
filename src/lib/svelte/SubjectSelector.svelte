@@ -2,11 +2,6 @@
     import Svelecte from 'svelecte'
     import { ged, subjectNameKey } from '$lib/js/store.js'
 
-    const options = []
-    $ged.persons().forEach (function(value, key) {
-        options.push({key: key, label: value.keys.label})
-    })
-
     let selectedOption = null
     let selectedValue = $subjectNameKey
     $: selectedSlot = selectedValue
@@ -15,11 +10,12 @@
     
     function changed(ev) {
         if (selectedValue && $ged.persons(selectedValue))
-            subjectNameKey = selectedValue
+        subjectNameKey.update(() => selectedValue)
     }
 </script>
 
-<Svelecte {options}
+<Svelecte options={$ged.keyLabels()}
+    on:change={changed}
     inputId="person"
     valueField="key"
     labelField="label"
@@ -31,6 +27,6 @@
     <svelte:fragment slot="clear-icon" let:selectedOptions let:inputValue>{selectedOptions.length ? '❌' : inputValue ? '👀' : '❓' }</svelte:fragment>
     <svelte:fragment slot="indicator-icon" let:hasDropdownOpened>{hasDropdownOpened?'😃':'😄'}</svelte:fragment>
 </Svelecte>
-<div>Current <code>option</code>: <b>{JSON.stringify(selectedOption) }</b></div>
+<!-- <div>Current <code>option</code>: <b>{JSON.stringify(selectedOption) }</b></div>
 <div>Current <code>value</code>: <b>{selectedValue}</b></div>
-<div>Current <code>subject</code>: <b>{$subjectNameKey}</b></div>
+<div>Current <code>subject</code>: <b>{$subjectNameKey}</b></div> -->
