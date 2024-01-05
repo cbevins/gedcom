@@ -105,3 +105,110 @@ button:focus:not(:focus-visible) {
 	width: 1px;
 	white-space: nowrap;
 }
+
+/* Genealogy Styles */
+
+div.title {
+	background-color: gray;
+	border: 2px solid black;
+	border-radius: 5px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	color: black;
+	font-size: 140%;
+	margin: 20px;
+	padding: 20px;
+	text-align:center;
+}
+div.card {
+	border: 2px solid black;
+	border-radius: 5px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin: 20px;
+	padding: 0px;
+}
+div.header {
+	background-color: gray;
+	color: white;
+	font-size: 100%;
+	padding: 10px;
+}
+div.immigrant {
+	border: none;
+	color: black;
+	font-size: 120%;
+	text-align:center;
+}
+div.topic {
+	border: none;
+	color: black;
+	font-weight: bold;
+	font-size: 120%;
+	text-align:left;
+}
+div.story{
+	border: none;
+	color: black;
+	font-size: 100%;
+	margin: 20px;
+	padding: 0px;
+}
+div.details {
+	background-color: white;
+	color: black;
+	font-size: 80%;
+	margin-left: 10px;
+	margin-top: 0px;
+	padding-top: 0px;
+	margin-bottom: 0px;
+	text-indent: -1em, hanging, each-line;
+}
+span.detail {
+	background-color: white;
+	color: black;
+	font-size: 100%;
+	font-style: italic;
+	margin-left: 0px;
+	margin-top: 0px;
+	padding-top: 0px;
+	margin-bottom: 0px;
+}
+.btn-xs {
+	min-width: 1.8em;
+	padding: .25em !important;
+	margin-left: .1em;
+	margin-right: .1em;
+	color: white !important;
+	cursor: pointer;
+	font-size: 75%;
+}   
+hr {
+	height:2px;
+	border-width:0;
+	color:gray;
+	background-color:gray;
+}
+img {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 5px;
+	width: 150px;
+}
+li.ancestor {
+	font-weight: bold;
+}
+ol.roman {
+  list-style-type: upper-roman;
+}
+ol.alpha {
+	list-style-type: lower-alpha;
+}
+ul.circle {
+	list-style-type: circle;
+}
+ul.square {
+	list-style-type: square;
+}
+p, ol, li {
+	font-size: 90%;
+}
+
