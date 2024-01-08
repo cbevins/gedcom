@@ -4,7 +4,7 @@ import { age } from './age.js'
 import { parseDate } from './parseDate.js'
 import { parsePlace } from './parsePlace.js'
 
-const fileName = "./src/lib/Gedcom/AncestryTest.ged"
+const fileName = "./src/lib/data/AncestryTest.ged"
 const aabKey = '@I292538955709@'    // Aaron Bevins
 const cdbKey = '@I292505355536@'    // Collin Douglas Bevins (#1)
 const wcbKey = '@I292505358890@'    // William Collins Bevins (#2)

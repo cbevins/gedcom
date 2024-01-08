@@ -3,7 +3,6 @@
 	import PersonBrief from './PersonBrief.svelte'
     export let ged
     export let subjectNameKey    // this is a nameKey like 'CollinDouglasBevins1952'
-
     $: prof = profile(ged, subjectNameKey)
 </script>
 

@@ -8,12 +8,16 @@
         ? (selectedValue === 'CollinDouglasBevins1952' ? '💀' : '👍')
         : '👉'
     function changed(ev) {
-        if (selectedValue && $ged.persons(selectedValue))
-        subjectNameKey.update(() => selectedValue)
+        if (selectedValue && $ged.person(selectedValue)) {
+            // console.log(`subjectNameKey UPDATED to '${selectedValue}'`)
+            subjectNameKey.update(() => selectedValue)
+        } else {
+            // console.log(`subjectNameKey NOT FOUND for '${selectedValue}'`, $ged.person(selectedValue))
+        }
     }
 </script>
 
-<Svelecte options={$ged.keyLabels()}
+<Svelecte options={$ged.personKeyLabels()}
     on:change={changed}
     inputId="person"
     valueField="key"

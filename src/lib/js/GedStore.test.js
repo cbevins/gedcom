@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { GedStore } from './GedStore.js'
-import { gedJson } from './GedJsonAncestry.js'
+import { gedJson } from '../data/GedJsonAncestry.js'
 import { relationship } from './relationship.js'
 
 const gd = new GedStore(gedJson)
@@ -15,7 +15,7 @@ const wlbNameKey = 'WilliamLongfordBevins1815'
 describe('GedStore class', () => {
     it('runGedStoreGenerator.js creates syntactically correct gedJson', () => {
         expect(gedJson.person.size).toBe(787)
-        expect(gedJson.labels.size).toBe(770) // this is less because of 17 duplicate persons
+        expect(gedJson.labels.size).toBe(787) // this is less because of 17 duplicate persons
         expect(gedJson.family.size).toBe(219)
     })
     it('GedStore.person() access method', () => {

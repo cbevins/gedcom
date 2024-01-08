@@ -1,6 +1,26 @@
+/**
+ * GedStore accepts a network-transportable plain-old JSON data set
+ * (produced by Gedcom and runGedJsonGenerator.js)
+ * hydrates the necessary {person}, {family}, {places} Map() objects
+ */
 export class GedStore {
     constructor(gedJson) {
-        this._data = gedJson
+        this._data = {
+            person: new Map(gedJson.person),
+            family: new Map(gedJson.family),
+            places: new Map(gedJson.places),
+        }
+        // Create the personLabel => personName Map()
+        const labels = []
+        gedJson.person.forEach(([, indi]) => { labels.push([indi.keys.label, indi.keys.name]) })
+        this._data.labels = new Map(labels)
+        
+        // Create the {key:, label:} objects used by person selectors
+        const options = []
+        this.persons().forEach (function(value, key) {
+            options.push({key: key, label: value.keys.label})
+        })
+        this._data.personKeyLabels = options
     }
 
     // Returns a {family:} object given the famKey like '@F123@'
@@ -10,8 +30,7 @@ export class GedStore {
     families() { return this._data.family }
 
     // Returns array of all {key:, label:} objects ised in selectors
-    keyLabels() { return this._data.keyLabels }
-    setKeyLabels(keyLabels) { this._data.keyLabels = keyLabels }
+    personKeyLabels() { return this._data.personKeyLabels }
 
     // Returns a nameKey like  'CollinDouglasBevins1952' given a label like
     nameKey(label) { return this._data.labels.get(label) }

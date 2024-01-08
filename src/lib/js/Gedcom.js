@@ -1,5 +1,6 @@
 // Reads a GEDCOM file using the Node environment's 'fs' and 'readline' modules
-// and restructures it into a JSON object written to a file as follows:
+// and restructures it into a network-transportable plain old JSON object
+// and written to a file as follows:
 // export const gedJson = {
 //      person: new Map([nameKey => {person:}]),
 //      family: new Map([@F123@' => {family:}]),
@@ -11,6 +12,7 @@
 // 1 - Reconcile FAM-MARR and INDI-MARR
 // 2 - Include INDI events in the JSON object
 // 3 - Include SOUR Map() in the JSON object
+// 4 - Command line args for input and output files
 
 import fs from 'fs'
 import readline from 'readline'
@@ -358,16 +360,16 @@ export class Gedcom {
         // NULL always means unprocessed
         let data = {
             keys: {
-                gedcom: key,
-                label: this.nameLabel(key),
-                name: this.nameKey(key)
+                gedcom: key,    // GEDCOM INDI record key, like '@I1234@'
+                label: this.nameLabel(key), // string like 'Collin Douglas Bevins (1952-?)'
+                name: this.nameKey(key) // string like 'CollinDouglasBevins1952'
             },
-            notes: this.indiNoteAll(key),
-            sources: this.indiSourceAll(key),
+            notes: this.indiNoteAll(key), // array of notes, which may contain newline separators '/n'
+            sources: this.indiSourceAll(key),   // array of source keys
             name: {
                 full: this.fullName(key),
                 given: this.givenNames(key),
-                name: this.name(key),
+                name: this.name(key),                   // string from GEDCOM NAME record, like 'Collin Douglas /Bevins/'
                 nick: this.nickNames(key),
                 prefix: this.namePrefix(key),
                 suffix: this.nameSuffix(key),
@@ -376,22 +378,22 @@ export class Gedcom {
             },
             birth: {
                 date: parseDate(this.birthDate(key)),   // {text:, year:, month:, day:, qual:, time:, year2:, str:, msg:}
-                notes: this.birthNoteAll(key),  // array of notes, which may contain newline separators '/n'
+                notes: this.birthNoteAll(key),          // array of notes, which may contain newline separators '/n'
                 place: this._addPlace(this.birthPlace(key)), // {text:, key:, count:, country:, state:, county:, locale:}
-                sources: this.birthSourceAll(key)
+                sources: this.birthSourceAll(key)       // array of sources keys like '@S1234@'
             },
             death: {
                 date: parseDate(this.deathDate(key)),   // {text:, year:, month:, day:, qual:, time:, year2:, str:, msg:}
-                notes: this.deathNoteAll(key),  // array of notes, which may contain newline separators '/n'
+                notes: this.deathNoteAll(key),          // array of notes, which may contain newline separators '/n'
                 place: this._addPlace(this.deathPlace(key)), // {text:, key:, count:, country:, state:, county:, locale:}
-                sources: this.deathSourceAll(key) // array of sources, which may contain newline separators '/n'
+                sources: this.deathSourceAll(key)       // array of sources keys like '@S1234@'
             },
             events: [],
             life: {
-                age: null,  // [years, months, days], calculated later
-                gender: this.gender(key),       // 'F' or 'M'
-                isLiving: this.isLiving(key),   // TRUE or FALSE
-                span: this.lifeSpan(key)
+                age: null,                      // [years, months, days], calculated later
+                gender: this.gender(key),       // string 'F' or 'M'
+                isLiving: this.isLiving(key),   // boolean TRUE or FALSE
+                span: this.lifeSpan(key)        // string like '(1815-1888)'
             },
             families: {
                 // array of subject's parental FAMC and spousal FAMS GEDCOM famKeys like ['@F123@']
@@ -416,6 +418,7 @@ export class Gedcom {
         for (const key of this._indi.keys()) { // 'key' is a GEDCOM INDI key like '@I123@'
             n++
             const indi = this.jsonIndi(key)
+            // Check for possible duplicates
             ids = []
             if (dups.has(indi.keys.name)) {
                 nDups++
@@ -474,5 +477,16 @@ export class Gedcom {
             ar.push([key, json])
         }
         return ar
+    }
+    // Returns a plain old JSON object with all the GEDCOM data of interest
+    toJson(indent=0) {
+        const indiArr = this.jsonIndiArray()
+        const famArr = this.jsonFamArray()
+        let text = 'export const gedJson = {\n'
+        text += `    person: ${JSON.stringify(indiArr, null, indent)},\n`
+        text += `    family: ${JSON.stringify(famArr, null, indent)},\n`
+        text += `    places: ${JSON.stringify(Array.from(this._plac), null, indent)}\n`
+        text += '}'
+        return text
     }
 }

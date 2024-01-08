@@ -9,12 +9,12 @@
         : '👉'
     
     function changed(ev) {
-        if (selectedValue && $ged.persons(selectedValue))
+        if (selectedValue && $ged.person(selectedValue))
         rootNameKey.update(() => selectedValue)
     }
 </script>
 
-<Svelecte options={$ged.keyLabels()}
+<Svelecte options={$ged.personKeyLabels()}
     on:change={changed}
     inputId="person"
     valueField="key"

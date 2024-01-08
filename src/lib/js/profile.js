@@ -24,8 +24,23 @@ function deathLine(person) {
 function unionLine(family) { return datePlace(family.union) }
 
 export function profile(ged, subjectKey, recurse=true) {
-    // console.log(`profile(${subjectKey})`)
     const person = ged.person(subjectKey)
+    if (!person) {
+        return {
+            personKey: subjectKey,
+            nameLine: 'Unknown',
+            birthLine: 'unknown date and place',
+            birthNotes: [],
+            birthSources:  [],
+            deathLine: 'unknown date and place',
+            deathNotes: [],
+            deathSources: [],
+            notes: [],
+            sources: [],
+            parents: [],
+            spouses: []
+        }
+    }
     const data = {
         personKey: subjectKey,
         nameLine: person.name.full + ' ' + person.life.span,
@@ -37,10 +52,12 @@ export function profile(ged, subjectKey, recurse=true) {
         deathSources: person.death.sources,
         notes: person.notes,
         sources: person.sources,
+        parents: [],
+        spouses: []
     }
     if (! recurse) return data
-    data.parents = []
-    data.spouses = []
+    // data.parents = []
+    // data.spouses = []
     for(let i=0; i<person.families.parents.length; i++) {
         const famKey = person.families.parents[i]
         const family = ged.family(famKey)
