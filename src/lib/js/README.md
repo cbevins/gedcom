@@ -1,6 +1,11 @@
 # Bevis-Riley Genealogy Web App
 
 ## To Do
+
+### Errors
+- age() must check for undefined birth and death dates
+- profile() must not link to unknown parents or spouses
+
 ### GedCom
 - Sort children and spouse lists and events by date
 - Parse for date records like `DATE estimated 1745`

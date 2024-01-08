@@ -21,6 +21,21 @@ export class GedStore {
             options.push({key: key, label: value.keys.label})
         })
         this._data.personKeyLabels = options
+
+        this.sortFamilyChildren()
+    }
+    sortFamilyChildren() {
+        const ged = this
+        for (const [famKey, family] of this.families().entries()) {
+            // console.log(famKey)
+            family.children.sort(function (a, b) {
+                const c1 = ged._data.person.get(a)
+                if (!c1) throw new Error(`${a} person is undefined`)
+                const c2 = ged._data.person.get(b)
+                if (!c2) throw new Error(`${a} person is undefined`)
+                return(c1.birth.date.year - c2.birth.date.year)
+            })
+        }
     }
 
     // Returns a {family:} object given the famKey like '@F123@'
