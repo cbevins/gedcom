@@ -17,6 +17,8 @@ function deathLine(person) {
         const a = age(person.birth.date)
         return `Living (currently ${a[0]}y, ${a[1]}m, ${a[2]}d)` 
     }
+    let str = datePlace(person.death)
+    if (person.death.date.str==='?') return str
     const a = person.life.age
     return datePlace(person.death) + ` (at ${a[0]}y, ${a[1]}m, ${a[2]}d)`
 }

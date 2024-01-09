@@ -23,7 +23,6 @@
  * 1 - Reconcile FAM-MARR and INDI-MARR
  * 2 - Include INDI events in the JSON object
  * 3 - Include SOUR Map() in the JSON object
- * 4 - Command line args for input and output files
 */
 
 import fs from 'fs'
@@ -413,7 +412,11 @@ export class Gedcom {
                 spouses: this.spousalFamilyKeys(key),   // array of FAM '@F123@' keys
             }
         }
-        data.life.age = age(data.birth.date, (data.life.isLiving ? null : data.death.date))
+        let a = age(data.birth.date, (data.life.isLiving ? null : data.death.date))
+        if (a[0]<0 || a[0] === null) a[0] = 0
+        if (a[1]<0 || a[1] === null) a[1] = 0
+        if (a[2]<0 || a[2] === null) a[2] = 0
+        data.life.age = a
         data.death.date.str = data.life.isLiving ? 'Living' : data.death.date.str
         return data
     }

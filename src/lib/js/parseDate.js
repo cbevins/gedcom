@@ -77,6 +77,7 @@ export function parseDate(text) {
         } else {
             date.msg = `Date text ${text} has '${n}' for part ${i}: '${parts[i]}'`
         }
+        if (date.day === null) date.day = 0
         date.str = formatDate(date)
     }
     return date
