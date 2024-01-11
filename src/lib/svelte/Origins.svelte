@@ -2,8 +2,6 @@
 	import { calcNationality } from '$lib/js/nationality.js'
 	export let ged
     export let subjectNameKey
-
-	let origins = calcNationality(ged, subjectNameKey)
 	$: origins = calcNationality(ged, subjectNameKey)
 </script>
 
