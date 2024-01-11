@@ -50,6 +50,14 @@
                     href="/people/explorer"
                     aria-current={$page.url.pathname === '/people/explorer' ? 'page' : undefined}>
                     Explorer</a></li>
+                <li><a class="dropdown-item text-black bg-success"
+                    href="/people/immigrants"
+                    aria-current={$page.url.pathname === '/people/immigrants' ? 'page' : undefined}>
+                    Immigrants</a></li>
+                <li><a class="dropdown-item text-black bg-success"
+                    href="/people/surnames"
+                    aria-current={$page.url.pathname === '/people/surnames' ? 'page' : undefined}>
+                    Surnames</a></li>
             </ul>
         </li>
 
