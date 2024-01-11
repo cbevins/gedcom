@@ -30,16 +30,14 @@ function recurseNationality(gedStore, subject, map=new Map(), level=0) {
     return map
 }
 
-// Returns an array of [fraction, origin]
+// Returns an array of [fraction, origin, count]
 export function calcNationality(gedStore, nameKey) {
     const person = gedStore.person(nameKey)
     const map = recurseNationality(gedStore, person)
     const ar = []
     let total = 0
     let count = 0
-    for (const x of map.entries()) {
-        const origin = x[0]
-        const rec = x[1]
+    for (const [origin, rec] of map.entries()) {
         let fraction = 0
         for(let i=1; i<rec.counts.length; i++) {
             if (rec.counts[i]) {
@@ -50,8 +48,9 @@ export function calcNationality(gedStore, nameKey) {
         count += rec.count
         ar.push([fraction, origin, rec.count])
     }
+    ar.sort().reverse()
     ar.push([total, 'TOTAL', count])
-    return ar.sort().reverse()
+    return ar
 }
 
 export function logNationality(ar) {

@@ -3,7 +3,6 @@
 ## To Do
 
 ### Errors
-- age() must check for undefined birth and death dates
 - profile() must not link to unknown parents or spouses
 
 ### GedCom
@@ -11,7 +10,6 @@
 - Parse for date records like `DATE estimated 1745`
 - Add INDI events to JSON data
 - Add SOUR [key, text] array to JSON data
-- Remove functions (like `new Map()`) from generated JSON data file
 - Report PLAC records with unknown or missing country
 
 ### Browser App

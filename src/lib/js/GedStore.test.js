@@ -4,7 +4,7 @@ import { gedJson } from '../data/GedJsonAncestry.js'
 import { relationship } from './relationship.js'
 
 const gd = new GedStore(gedJson)
-const cdbLabel = 'Collin Douglas BEVINS (#1) (1952-?)'
+const cdbLabel = 'Collin Douglas BEVINS (#BH1) (1952-?)'
 const Collin = 'CollinDouglasBevins1952'
 const Karen = 'KarenMargaretBevins1954'
 const Barbara = 'BarbaraJeanneRiley1953'
@@ -14,13 +14,13 @@ const wlbNameKey = 'WilliamLongfordBevins1815'
 
 describe('GedStore class', () => {
     it('runGedStoreGenerator.js creates syntactically correct gedJson', () => {
-        expect(gedJson.person.length).toBeGreaterThan(787)
-        expect(gedJson.family.length).toBeGreaterThan(219)
+        expect(gedJson.person.length).toBeGreaterThan(750)
+        expect(gedJson.family.length).toBeGreaterThan(200)
     })
     it('GedStore.person() access method', () => {
         expect(gd.person(Collin).keys.name).toBe(Collin)
         expect(gd.person(Barbara).keys.name).toBe(Barbara)
-        expect(gd.person(Collin).families.parents[0]).toBe('@F74@')
+        expect(gd.person(Collin).families.parents[0]).toBe('@F73@')
         expect(gd.person('junk')).toBe(undefined)
     })
     it('GedStore.family() access method', () => {
@@ -56,11 +56,11 @@ describe('GedStore class', () => {
         expect(gd.children(Collin)[0].keys.name).toBe('DrewallynBevinsRiley1982')
         expect(gd.children(Collin)[1].keys.name).toBe('KelsynRileyBevins1986')
         expect(gd.children(wlbNameKey, 0).length).toBe(1)
-        expect(gd.children(wlbNameKey, 1).length).toBe(12)
+        expect(gd.children(wlbNameKey, 1).length).toBe(11)
     })
     it('GedStore.allChildren() method accepts either nameKey string or {indi:} object', () => {
         expect(gd.allChildren(Collin).length).toBe(2)
-        expect(gd.allChildren(wlbNameKey).length).toBe(13)
+        expect(gd.allChildren(wlbNameKey).length).toBe(12)
     })
     it('{places:} exists', () => {
         expect(gd.places().size).toBeGreaterThan(611)

@@ -25,6 +25,7 @@ const Quals = new Map([
     ['cir', 'circa'],
     ['civ', ''], // catches the 'Civil War' date
     ['ear', 'early'],
+    // ['est', 'estimated'],
     ['pre', 'pre'],
 ])
 

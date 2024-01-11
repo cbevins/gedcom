@@ -2,6 +2,7 @@
 	import AncestorTree from '$lib/svelte/AncestorTree.svelte'
 	import Demographics from '$lib/svelte/Demographics.svelte'
 	import Immigrants from '$lib/svelte/Immigrants.svelte'
+	import Origins from '$lib/svelte/Origins.svelte'
 	import Profile from '$lib/svelte/Profile.svelte'
     import RootSelector from '$lib/svelte/RootSelector.svelte'
     import SubjectSelector from '$lib/svelte/SubjectSelector.svelte'
@@ -71,7 +72,7 @@
         <div id="origins" class="container tab-pane fade"><br>
             <div class="card">
                 <div class="card-body">
-                    <h3>{$subjectNameKey} Ancestral Origins</h3>
+                    <Origins ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
                 </div>
             </div>
         </div>
