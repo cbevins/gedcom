@@ -48,8 +48,23 @@ export function calcNationality(gedStore, nameKey) {
         count += rec.count
         ar.push([fraction, origin, rec.count])
     }
-    ar.sort().reverse()
     ar.push([total, 'TOTAL', count])
+    // Fractions without USA or Unknown
+    let f = 0
+    const skip = ['USA', 'Unknown']
+    for (let i=0; i<ar.length; i++) {
+        const [fraction, country, count] = ar[i]
+        if (skip.includes(country)) f += fraction
+    }
+    if (f===0) f=1
+    // Adjust for removing USA and unknwon
+    for (let i=0; i<ar.length; i++) {
+        const [fract, country, n] = ar[i]
+        if (skip.includes(country)) ar[i].push(0)
+        else if (country === 'TOTAL') ar[i].push(1)
+        else ar[i].push(fract / f)
+    }
+    ar.sort().reverse()
     return ar
 }
 
