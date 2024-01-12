@@ -1,39 +1,33 @@
 <script>
 	import { page } from '$app/stores'
-    const about = [
-        ['/', 'Home'],
-        ['/about/motivation', 'Motivation'],
-        ['/about/notation', 'Notation'],
-        ['/about/tools', 'Tools']
-    ]
-    const people = [
-        ['/people/explorer', 'Explorer'],
-        ['/people/immigrants', 'Immigrants'],
-        ['/people/surnames', 'Surnames'],
-    ]
     const Menus = [
-        ['/about', 'About', about],
-        ['/people', 'People', people]
+        ['/about', 'About', [
+            ['/', 'Home'],
+            ['/about/motivation', 'Motivation'],
+            ['/about/notation', 'Notation'],
+            ['/about/tools', 'Tools'],
+        ]],
+        ['/people', 'People', [
+            ['/people/explorer', 'Explorer'],
+            ['/people/immigrants', 'Immigrants'],
+            ['/people/surnames', 'Surnames'],
+        ]]
     ]
 
     function menuHtml(props) {
         const [route, label, items] = props
         let html = menuButtonHtml(route, label)
-        html += '<ul class="dropdown-menu text-black bg-success">'
-        for(let i=0; i<items.length; i++) {
-            const [href, text] = items[i]
-            html += menuItemHtml(href, text)
-        }
-        html += '</ul>'
-        return html
+            + '<ul class="dropdown-menu text-black bg-success">'
+        for(let i=0; i<items.length; i++)
+            html += menuItemHtml(...items[i])
+        return html + '</ul>'
     }
 
     function menuButtonHtml(route, label) {
-        let html = '<a class="nav-link dropdown-toggle text-black bg-success"'
-        html += 'data-bs-toggle="dropdown"'
-        html += `href="${route}">${label}</a>`
-        return html
+        return '<a class="nav-link dropdown-toggle text-black bg-success"'
+            + `data-bs-toggle="dropdown" href="${route}">${label}</a>`
     }
+
     function menuItemHtml(href, text) {
         return '<a class="dropdown-item text-black bg-success" '
             + `aria-current=${$page.url.pathname === href ? 'page' : undefined}`
