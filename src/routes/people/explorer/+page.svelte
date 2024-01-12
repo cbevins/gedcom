@@ -22,84 +22,84 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">People Explorer</h5>
-    <div class="card">
-        <div>
-            Subject: {$subjectNameKey}
-            <SubjectSelector />
+        <div class="card">
+            <div>
+                Subject: {$subjectNameKey}
+                <SubjectSelector />
+            </div>
+            <!-- <div>
+                Root: {$rootNameKey}
+                <RootSelector />
+            </div> -->
         </div>
-        <!-- <div>
-            Root: {$rootNameKey}
-            <RootSelector />
-        </div> -->
-    </div>
-    <hr>
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-        {#each tabs as tab, i}
-            <li class="nav-item">
-                <a class={tab.c} data-bs-toggle="tab"
-                    href={tab.href}>{tab.title}</a>
-            </li>
-        {/each}
-    </ul>
+        <hr>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            {#each tabs as tab, i}
+                <li class="nav-item">
+                    <a class={tab.c} data-bs-toggle="tab"
+                        href={tab.href}>{tab.title}</a>
+                </li>
+            {/each}
+        </ul>
 
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div id="family" class="container tab-pane active"><br>
-            <div class="card">
-                <div class="card-body">
-                    <Profile ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div id="family" class="container tab-pane active"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <Profile ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ancestors" class="container tab-pane fade"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <AncestorTree ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+                    </div>
+                </div>
+            </div>
+
+            <div id="immigrants" class="container tab-pane fade"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <Immigrants ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+                    </div>
+                </div>
+            </div>
+
+            <div id="origins" class="container tab-pane fade"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <Origins ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+                    </div>
+                </div>
+            </div>
+
+            <div id="migration" class="container tab-pane fade"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>{$subjectNameKey} Ancestral Migration Routes</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="demographics" class="container tab-pane fade"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <Demographics ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+                    </div>
+                </div>
+            </div>
+
+            <div id="relationships" class="container tab-pane fade"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>{$subjectNameKey} Relationships</h3>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div id="ancestors" class="container tab-pane fade"><br>
-            <div class="card">
-                <div class="card-body">
-                    <AncestorTree ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
-                </div>
-            </div>
-        </div>
-
-        <div id="immigrants" class="container tab-pane fade"><br>
-            <div class="card">
-                <div class="card-body">
-                    <Immigrants ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
-                </div>
-            </div>
-        </div>
-
-        <div id="origins" class="container tab-pane fade"><br>
-            <div class="card">
-                <div class="card-body">
-                    <Origins ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
-                </div>
-            </div>
-        </div>
-
-        <div id="migration" class="container tab-pane fade"><br>
-            <div class="card">
-                <div class="card-body">
-                    <h3>{$subjectNameKey} Ancestral Migration Routes</h3>
-                </div>
-            </div>
-        </div>
-
-        <div id="demographics" class="container tab-pane fade"><br>
-            <div class="card">
-                <div class="card-body">
-                    <Demographics ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
-                </div>
-            </div>
-        </div>
-
-        <div id="relationships" class="container tab-pane fade"><br>
-            <div class="card">
-                <div class="card-body">
-                    <h3>{$subjectNameKey} Relationships</h3>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
 </div>
