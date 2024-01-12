@@ -13,7 +13,7 @@
 			My initial motiviation was to discover where the <Surname name='Bevins' /> surname originated.
 			It seems to be a fairly uncommon surname in the United States, and there are conflicting
 			statements whether it is English or Welsh.
-			(The answer for our Bevins name, <a href="/bevins-heddens">is here</a>.)
+			(The answer for our Bevins name, <a href="/people/surnames">is here</a>.)
 		</p>
 		<p>
 			My second motiviating factor was to discover where my direct ancestors

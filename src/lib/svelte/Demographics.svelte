@@ -1,4 +1,5 @@
 <script>
+	import { page } from '$app/stores'
     import { demographics } from '$lib/js/demographics.js'
 	export let ged
     export let subjectNameKey
@@ -52,9 +53,9 @@
                 Change Demographic
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" on:click={age}>Age at Death</a></li>
-                <li><a class="dropdown-item" on:click={children}>Number of Children</a></li>
-                <li><a class="dropdown-item" on:click={spouses}>Number of Spouses</a></li>
+                <li><button class="dropdown-item" on:click={age}>Age at Death</button>
+                <li><button class="dropdown-item" on:click={children}>Number of Children</button>
+                <li><button class="dropdown-item" on:click={spouses}>Number of Spouses</button>
             </ul>
         </div>
     </div>
