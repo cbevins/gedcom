@@ -2,7 +2,7 @@
 // Note that 'from' and 'thru' are each a JSON object
 // that must contain {day:, month:, year:} properties.
 // If 'thru' is NULL, the current date is used
-// If 'from'  is null
+// If 'from'  is null,
 export function age(from, thru=null) {
     const days = [31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
