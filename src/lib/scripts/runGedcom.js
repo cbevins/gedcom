@@ -20,4 +20,4 @@ logDataSizes(gedcom)
 
 const mem2 = process.memoryUsage()
 logMemory(mem1, mem2)
-console.log(process.argv)
+// console.log(process.argv)

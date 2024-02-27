@@ -12,26 +12,28 @@ export class Ancestors {
         this._ancMap = new Map()
         this._ancTree = null
         this._subjectKey = subjectKey
-        this._ancestorsRecurse(subjectKey, 0)
+        this._ancestorsRecurse(subjectKey, 1, 0)
         return this._ancMap
     }
     
-    _ancestorsRecurse(subjectKey, level=0) {
+    _ancestorsRecurse(subjectKey, id, level=0) {
         // console.log(level, subjectKey)
         const person = this._gedStore.person(subjectKey)
         const node = {
             level: level,
+            id: id,
             person: person, // reference to {person:}
             mother: this._gedStore.mother(subjectKey),   // reference to {person:}
             father: this._gedStore.father(subjectKey) // reference to {person:}
         }
         if (! this._ancTree) this._ancTree = node
         this._ancMap.set(subjectKey, node)
+        // console.log(subjectKey)
         const parentFamKeys = person.families.parents
         if (!parentFamKeys.length) return
         const family = this._gedStore.family(parentFamKeys[0])
-        if (family.yKey !== '?') this._ancestorsRecurse(family.yKey, level+1)
-        if (family.xKey !== '?') this._ancestorsRecurse(family.xKey, level+1)
+        if (family.yKey !== '?') this._ancestorsRecurse(family.yKey, id*2, level+1)
+        if (family.xKey !== '?') this._ancestorsRecurse(family.xKey, id*2+1, level+1)
     }
 
     list() {
@@ -44,6 +46,8 @@ export class Ancestors {
         return this
     }
 
+    map() { return this._ancMap }
+    
     mapSize() { return this._ancMap.size }
 
     subjectKey() { return this._subjectKey }

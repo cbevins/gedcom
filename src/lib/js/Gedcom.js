@@ -70,8 +70,10 @@ export class Gedcom {
 
     // Attempts to parse and standardize place keys and names, and store them in a Map()
     // Returns the {place:} data object reference
-    _addPlace(text) {
-        let place = parsePlace(text) // returns {text:, key:, count:, country:, state:, county:, locale:}
+    // pkey and event are optional for reporting where the place need fixing
+    _addPlace(text, pkey=null, event='') {
+        let place = parsePlace(text, pkey, event) // returns {text:, key:, count:, country:, state:, county:, locale:}
+        // console.log(pkey, event, ':', place.text)
         if (! this._plac.has(place.key)) {
             this._plac.set(place.key, place)
         }
@@ -91,6 +93,9 @@ export class Gedcom {
         this._command = null
         this._curr = null // reference to the current Record
         this._lines = []
+        // Diagnostics
+        this._diag = new Map()
+        this._dupKeys = new Map()
     }
 
     _initRecordStore() {
@@ -369,6 +374,7 @@ export class Gedcom {
     // 'key' is the GEDCOM INDI key like '@I123@'
     jsonIndi(key) {
         // NULL always means unprocessed
+        const label = this.nameLabel(key)
         let data = {
             keys: {
                 gedcom: key,    // GEDCOM INDI record key, like '@I1234@'
@@ -390,13 +396,13 @@ export class Gedcom {
             birth: {
                 date: parseDate(this.birthDate(key)),   // {text:, year:, month:, day:, qual:, time:, year2:, str:, msg:}
                 notes: this.birthNoteAll(key),          // array of notes, which may contain newline separators '/n'
-                place: this._addPlace(this.birthPlace(key)), // {text:, key:, count:, country:, state:, county:, locale:}
+                place: this._addPlace(this.birthPlace(key), label, 'birth'), // {text:, key:, count:, country:, state:, county:, locale:}
                 sources: this.birthSourceAll(key)       // array of sources keys like '@S1234@'
             },
             death: {
                 date: parseDate(this.deathDate(key)),   // {text:, year:, month:, day:, qual:, time:, year2:, str:, msg:}
                 notes: this.deathNoteAll(key),          // array of notes, which may contain newline separators '/n'
-                place: this._addPlace(this.deathPlace(key)), // {text:, key:, count:, country:, state:, county:, locale:}
+                place: this._addPlace(this.deathPlace(key), label, 'death'), // {text:, key:, count:, country:, state:, county:, locale:}
                 sources: this.deathSourceAll(key)       // array of sources keys like '@S1234@'
             },
             events: [],
@@ -426,33 +432,53 @@ export class Gedcom {
     // Return value may be used like: const map = new Map(gedcom.jsonIndiArray())
     jsonIndiArray() {
         const ar = []
-        const dups = new Map()
-        let ids = []
         let n = 0
         let nDups = 0
         for (const key of this._indi.keys()) { // 'key' is a GEDCOM INDI key like '@I123@'
             n++
             const indi = this.jsonIndi(key)
-            // Check for possible duplicates
-            ids = []
-            if (dups.has(indi.keys.name)) {
+            // Returns number of duplicates for this key
+            const dups = this.checkDuplicateKey(indi)
+            if (dups) {
+                const suffix = `(Copy${dups})`
+                indi.keys.label += ` ${suffix})`
+                indi.keys.name += `${suffix}`
                 nDups++
-                ids = dups.get(indi.keys.name)
-                indi.keys.label += ` (Copy${ids.length})`
-                indi.keys.name += `Copy${ids.length}`
-                console.log(`Duplicate indi.keys.name for ${indi.keys.name} (${indi.keys.gedcom}) in [${ids}]`)
             }
-            ids.push(indi.keys.gedcom)
-            dups.set(indi.keys.name, ids)
             ar.push([indi.keys.name, indi])
         }
         console.log(`${n} INDI records, ${nDups} apparent duplicates`)
+        this.reportDuplicateKeys()
         return ar
     }
-
+    // Check for INDI with duplicate keys
+    checkDuplicateKey(indi) {
+        let n = 0
+        if (this._dupKeys.has(indi.keys.name)) {
+            const gedKeys = this._dupKeys.get(indi.keys.name)
+            gedKeys.push(indi.keys.gedcom)
+            this._dupKeys.set(indi.keys.name, gedKeys)
+            n = gedKeys.length
+            // console.log(`Duplicate indi.keys.name for ${indi.keys.name} (${indi.keys.gedcom}) in [${gedKeys}]`)
+        } else {
+            this._dupKeys.set(indi.keys.name, [indi.keys.gedcom])
+        }
+        return n
+    }
+    addDiagnostic(indi, type, text) {
+        if (! this._diag.has(indi.keys.name)) this._diag.set(indi.keys.name)
+    }
+    reportDuplicateKeys() {
+        console.log('\nDuplicate Keys:')
+        for (const [key, gedKeys] of this._dupKeys.entries()) {
+            if (gedKeys.length > 1)
+                console.log(key, gedKeys)
+        }
+    }
     // Creates and returns a {family:} data object from the GEDCOM FAMC/FAMS
     // 'famKey' is the GEDCOM FAMC/FAMS key, like '@F123@'
     jsonFam(famKey) {
+        const label = this.nameKey(this.familyXKey(famKey))
         const data = {
             key: famKey,
             xKey: this.nameKey(this.familyXKey(famKey)),    // '?' if none
@@ -461,7 +487,7 @@ export class Gedcom {
             union: {
                 date: parseDate(this.familyUnionDate(famKey)), // {text:, year:, month:, day:, qual:, time:, year2:, str:, msg:}
                 notes: this.familyUnionNoteAll(famKey), // array of notes, which may contain newline separators '/n'
-                place: this._addPlace(this.familyUnionPlace(famKey)), // {text:, key:, count:, country:, state:, county:, locale:}
+                place: this._addPlace(this.familyUnionPlace(famKey), label, 'union'), // {text:, key:, count:, country:, state:, county:, locale:}
                 sources: this.familyUnionSourceAll(famKey)  // array of sources, which may contain newline separators '/n'
             }
         }

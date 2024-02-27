@@ -1,3 +1,4 @@
+// EXPERIMENTAL
 import { Ancestors } from './Ancestors.js'
 // Returns a data object describing subject's relationship to the *other*
 // {subjectKey:, otherKey:, ccaKeys:, cousin:, removed:, text:}

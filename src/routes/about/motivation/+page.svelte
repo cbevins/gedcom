@@ -42,4 +42,43 @@
 			allows me to keep my web development skills sharp and current.
 		</p>
 	</div>
+	<Title1 title='Objectives and Conditions' />
+	<div class=story>
+		<ul>
+			<li>Document the direct ancestors of Collin Douglas Bevins and Barbara Jeanne Riley
+				back to their counrty of emmigration beyond the US and Canada.
+				<ul>
+					The following should be documented/performed for each direct ancestors:
+					<li>name, gender, and file id</li>
+					<li>year and country of birth</li>
+					<li>year and country of death</li>
+					<li>all Ancestry.com hints reviewed and all relevany documents and sources stored</li>
+				</ul>
+				<ul>Also document where possible direct ancestors':
+					<li>father and mother names (and available birth/union/death info)</li>
+					<li>year and country of all unions (marriages)</li>
+					<li>siblings names (and available birth/union/death info)</li>
+				</ul>
+			</li>
+			<li>Develop web site to display family relationships and demographics in new and interesting ways.
+				Some ideas include:
+				<ul>
+					<li>Notable lives</li>
+					<li>Notable deaths</li>
+					<li>Profile cards by family group</li>
+					<li>Tables of age-at death, number of children, and number of spouses demographics
+						broken down by by gender and time period.</li>
+					<li>Table of country-of-origin percents</li>
+					<li>Table of birth-death year range by generation</li>
+					<li>Table of family surnames</li>
+					<li>Maps of gnerational migration</li>
+					<li>Family bush diagram with names on colored lines by year or generation</li>
+					<li>Family wall or circle diagram</li>
+					<li>Family historical timeline diagram</li>
+				</ul>
+			</li>
+
+
+		</ul>
+	</div>
 </div>

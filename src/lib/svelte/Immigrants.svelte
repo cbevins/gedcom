@@ -11,6 +11,8 @@
 	]
 
 	let immigrants = ancestors(subjectNameKey)
+	// Returns an array of Ancestor objects {level: <int>, id: <int>, person: {person}, mother: {person}, father: {person}}
+	// whose known birth and death countries are different
     $: immigrants = ancestors(subjectNameKey)
 	function ancestors(subKey) {
 		const immigrants = []
@@ -29,31 +31,44 @@
 					last--
 				}
 			}
-			let name = data.person.keys.label
-			if (! name || name==='unknown') name = nameKey
-			// immigrant?
-			let origin = ''
 			if (!data.person.life.isLiving
-				&& data.person.birth.place.country
-				&& data.person.death.place.country
+				&& data.person.birth.place.country !== 'unknown country'
+				&& data.person.death.place.country !== 'unknown country'
 				&& data.person.birth.place.country !== data.person.death.place.country) {
-				origin = ` [${data.person.birth.place.country.toUpperCase()}]`
-				immigrants.push(data.person)
+				immigrants.push(data)
 			}
 		}
 		return immigrants
 	}
 
 	function immigrantsHtml(subKey) {
-		immigrants.sort(function(a, b) {return a.birth.date.year - b.birth.date.year})
+		immigrants.sort(function(a, b) {return a.person.birth.date.year - b.person.birth.date.year})
 		let person = ged.person(subKey)
 		let html = '<ul>'+ person.name.full + ' has ' + (immigrants.length) + ' documented immigrant ancestors:'
 		for(let i=0; i<immigrants.length; i++) {
-			person = immigrants[i]
+			person = immigrants[i].person
 			html += `<li>${person.keys.label} ${person.birth.place.country} ${person.death.place.country}</li>`
 		}
 		return html+'</ul>'
 	}
+
+	function immigrantsTable(subKey) {
+		immigrants.sort(function(a, b) {return a.person.birth.date.year - b.person.birth.date.year})
+		let person = ged.person(subKey)
+		let html = `<h3>${person.name.full} has ${immigrants.length} documented immigrant ancestors:</h3>`
+		html += '<table class="stripped"><tbody>'
+		html += '<tr><th>Name</th><th>Gen</th><th>Lived</th><th>Born</th><th>Died</th></tr>'
+		for(let i=0; i<immigrants.length; i++) {
+			let anc = immigrants[i]
+			person = anc.person
+			html += `<tr><td>${person.name.full}</td><td>${anc.level}`
+			html += `<td>${person.birth.date.year} - ${person.death.date.year}</td>`
+			html += `<td>${person.birth.place.country}</td>`
+			html += `<td>${person.death.place.country}</td></tr>`
+		}
+		html += '</tbody></table>'
+		return html
+	}
 </script>
 
-{@html immigrantsHtml(subjectNameKey)} 
+{@html immigrantsTable(subjectNameKey)} 

@@ -1,3 +1,4 @@
+// EXPERIMENTAL
 /**
  * Creates a Map() of the relationships between a root person
  * and all other persons in the GedStore.

@@ -9,6 +9,7 @@
         ]],
         ['/people', 'People', [
             ['/people/explorer', 'Explorer'],
+            ['/people/interest', 'Interesting Notes'],
             ['/people/immigrants', 'Immigrants'],
             ['/people/surnames', 'Surnames'],
         ]]
