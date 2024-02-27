@@ -6,6 +6,7 @@
             ['/about/motivation', 'Motivation'],
             ['/about/notation', 'Notation'],
             ['/about/tools', 'Tools'],
+            ['/about/diagnostics', 'Diagnostics'],
         ]],
         ['/people', 'People', [
             ['/people/explorer', 'Explorer'],

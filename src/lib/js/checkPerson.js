@@ -24,21 +24,21 @@ export function checkPerson(person, id=null, key=null) {
     const msg = []
     if (id) {
         // Test 1: Ancestors must have a correct file id in its name suffix
-        if (! person.name.suffix || person.name.suffix === '') msg.push(`ID ? '${id}'`)
-        else if (! person.name.suffix.includes(id)) msg.push(`ID '${person.name.suffix}' ==> '${id}'`)
+        if (! person.name.suffix || person.name.suffix === '') msg.push(`Add ancestor id '${id}'`)
+        else if (! person.name.suffix.includes(id)) msg.push(`Change ancestor id from '${person.name.suffix}' to '${id}'`)
     }
     // Test 2: Ancestors must have a birth year and country
-    if (! person.birth.date.year) msg.push('BirthYear ?')
+    if (! person.birth.date.year) msg.push('Birth Year is missing')
     if (person.birth.place.country === 'unknown country' || person.birth.place.state === 'unknown state')
-        msg.push(`BirthPlace ? [${person.birth.place.text}]`)
+        msg.push(`Birth Country or State is unknown: [${person.birth.place.text}]`)
 
     // Test 3: Ancestors must have a death year and country
     if (! person.life.isLiving ) {
-        if (! person.death.date.year) msg.push('DeathYear ?')
+        if (! person.death.date.year) msg.push('Death Year is mmissing')
         if (person.death.place.country === 'unknown country' || person.death.place.state === 'unknown state')
-            msg.push(`DeathPlace ? [${person.death.place.text}]`)
+            msg.push(`Death Country or State is unknown: [${person.death.place.text}]`)
     }
     // Test 4: Persons must have a gender
-    if (person.life.gender !== 'M' && person.life.gender !== 'F') msg.push(`Gender unnown [${person.life.gender}]`)
+    if (person.life.gender !== 'M' && person.life.gender !== 'F') msg.push(`Gender is unknown [${person.life.gender}]`)
     return msg
 }

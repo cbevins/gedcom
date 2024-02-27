@@ -1,4 +1,5 @@
 <script>
+	import { ged } from '$lib/js/store.js'
 </script>
 
 <div class="container">
