@@ -1,14 +1,8 @@
 <script>
-	import { Ancestors } from '$lib/js/Ancestors.js'
+	import { Ancestors, Generations } from '$lib/js/Ancestors.js'
 	export let ged
     export let subjectNameKey
 	const anc = new Ancestors(ged)
-	
-	const Ancestor =[
-		'Subject', 'Parent', 'GrandP', '1st GPP', '2nd GPP', '3rd GGP',
-		'4th GGP', '5th GGP', '6th GGP', '7th GGP', '8th GGP', '9th GGP',
-		'10th GGP', '11th GGP', '12th GGP', '13th GGP', '14th GGP', '15th GGP'
-	]
 
 	let immigrants = ancestors(subjectNameKey)
 	// Returns an array of Ancestor objects {level: <int>, id: <int>, person: {person}, mother: {person}, father: {person}}
@@ -41,30 +35,20 @@
 		return immigrants
 	}
 
-	function immigrantsHtml(subKey) {
-		immigrants.sort(function(a, b) {return a.person.birth.date.year - b.person.birth.date.year})
-		let person = ged.person(subKey)
-		let html = '<ul>'+ person.name.full + ' has ' + (immigrants.length) + ' documented immigrant ancestors:'
-		for(let i=0; i<immigrants.length; i++) {
-			person = immigrants[i].person
-			html += `<li>${person.keys.label} ${person.birth.place.country} ${person.death.place.country}</li>`
-		}
-		return html+'</ul>'
-	}
-
 	function immigrantsTable(subKey) {
 		immigrants.sort(function(a, b) {return a.person.birth.date.year - b.person.birth.date.year})
 		let person = ged.person(subKey)
 		let html = `<h3>${person.name.full} has ${immigrants.length} documented immigrant ancestors:</h3>`
-		html += '<table class="stripped"><tbody>'
-		html += '<tr><th>Name</th><th>Gen</th><th>Lived</th><th>Born</th><th>Died</th></tr>'
+		html += '<table class="table table-striped"><tbody>'
+		html += '<tr><th class="text-center">Gen</th><th>Name</th><th class="text-center">Lived</th><th>Born</th><th>Died</th></tr>'
 		for(let i=0; i<immigrants.length; i++) {
 			let anc = immigrants[i]
 			person = anc.person
-			html += `<tr><td>${person.name.full}</td><td>${anc.level}`
+			html += `<tr><td>${Generations[anc.level]}</td>`
+			html += `<td>${person.name.full}</td>`
 			html += `<td>${person.birth.date.year} - ${person.death.date.year}</td>`
-			html += `<td>${person.birth.place.country}</td>`
-			html += `<td>${person.death.place.country}</td></tr>`
+			html += `<td>${person.birth.place.state}, ${person.birth.place.country.toUpperCase()}</td>`
+			html += `<td>${person.death.place.state}, ${person.death.place.country.toUpperCase()}</td></tr>`
 		}
 		html += '</tbody></table>'
 		return html
