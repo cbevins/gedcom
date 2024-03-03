@@ -206,6 +206,7 @@ export const Regions = new Map([
     ['somerset', ['Somerset', 'England']],
     ['south holland', ['Zuid-Holland', 'Netherlands']],
     ['staffordshire', ['Staffordshire', 'England']],
+    ['suffolk', ['Suffolk', 'England']],
     ['sulawesi tengah', ['Sulawesi Tengah', 'Indonesia']],
     ['ulster', ['Ulster', 'Northern Ireland']],
     ['värmland',['Värmland','Sweden']],

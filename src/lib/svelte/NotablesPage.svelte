@@ -8,18 +8,20 @@
 	for(let i=0; i<Notables.length; i++) {
 		const entry = Notables[i]
 		if (entry.tree === tree) {
-			let title = 'Untitled'
-			if (entry.key) {
-				const person = ged.person(entry.key)
-				title = person.keys.label
-			} else if (entry.title) {
-				title = entry.title
+			let title = ''
+			if (entry.keys.length) {
+				for(let i=0; i<entry.keys.length; i++) {
+					const person = ged.person(entry.keys[i])
+					let name = (person) ? person.keys.label : entry.keys[i]
+					let br = (i > 0) ? '<br>' : ''
+					title += br + name + ' - '
+				}
 			}
+			title += entry.title
 			html += `<h6>${title}</h6>`
-			for(let i=0; i<entry.lines.length; i++) {
-				html += '&nbsp' + entry.lines[i]
+			for(let i=0; i<entry.pars.length; i++) {
+				html += '<p>' + entry.pars[i] + '</p>'
 			}
-			html += '</p>'
 		}
 	}
 	return html
