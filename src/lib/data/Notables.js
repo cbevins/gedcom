@@ -36,5 +36,17 @@ export const Notables = [
         'James was personally acquainted with Gens Steuben and Layfayette, and saw'
         + ' Gen George Washington at Little York.',
         'At age 82, he and his wife Patte began receiving a pension of $70 per year']
+    },{
+        tree: 'BH', keys: ['JamesPolkHarris(2)1752'], title: 'Slave Owner',
+        pars: ['The same James Harris above was also one of the few men in our family tree'
+        + ' wealthy enough to leave enslaved persons in his will; he may have owned as many as 17 slaves.',
+        'Among those enslaved persons so named in his will are:'
+        + ' "negro woman Johanna & her increase", "negro girl named Subrina", "negro man named Minor"'
+        + ' "negro lad named Nelson", "Negro woman named Milley", "negro boy named Fauntain",'
+        + ' "negro boy Jordan", "negro girl Millenia", "negro boy Isham and girl Patti",'
+        + ' and "To my sd. wife Mary Harris, during her natural life or widowhood, 7 slaves."']
+    },{
+        tree:'BH', keys:['WilliamOverton1609', 'MaryElizabethWaters'], title: 'Love, War, and Escape to Freedom',
+        pars:['See William Overton gallery manuscript "Records of Lewis, Meriwether, and Kindred Families']
     }
 ]
