@@ -4,7 +4,8 @@ export const Generations =[
     '10th GGP', '11th GGP', '12th GGP', '13th GGP', '14th GGP', '15th GGP'
 ]
 
-    // Demonstrates how to traverse the family tree to collect ancestors.
+
+// Demonstrates how to traverse the family tree to collect ancestors.
 export class Ancestors {
     constructor(gedStore) {
         this._gedStore = gedStore

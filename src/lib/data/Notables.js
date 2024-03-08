@@ -19,7 +19,7 @@ export const Notables = [
         pars: ['According to DAR, Christian served as a private in the Frederick County, Maryland Militia, '
         + 'Flying Camp outfit under Capt. Jacob Goode & Col. Griffin.']
     },{
-        tree: 'BH', keys: ['JamesPolkHarris(2)1752'], title: 'Revolutionary War Soldier',
+        tree: 'BH', keys: ['JamesHarris(1)1722'], title: 'Revolutionary War Soldier',
         pars: ['James volunteered in the Buckingham County, Virgian malitia on Sep 2, 1777'
         + ' and completed his 9 month contract without action.  He was subsequently drafted'
         + ' for an additional 3 months during which time he again saw no action.'
@@ -37,7 +37,7 @@ export const Notables = [
         + ' Gen George Washington at Little York.',
         'At age 82, he and his wife Patte began receiving a pension of $70 per year']
     },{
-        tree: 'BH', keys: ['JamesPolkHarris(2)1752'], title: 'Slave Owner',
+        tree: 'BH', keys: ['JamesHarris(1)1722'], title: 'Slave Owner',
         pars: ['The same James Harris above was also one of the few men in our family tree'
         + ' wealthy enough to leave enslaved persons in his will; he may have owned as many as 17 slaves.',
         'Among those enslaved persons so named in his will are:'
@@ -48,5 +48,9 @@ export const Notables = [
     },{
         tree:'BH', keys:['WilliamOverton1609', 'MaryElizabethWaters'], title: 'Love, War, and Escape to Freedom',
         pars:['See William Overton gallery manuscript "Records of Lewis, Meriwether, and Kindred Families']
+    },{
+        tree:'BH', keys:['Jacob Sowders1734'], title: 'Revolutionary War Soldier',
+        pars:['Served as a Private in the 4th Virginia Regiment of Foot stationed at White Plains and Valley Forge'
+    + ' from 6 Mar 1778 until 16 Feb 1779.']
     }
 ]
