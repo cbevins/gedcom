@@ -1,10 +1,10 @@
 import {Countries, Regions, States, Recodes} from '../data/Places.js'
 
 // Attempts to resolve each segment into a standard place string.
-// pkey and event are optional for reporting where the place need fixing
-function recodePlace(text, pkey, event) {
-    if (! text || text === '') return ['unknown state', 'unknown country']
-
+// Returns an array of place name segments and error message
+function recodePlace(text) {
+    if (! text || text === '') return [[], ['missing place text']]
+    let message = null
     // Split place name on commas, trim, and convert to lowercase
     const fields = text.split(',')
     const parts = [] 
@@ -30,7 +30,7 @@ function recodePlace(text, pkey, event) {
             [state, country] = Regions.get(last)
             parts.pop()
         } else {
-            if (pkey) console.log(`${pkey} ${event} has unknown country [${text}]`)
+            message = `unknown country [${text}]`
         }
     }
 
@@ -44,7 +44,7 @@ function recodePlace(text, pkey, event) {
             state = Regions.get(last)[0]
             parts.pop()
         } else {
-            if (pkey) console.log(`${pkey} ${event} has unknown state [${text}]`)
+            message = `unknown state [${text}]`
         }
     }
 
@@ -55,16 +55,17 @@ function recodePlace(text, pkey, event) {
     }
     segments.push(state ? state : 'unknown state')
     segments.push(country ? country : 'unknown country')
-    return segments
+    return [segments, message]
 }
 
-// pkey and event are optional for reporting where the place needs fixing
-export function parsePlace(text, pkey=null, event=null) {
-    const parts = recodePlace(text, pkey, event)
+// text is, hopefully, a comma-delimited place name
+export function parsePlace(text) {
+    const [parts, message] = recodePlace(text)
     const place = {
         text: text,
         key: parts.join(','),
-        count: 0,
+        count: 0,   // stores count of the 'text' if stored as a map entry
+        message: message,
         country: parts.length > 0 ? parts.pop() : '',
         state: parts.length > 0 ? parts.pop() : '',
         locale: parts.length > 0 ? parts.join(', ') : '',

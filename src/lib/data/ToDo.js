@@ -1,4 +1,5 @@
 export const ToDo = [
+    {title: 'Status Panel', desc: 'SHows number of persons, places, direct ancestors, etc)', req: []},
     {title: 'Place Name Diagnostics', desc: 'Displays place name diagnostics on a browser page',
         req: ['js/placeDiagnostics.js', 'svelte/PlaceDiagnostics.svelte']},
     {title: 'Subject Subject Selector', desc: 'Button or menu selction between BH, RT for BR trees.', req: []},

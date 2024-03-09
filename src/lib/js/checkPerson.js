@@ -19,7 +19,6 @@ export function checkAncestors(gedStore, key, prefix) {
     return ar
 }
 
-
 export function checkPerson(person, id=null, key=null) {
     const msg = []
     if (id) {
@@ -34,7 +33,7 @@ export function checkPerson(person, id=null, key=null) {
 
     // Test 3: Ancestors must have a death year and country
     if (! person.life.isLiving ) {
-        if (! person.death.date.year) msg.push('Death Year is mmissing')
+        if (! person.death.date.year) msg.push('Death Year is missing')
         if (person.death.place.country === 'unknown country' || person.death.place.state === 'unknown state')
             msg.push(`Death Country or State is unknown: [${person.death.place.text}]`)
     }

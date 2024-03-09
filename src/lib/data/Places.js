@@ -170,11 +170,12 @@ export const Regions = new Map([
     ['lancashire', ['Lancashire', 'Scotland']],
     ['lanarkshire', ['Lanarkshire', 'Scotland']],
     ['leicestershire', ['Leicestershire', 'England']],
+    ['leinster', ['Leinster', 'Ireland']],  // One of the 4 provinces of Ireland with Connacht, Munster, and Ulster
     ['linlithgowshire', ['Linlithgowshire', 'Scotland']],
     ['london', ['London', 'England']],
     ['middlesex', ['Middlesex', 'England']],
     ['monaghan', ['Monaghan', 'Ireland']],
-    ['munster', ['Munster', 'Ireland']],
+    ['munster', ['Munster', 'Ireland']],   // One of the 4 provinces of Ireland with Connacht, Leinster, and Ulster
     ['mijnsheerenland', ['Mijnsheerenland', 'Netherlands']],
     ['nieuw-beijerland', ['Nieuw-Beijerland', 'Netherlands']],
     ['noord-brabant', ['Noord-Brabant', 'Netherlands']],
@@ -182,6 +183,7 @@ export const Regions = new Map([
     ['northumberland', ['Northumberland', 'England']],
     ['north holland', ['North Holland', 'Netherlands']],
     ['north rhine-westphalia', ['North Rhine-Westphalia', 'Germany']],
+    // ['norway', ['Norway', 'Norway']],   // means somewhere in Norway
     ['nottinghamshire', ['Nottinghamshire', 'England']],
     ['ontario', ['Ontario', 'Canada']],
     ['oppland', ['Oppland', 'Netherlands']],
@@ -208,7 +210,7 @@ export const Regions = new Map([
     ['staffordshire', ['Staffordshire', 'England']],
     ['suffolk', ['Suffolk', 'England']],
     ['sulawesi tengah', ['Sulawesi Tengah', 'Indonesia']],
-    ['ulster', ['Ulster', 'Northern Ireland']],
+    ['ulster', ['Ulster', 'Northern Ireland']],   // One of the 4 provinces of Ireland with Connacht, Leinster, and Munster
     ['värmland',['Värmland','Sweden']],
     ['warwickshire', ['Warwickshire', 'England']],
     ['western australia', ['Western Australia', 'Australia']],

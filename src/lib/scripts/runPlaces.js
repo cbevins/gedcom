@@ -2,7 +2,7 @@
 import fs from 'fs'
 import { GedStore } from '../js/GedStore.js'
 import { gedJson } from '../data/GedJsonAncestry.js'
-import { Country } from '../js/parsePlace.js'
+import {Countries, Regions, States, Recodes} from '../data/Places.js'
 
 const time1 = new Date()
 const gedStore = new GedStore(gedJson)
@@ -15,7 +15,7 @@ for(const [key, place] of gedStore.places()) {
     if (parts.length) {
         const country = parts[parts.length-1].trim()
         let part = country.toLowerCase()
-        if (! Country.has(part)) {
+        if (! Countries.has(part)) {
             console.log(`No country for ${place.key}`)
         }
         if (! countryMap.has(country)) countryMap.set(country, 0)

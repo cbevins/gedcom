@@ -72,13 +72,15 @@ export class Gedcom {
     // Returns the {place:} data object reference
     // pkey and event are optional for reporting where the place need fixing
     _addPlace(text, pkey=null, event='') {
-        let place = parsePlace(text, pkey, event) // returns {text:, key:, count:, country:, state:, county:, locale:}
+        let place = parsePlace(text, pkey, event) // returns {text:, key:, count:, message:, country:, state:, county:, locale:}
         // console.log(pkey, event, ':', place.text)
+        // Store this place name in a map under its canonical key for faster lookup
         if (! this._plac.has(place.key)) {
             this._plac.set(place.key, place)
         }
         place = this._plac.get(place.key)
         place.count++
+        this._plac.set(place.key, place)
         return place
     }
 

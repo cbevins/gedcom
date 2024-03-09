@@ -52,5 +52,8 @@ export const Notables = [
         tree:'BH', keys:['Jacob Sowders1734'], title: 'Revolutionary War Soldier',
         pars:['Served as a Private in the 4th Virginia Regiment of Foot stationed at White Plains and Valley Forge'
     + ' from 6 Mar 1778 until 16 Feb 1779.']
+    },{
+        tree: 'BH', keys: ['HenryGCartwright1795'], title: 'Civil War Soldier',
+        pars: ['Private, Company H, 2nd Ohio Heavy Artillery.  Enlisted 12 Aug 1863, 6 Jun 1865.']
     }
 ]
