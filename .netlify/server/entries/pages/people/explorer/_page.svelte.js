@@ -76,7 +76,7 @@ class Ancestors {
     this._ancMap = /* @__PURE__ */ new Map();
     this._ancTree = null;
   }
-  // Returns a Map() of nameKey => {level:, person:, mother:, father:}
+  // Returns a Map() of nameKey => {gen:, person:, mother:, father:}
   // 'subjectKey' is the subject's person.keys.name value
   ancestors(subjectKey) {
     this._ancMap = /* @__PURE__ */ new Map();
@@ -85,10 +85,10 @@ class Ancestors {
     this._ancestorsRecurse(subjectKey, 0);
     return this._ancMap;
   }
-  _ancestorsRecurse(subjectKey, level = 0) {
+  _ancestorsRecurse(subjectKey, gen = 0) {
     const person = this._gedStore.person(subjectKey);
     const node = {
-      level,
+      gen,
       person,
       // reference to {person:}
       mother: this._gedStore.mother(subjectKey),
@@ -104,9 +104,9 @@ class Ancestors {
       return;
     const family = this._gedStore.family(parentFamKeys[0]);
     if (family.yKey !== "?")
-      this._ancestorsRecurse(family.yKey, level + 1);
+      this._ancestorsRecurse(family.yKey, gen + 1);
     if (family.xKey !== "?")
-      this._ancestorsRecurse(family.xKey, level + 1);
+      this._ancestorsRecurse(family.xKey, gen + 1);
   }
   list() {
     console.log(`
@@ -116,7 +116,7 @@ class Ancestors {
     console.log(`${this._subjectKey} has ${this._ancMap.size} known ancestors:
 `);
     for (const [nameKey, data] of this._ancMap.entries()) {
-      let str = `${"".padStart(4 * data.level, " ")} |-${data.level.toString().padStart(3)} ${data.person.keys.label}`;
+      let str = `${"".padStart(4 * data.gen, " ")} |-${data.gen.toString().padStart(3)} ${data.person.keys.label}`;
       console.log(str);
     }
     return this;
@@ -161,7 +161,7 @@ const AncestorTree = create_ssr_component(($$result, $$props, $$bindings, slots)
     let last = -1;
     let html = "<ul>" + person.name.full + " has " + (ancMap.size - 1) + " documented ancestors:";
     for (const [nameKey, data] of anc._ancMap.entries()) {
-      const gen = data.level;
+      const gen = data.gen;
       if (gen > last) {
         html += "<ul>";
         last = gen;
@@ -218,15 +218,15 @@ function demographics(gedStore, nameKey) {
   const dem = new Demographics$1(gedStore, ancestors);
   return dem;
 }
-function _recurseAncestors(gedStore, person, statsArray, level = 0) {
+function _recurseAncestors(gedStore, person, statsArray, gen = 0) {
   if (!person.life.isLiving)
-    statsArray.push([person, level]);
+    statsArray.push([person, gen]);
   if (!person.families.parents.length)
     return statsArray;
   if (gedStore.mother(person))
-    _recurseAncestors(gedStore, gedStore.mother(person), statsArray, level + 1);
+    _recurseAncestors(gedStore, gedStore.mother(person), statsArray, gen + 1);
   if (gedStore.father(person))
-    _recurseAncestors(gedStore, gedStore.father(person), statsArray, level + 1);
+    _recurseAncestors(gedStore, gedStore.father(person), statsArray, gen + 1);
   return statsArray;
 }
 let Demographics$1 = class Demographics {
@@ -241,7 +241,7 @@ let Demographics$1 = class Demographics {
   calc() {
     this._init();
     for (let i = 0; i < this._recs.length; i++) {
-      const [person, level] = this._recs[i];
+      const [person, gen] = this._recs[i];
       if (!person.birth.date.year || !person.death.date.year)
         continue;
       const years = person.death.date.year - person.birth.date.year;
@@ -392,7 +392,7 @@ const Immigrants = create_ssr_component(($$result, $$props, $$bindings, slots) =
       return immigrants2;
     }
     for (const [nameKey, data] of anc._ancMap.entries()) {
-      data.level;
+      data.gen;
       data.person.keys.label;
       if (!data.person.life.isLiving && data.person.birth.place.country && data.person.death.place.country && data.person.birth.place.country !== data.person.death.place.country) {
         ` [${data.person.birth.place.country.toUpperCase()}]`;
@@ -420,25 +420,25 @@ const Immigrants = create_ssr_component(($$result, $$props, $$bindings, slots) =
   immigrants = ancestors(subjectNameKey2);
   return `<!-- HTML_TAG_START -->${immigrantsHtml(subjectNameKey2)}<!-- HTML_TAG_END -->`;
 });
-function addNationality(map, origin, level, n = 1) {
+function addNationality(map, origin, gen, n = 1) {
   if (!origin || origin === "?")
     origin = "unknown";
   if (!map.has(origin)) {
     map.set(origin, { fraction: 0, count: 0, counts: new Array(20).fill(0) });
   }
   const rec = map.get(origin);
-  rec.counts[level + 1] += n;
+  rec.counts[gen + 1] += n;
   rec.count += n;
   return map;
 }
-function recurseNationality(gedStore, subject, map = /* @__PURE__ */ new Map(), level = 0) {
+function recurseNationality(gedStore, subject, map = /* @__PURE__ */ new Map(), gen = 0) {
   const origin = subject.birth.place.country ? subject.birth.place.country : null;
   const parents = [gedStore.mother(subject), gedStore.father(subject)];
   parents.forEach((parent) => {
     if (parent) {
-      recurseNationality(gedStore, parent, map, level + 1);
+      recurseNationality(gedStore, parent, map, gen + 1);
     } else {
-      addNationality(map, origin, level);
+      addNationality(map, origin, gen);
     }
   });
   return map;

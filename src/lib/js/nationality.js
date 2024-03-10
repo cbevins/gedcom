@@ -1,30 +1,30 @@
-// Increments the count at the level+1 for the origin key to the map,
+// Increments the count at the gen+1 for the origin key to the map,
 // creating a the origin key array first if necessary
-function addNationality(map, origin, level, n=1) {
+function addNationality(map, origin, gen, n=1) {
     if (!origin || origin === '?')
         origin = 'unknown'
     if (!map.has(origin)) {
         map.set(origin, {fraction: 0, count: 0, counts: new Array(20).fill(0)})
     }
     const rec = map.get(origin)
-    rec.counts[level+1] += n
+    rec.counts[gen+1] += n
     rec.count += n
-    // console.log(`Added ${n} to level ${level+1} at ${origin}`)
+    // console.log(`Added ${n} to gen ${gen+1} at ${origin}`)
     // map.set(origin, ar)
     return map
 }
 
 // Recursively descends the ancestor chain,
 // accumulating the origin of furthest descended ancestors
-function recurseNationality(gedStore, subject, map=new Map(), level=0) {
+function recurseNationality(gedStore, subject, map=new Map(), gen=0) {
     const origin = subject.birth.place.country ? subject.birth.place.country : null
     const parents = [gedStore.mother(subject), gedStore.father(subject)]
     parents.forEach((parent) => {
         // If parent is known, recurse; otherwise assign same nationality as subject
         if (parent) {
-            recurseNationality(gedStore, parent, map, level+1)
+            recurseNationality(gedStore, parent, map, gen+1)
         } else {
-            addNationality(map, origin, level)
+            addNationality(map, origin, gen)
         }
     })
     return map

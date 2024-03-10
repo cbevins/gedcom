@@ -10,21 +10,21 @@ export function relationship(gedStore, subjectKey, otherKey, log=false) {
     const other = gedStore.person(otherKey)
     const subjectAnc = new Ancestors(gedStore)
     const otherAnc = new Ancestors(gedStore)
-    const subjectMap = subjectAnc.ancestors(subjectKey)    // {level:, person:, mother:, father:}
+    const subjectMap = subjectAnc.ancestors(subjectKey)    // {gen:, person:, mother:, father:}
     const otherMap = otherAnc.ancestors(otherKey)
     let minDist = 999999
     let subjectDist = 999999
     let otherDist = 999999
-    subjectMap.forEach((a1, key, map)=> { // value = {level: level, person: person}
-        // console.log(a1.level, a1.person.keys.label)
+    subjectMap.forEach((a1, key, map)=> { // value = {gen: gen, person: person}
+        // console.log(a1.gen, a1.person.keys.label)
         if (otherMap.has(key)) {
             // Shared ancestor found
             const a2 = otherMap.get(key)
-            const dist = a1.level + a2.level
-            // console.log(`---- ${a1.level}+${a2.level}=${dist} for ${a2.person.keys.label}`)
+            const dist = a1.gen + a2.gen
+            // console.log(`---- ${a1.gen}+${a2.gen}=${dist} for ${a2.person.keys.label}`)
             if (dist <= minDist) {
-                subjectDist = a1.level
-                otherDist = a2.level
+                subjectDist = a1.gen
+                otherDist = a2.gen
                 minDist = dist
                 data.ccaKeys.push(key)
             }

@@ -21,7 +21,7 @@
 		let last = -1
 		let html = '<ul>'+ person.name.full + ' has ' + (ancMap.size-1) + ' documented ancestors:'
 		for (const [nameKey, data] of anc._ancMap.entries()) {
-			const gen = data.level
+			const gen = data.gen
 			if (gen > last) {
 				html += '<ul>'
 				last = gen

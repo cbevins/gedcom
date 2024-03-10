@@ -13,18 +13,18 @@ export function demographics(gedStore, nameKey) {
 }
 
 // Recursively adds person instances for subjects to a data array
-function _recurseAncestors(gedStore, person, statsArray, level=0) {
-    // console.log(' '.padStart(4*level), level, person.strNameStandard())
+function _recurseAncestors(gedStore, person, statsArray, gen=0) {
+    // console.log(' '.padStart(4*gen), gen, person.strNameStandard())
     if (!person.life.isLiving)
-        statsArray.push([person, level])
+        statsArray.push([person, gen])
     // Return if at end of parental family ancestor chain
     if (! person.families.parents.length)
         return statsArray
     // Recurse up to each parent
     if (gedStore.mother(person))
-        _recurseAncestors(gedStore, gedStore.mother(person), statsArray, level+1)
+        _recurseAncestors(gedStore, gedStore.mother(person), statsArray, gen+1)
     if (gedStore.father(person))
-        _recurseAncestors(gedStore, gedStore.father(person), statsArray, level+1)
+        _recurseAncestors(gedStore, gedStore.father(person), statsArray, gen+1)
     return statsArray
 }
 
@@ -42,7 +42,7 @@ class Demographics {
     calc() {
         this._init()
         for (let i=0; i<this._recs.length; i++) {
-            const [person, level] = this._recs[i]
+            const [person, gen] = this._recs[i]
             // Ensure this record has useable birth and death years
             if (! person.birth.date.year || ! person.death.date.year )
                 continue

@@ -9,11 +9,11 @@ export const Generations =[
 export class Ancestors {
     constructor(gedStore) {
         this._gedStore = gedStore
-        this._ancMap = new Map()   // map of indiKey > {level:, person:, mother:, father:}
+        this._ancMap = new Map()   // map of indiKey > {gen:, person:, mother:, father:}
         this._ancTree = null
     }
     
-    // Returns a Map() of nameKey => {level:, person:, mother:, father:}
+    // Returns a Map() of nameKey => {gen:, person:, mother:, father:}
     // 'subjectKey' is the subject's person.keys.name value
     ancestors(subjectKey) {
         this._ancMap = new Map()
@@ -23,11 +23,11 @@ export class Ancestors {
         return this._ancMap
     }
     
-    _ancestorsRecurse(subjectKey, id, level=0) {
-        // console.log(level, subjectKey)
+    _ancestorsRecurse(subjectKey, id, gen=0) {
+        // console.log(gen, subjectKey)
         const person = this._gedStore.person(subjectKey)
         const node = {
-            level: level,
+            gen: gen,
             id: id,
             person: person, // reference to {person:}
             mother: this._gedStore.mother(subjectKey),   // reference to {person:}
@@ -39,15 +39,15 @@ export class Ancestors {
         const parentFamKeys = person.families.parents
         if (!parentFamKeys.length) return
         const family = this._gedStore.family(parentFamKeys[0])
-        if (family.yKey !== '?') this._ancestorsRecurse(family.yKey, id*2, level+1)
-        if (family.xKey !== '?') this._ancestorsRecurse(family.xKey, id*2+1, level+1)
+        if (family.yKey !== '?') this._ancestorsRecurse(family.yKey, id*2, gen+1)
+        if (family.xKey !== '?') this._ancestorsRecurse(family.xKey, id*2+1, gen+1)
     }
 
     list() {
         console.log(`\n-----------------------------------------------------\n\n`)
         console.log(`${this._subjectKey} has ${this._ancMap.size} known ancestors:\n`)
         for (const [nameKey, data] of this._ancMap.entries()) {
-            let str = `${''.padStart(4*data.level, ' ')} |-${data.level.toString().padStart(3)} ${data.person.keys.label}`
+            let str = `${''.padStart(4*data.gen, ' ')} |-${data.gen.toString().padStart(3)} ${data.person.keys.label}`
             console.log(str)
         }
         return this

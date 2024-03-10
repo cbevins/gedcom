@@ -5,7 +5,7 @@
 	const anc = new Ancestors(ged)
 
 	let immigrants = ancestors(subjectNameKey)
-	// Returns an array of Ancestor objects {level: <int>, id: <int>, person: {person}, mother: {person}, father: {person}}
+	// Returns an array of Ancestor objects {gen: <int>, id: <int>, person: {person}, mother: {person}, father: {person}}
 	// whose known birth and death countries are different
     $: immigrants = ancestors(subjectNameKey)
 	function ancestors(subKey) {
@@ -16,7 +16,7 @@
         }
 		let last = -1
 		for (const [nameKey, data] of anc._ancMap.entries()) {
-			const gen = data.level
+			const gen = data.gen
 			if (gen > last) {
 				last = gen
 			} else if (gen === last) {
@@ -44,7 +44,7 @@
 		for(let i=0; i<immigrants.length; i++) {
 			let anc = immigrants[i]
 			person = anc.person
-			html += `<tr><td>${Generations[anc.level]}</td>`
+			html += `<tr><td>${Generations[anc.gen]}</td>`
 			html += `<td>${person.name.full}</td>`
 			html += `<td>${person.birth.date.year} - ${person.death.date.year}</td>`
 			html += `<td>${person.birth.place.state}, ${person.birth.place.country.toUpperCase()}</td>`
