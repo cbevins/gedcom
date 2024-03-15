@@ -1,10 +1,3 @@
-export const Generations =[
-    'Subject', 'Parent', 'GrandP', '1st GPP', '2nd GPP', '3rd GGP',
-    '4th GGP', '5th GGP', '6th GGP', '7th GGP', '8th GGP', '9th GGP',
-    '10th GGP', '11th GGP', '12th GGP', '13th GGP', '14th GGP', '15th GGP'
-]
-
-
 // Demonstrates how to traverse the family tree to collect ancestors.
 export class Ancestors {
     constructor(gedStore) {

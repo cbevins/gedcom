@@ -1,7 +1,15 @@
 <script>
-	import { Ancestors, Generations } from '$lib/js/Ancestors.js'
+	import { Ancestors } from '$lib/js/Ancestors.js'
+	// import { GenerationsData } from '$lib/data/Generations.js'
 	export let ged
     export let subjectNameKey
+
+	const Generations =[
+    'Subject', 'Parent', 'GrandP', '1st GPP', '2nd GPP', '3rd GGP',
+    '4th GGP', '5th GGP', '6th GGP', '7th GGP', '8th GGP', '9th GGP',
+    '10th GGP', '11th GGP', '12th GGP', '13th GGP', '14th GGP', '15th GGP'
+	]
+
 	const anc = new Ancestors(ged)
 
 	let immigrants = ancestors(subjectNameKey)
