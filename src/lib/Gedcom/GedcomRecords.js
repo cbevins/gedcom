@@ -1,3 +1,13 @@
+/**
+ * The GedcomRecords class holds all the records from a GEDCOM file
+ * in a Map() object whose key is the top level 0 record type ('INDI', 'FAM', '_PLAC', etc),
+ * and whose entries are another Map() of all associated level 0 records.
+ * 
+ * Usage:
+ * The class instances are created and returned by the GedcomReader class:
+ *     const reader = new GedcomReader()
+ *     const gedrecs = await reader.readFile(gedcomFileName)
+ */
 import { GedcomRecord } from './GedcomRecord.js'
 
 export class GedcomRecords {
@@ -122,7 +132,15 @@ export class GedcomRecords {
         }
     }
 
-    topLevelMap() { return this._topLevel }
+    isAncestry() {
+        const recs = this.findAll('', ['HEAD','SOUR','NAME'])
+        return recs.length > 0 && recs[0].content() === 'Ancestry.com Member Trees'
+    }
+
+    isRootsMagic() {
+        const recs = this.findAll('', ['HEAD','SOUR','NAME'])
+        return recs.length > 0 && recs[0].content() == 'RootsMagic'
+    }
 
     // Returns array of [type0, count] arrays of all Level 0 record types
     topLevelCounts() {
@@ -131,5 +149,11 @@ export class GedcomRecords {
             data.push([type0, typeMap.size])
         }
         return data
+    }
+
+    topLevelMap() { return this._topLevel }
+
+    topLevelRecordsFor(key) {
+        return this._topLevel.get(key)
     }
 }

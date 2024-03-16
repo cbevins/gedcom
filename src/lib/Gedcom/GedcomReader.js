@@ -1,6 +1,8 @@
 /**
  * Reads a GEDCOM file, such as those produced by Ancestry.com and Roots Magic,
- * and returns a GedcomRecords object for subsequent parsing, translation, and analysis.
+ * and returns a GedcomRecords instance for subsequent parsing, translation, and analysis.
+ * 
+ * This class does not assume existence of any specific GEDCOM record types, it just syores them.
  * 
  * The following GEDCOM input file format rules are enforced:
  * - Every text line is a series of blank-separated fields
@@ -9,6 +11,11 @@
  * - If the second field is enclosed in '@' characters, it is a *key*, and the record *type* is in the third field
  * - Otherwise, the second field is the record *type*
  * - Any fields after the record *type* are the record *content*
+ * 
+ * Usage:
+ * The class instances are created and returned by the GedcomReader class:
+ *     const reader = new GedcomReader()
+ *     const gedrecs = await reader.readFile(gedcomFileName)
  */
 import fs from 'fs'
 import readline from 'readline'

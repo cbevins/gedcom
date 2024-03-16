@@ -1,44 +1,73 @@
 /**
- * Example of reading a GEDCOM file exported by ANcestry.com or Roots Magic
- * into a GedRecords object for further parsing and analysis.
+ * Example of reading a GEDCOM file exported by Ancestry.com or Roots Magic
+ * into a GedcomRecords instance for further parsing and analysis.
  */
 import * as process from 'process'
 import { GedcomReader } from './GedcomReader.js'
-
-const Ancestry = "../data/Bevins-Riley Family Tree.ged"
-const Roots = "../data/Root Magic Bevins-Riley Ancestry Ged.ged"
+import { GedcomRecords } from './GedcomRecords.js'
+import { locations } from './Locations.js'
 
 const time1 = new Date()
-let gedcomFileName = Roots
-if (process.argv.length > 2) {
-    gedcomFileName = process.argv[2]
-    // console.log('***\n*** usage: node runGedcomReader <gedcomFilePath>\n***')
-    // process.exit()
-}
+const parms = getArgs()
 
-await mission(gedcomFileName)
+await mission(parms)
 const time2 = new Date()
 console.log(`Elapsed : ${(time2-time1).toString().padStart(5)} msec`)
 
-async function mission(gedcomFileName) {
+async function mission(parms) {
     const reader = new GedcomReader()
-    const gedrecs = await reader.readFile(gedcomFileName)
+    const gedrecs = await reader.readFile(parms.file)
 
     // Diplay any GedcomReader messages
-    console.log(`\nGEDCOM File: '${gedcomFileName}' has ${reader.messages().length} GedcomReader messages:`)
+    const source = gedrecs.isAncestry() ? 'Accestry.com' : 'Roots Magic'
+    console.log(`\n${source} GEDCOM File: '${parms.file}' has ${reader.messages().length} GedcomReader messages:`)
     if (reader.messages().length) console.log(reader.messages())
 
     // Display top level record counts
-    displayTopLevelCounts(gedrecs)
+    if (parms.toplevels) displayTopLevelCounts(gedrecs)
 
     // Display record context counts
-    // displayContextCounts(gedrecs)
+    if (parms.contexts) displayContextCounts(gedrecs)
 
     // Display all subrecords for a specific toplevel key
-    // displayTopLevelBlock('INDI', '@I13@', gedrecs)
+    if (parms.block) displayTopLevelBlock(gedrecs, 'INDI', '@I13@')
 
     // Find all GedcomRecords of a specific context for a specific level0 type
-    // displayFindAll('@I100@', ['INDI','NAME','GIVN'], gedrecs)
+    if (parms.findall) displayFindAll(gedrecs, '@I100@', ['INDI','NAME','GIVN'])
+
+    if (parms.locations) displayLocations(gedrecs)
+}
+
+function getArgs() {
+    if (process.argv.length < 3) {
+        console.log('***\n*** usage: node runGedcomReader ["ancestry" | "roots"] ["block", "contexts", "find", "locations", "toplevels"]\n***')
+        process.exit()
+    }
+
+    const gedcoms = [
+        {flag: 'ancestry', file: "../data/Bevins-Riley Family Tree.ged"},
+        {flag: 'roots', file: "../data/Root Magic Bevins-Riley Ancestry Ged.ged"},
+    ]
+    const parms = {
+        file : gedcoms[1].file,
+        block: false, contexts: false, findall: false, locations: false, toplevels: false
+    }
+    for (let i=2; i<process.argv.length; i++) {
+        const arg = (process.argv[i]).toLowerCase()
+        const a = arg.substring(0, 1)
+        if (a === 'b') parms.block = true
+        else if (a === 'c') parms.contexts = true
+        else if (a === 'f') parms.findall = true
+        else if (a === 'l') parms.locations = true
+        else if (a === 't') parms.toplevels = true
+        else {
+            for(let i=0; i<gedcoms.length; i++) {
+                if (a === gedcoms[i].flag.substring(0,1))
+                    parms.file = gedcoms[i].file
+            }
+        }
+    }
+    return parms
 }
 
 function displayContextCounts(gedrecs) {
@@ -50,7 +79,7 @@ function displayContextCounts(gedrecs) {
     }
 }
 
-function displayFindAll(key, context, gedrecs) {
+function displayFindAll(gedrecs, key, context) {
     // Returns array of references to all GedcomRecord objects whose top level key and context array matches
     const records = gedrecs.findAll(key, context)
     console.log(`\nResults of findAll('${key}', '${context.join('-')}'):`)
@@ -60,7 +89,15 @@ function displayFindAll(key, context, gedrecs) {
     }
 }
 
-function displayTopLevelBlock(type, key, gedrecs) {
+function displayLocations(gedrecs) {
+    const ar = locations(gedrecs)
+    for(let i=0; i<ar.length; i++) {
+        const [key, stnd, lat, lon] = ar[i]
+        console.log(key.padEnd(60), '=>', stnd, lat, lon)
+    }
+}
+
+function displayTopLevelBlock(gedrecs, type, key) {
     console.log(`\nGedcomRecord Block for ${type} '${key}':`)
     const head = gedrecs.findHead(type, key)
     const block = head.listBlock() // Returns array of strings indented by level
