@@ -4,7 +4,6 @@
  */
 import * as process from 'process'
 import { GedcomReader } from './GedcomReader.js'
-import { GedcomRecords } from './GedcomRecords.js'
 import { locations } from './Locations.js'
 
 const time1 = new Date()

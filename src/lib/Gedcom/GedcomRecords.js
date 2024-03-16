@@ -105,7 +105,11 @@ export class GedcomRecords {
     }
 
     // Returns reference to the FIRST GedcomRecord matching the context with level 0 *key*
-    findFirst(key, context) { return this.findAll(key, context)[0] }
+    // or 'missing' if none found
+    findFirst(key, context, missing=null) {
+        const recs = this.findAll(key, context)
+        return recs.length ? recs[0] : missing
+    }
     
     // Returns reference to the Level 0 GedcomRecord with *key*
     findHead(type, key) {
