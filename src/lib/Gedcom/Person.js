@@ -3,9 +3,7 @@
  */
 export class Person {
     constructor(gedKey) {
-        this._data = {
-            gedKey: gedKey
-        }
+        this._data = {gedKey: gedKey, messages: []}
     }
 
     // Data access methods
@@ -17,6 +15,10 @@ export class Person {
     deathNotes() { return this._data.death.notes }
     deathPlace() { return this._data.death.place }
     deathSources() { return this._data.death.sources }
+    familyParents() { return this._data.family.parents }        // array of Family *references*
+    familyParentKeys() { return this._data.family.parentKeys }  // array of FAM '@F123@' keys
+    familySpouses() { return this._data.family.spouses }        // array of Family *references*
+    familySpouseKeys() { return this._data.family.spouseKeys }  // array of FAM '@F123@' keys
     fullName() { return this._data.name.full }      // same as nameFull()
     gedKey() { return this._data.gedKey }           // INDI GEDCOM key like '@I123@'
     gender() { return this._data.life.gender }      // string 'F' or 'M'
@@ -24,6 +26,7 @@ export class Person {
     isLiving() { return this._data.life.isLiving }  // boolean TRUE or FALSE
     isMale() { return this.gender() === 'M'}        // boolean TRUE or FALSE
     lifeSpan() { return this._data.life.span }      // string like '(1815-1888)'
+    messages() { return this._data.messages }
     nameFull() { return this._data.name.full }      // same as fullName()
     nameKey() { return this._data.name.key }
     nameLabel() { return this._data.name.label }
@@ -33,10 +36,6 @@ export class Person {
     nameSuffix() { return this._data.name.suffix }
     nameSurnames() { return this._data.name.surnames }
     nameSurnamePrefix() { return this._data.name.surnamePrefix }
-    familyParents() { return this._data.family.parents }        // array of Family *references*
-    familyParentKeys() { return this._data.family.parentKeys }  // array of FAM '@F123@' keys
-    familySpouses() { return this._data.family.spouses }        // array of Family *references*
-    familySpouseKeys() { return this._data.family.spouseKeys }  // array of FAM '@F123@' keys
 
     // Additional access methods
     father() { return this.familyParents().length ? this.familyParents()[0].yParent() : null }
@@ -44,5 +43,6 @@ export class Person {
 
     // Update methods
     addParentFamily(family) { this._data.family.parents.push(family) }
+    addMessage(msg) { this._data.messages.push(msg) }
     addSpouseFamily(family) { this._data.family.spouses.push(family) }
 }

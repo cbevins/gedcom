@@ -15,7 +15,17 @@ export class Family {
     // Returns an array of children Person *references*
     children() { return this._data.children }
 
+    disunionDate() { return this._data.disunion.date }
+    disunionNotes() { return this._data.disunion.notes }
+    disunionPlace() { return this._data.disunion.place }
+    disunionSources() { return this._data.disunion.sources }
+
     gedKey() { return this._data.gedKey }
+
+    unionDate() { return this._data.union.date }
+    unionNotes() { return this._data.union.notes }
+    unionPlace() { return this._data.union.place }
+    unionSources() { return this._data.union.sources }
 
     // Returns a Person *reference*
     xParent() { return this._data.xParent }

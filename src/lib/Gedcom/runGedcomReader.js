@@ -7,6 +7,7 @@ import { GedcomReader } from './GedcomReader.js'
 import { locations } from './Locations.js'
 import { Families } from './Families.js'
 import { People } from './People.js'
+import { Places } from './Places.js'
 
 const time1 = new Date()
 const parms = getArgs()
@@ -94,16 +95,25 @@ function displayLocations(gedrecs) {
 
 // Illustrates how to hydrate the entire GEDCOM Tree
 function displayPeople(gedrecs) {
-    // Cretae the People instance
-    const people = new People(gedrecs)
+    // Step 1 - Create Places instance
+    const places = new Places()
+    
+    // Step 2 - Create the People instance
+    const people = new People(gedrecs, places)
     console.log(`There are ${people.size()} Persons`)
-    const families = new Families(gedrecs, people)
-    console.log(`There are ${families.size()} Familys`)
+    
+    // Step 3 - Create the Families instance
+    const families = new Families(gedrecs, people, places)
+    console.log(`There are ${families.size()} Families`)
+    
+    // How many places are there?
+    console.log(`There are ${places.size()} Places`)
+    // Use the data
     const person = people.find('CollinDouglasBevins1952')
-    console.log(`${person.fullName()} ${person.mother().fullName()} ${person.father().fullName()}`)
-    // Create the Families instance
-    // for(const[key,person] of people.gedKeyMap().entries())
-    //     console.log(person.gedKey(), person.nameKey(), person.nameLabel())
+    console.log(`${person.nameLabel()} ${person.mother().fullName()} ${person.father().fullName()}`)
+    console.log(person.birthPlace())
+    // const fam = person.familyParents()[0]
+    // console.log(fam.xParent().fullName(), 'MARR', fam.unionDate(), 'DIV', fam.disunionDate())
 }
 
 function displayTopLevelBlock(gedrecs, type, key) {

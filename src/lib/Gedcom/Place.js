@@ -1,34 +1,23 @@
-/**
- * Places are top level GEDCOM '_MAP' records stored in a Map
- */
 export class Place {
-    constructor(gedKey) {
-        this._gedKey = gedKey
+    constructor(text, parts, messages) {
+        this._data = {
+            count: 0,
+            country: parts.length > 0 ? parts.pop() : '',
+            locale: parts.length > 0 ? parts.join(', ') : '',
+            messages: messages,
+            standard: parts.join(','),
+            state: parts.length > 0 ? parts.pop() : '',
+            text: text
+        }
     }
 
-    gedKey() { return this._gedKey }
-}
+    count() { return this._data.count }
+    country() { return this._data.country }
+    standard() { return this._data.standard }
+    locale() { return this._data.locale }
+    messages() { return this._data.messages }
+    state() { return this._data.state }
+    text() { return this._data.text }
 
-export class Places {
-    constructor(gedcom) {
-        this._type = 'INDI'
-        this._gedcom = gedcom
-        this._init()
-    }
-
-    _init() {
-        this._map = new Map()
-        const recsMap = this._gedcom.topLevelRecordsFor(this._type)
-        for(const key of recsMap.keys()) this._map.set(key, new Person(key))
-    }
-
-    find(key) {
-        if (key.substring(0,1) === '@') return this._map.get(key)
-        // otherwise else assume it is a nameKey
-        return  null
-    }
-
-    map() { return this._map }
-
-    size() { return this._map.size }
+    increment() { this._data.count++ }
 }
