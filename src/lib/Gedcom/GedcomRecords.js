@@ -1,7 +1,7 @@
 /**
  * The GedcomRecords class holds all the records from a GEDCOM file
  * in a Map() object whose key is the top level 0 record type ('INDI', 'FAM', '_PLAC', etc),
- * and whose entries are another Map() of all associated level 0 records.
+ * and whose entries are another Map() of all associated level 0 records with their nested subrecords.
  * 
  * Usage:
  * The class instances are created and returned by the GedcomReader class:
@@ -92,9 +92,18 @@ export class GedcomRecords {
 
     fileName() { return this._fileName }
 
-    // Returns array of references to all GedcomRecord objects
-    // whose top level key and context array matches
-    findAll(key, context) {
+    // Finds ALL GedcomRecords matching the *type* and *context* starting at the top level
+    // and returns their content strings in an array
+    findAllContent(key, context, missing='') {
+        const recs = this.findAllRecords(key, context)
+        const contents = []
+        for (let i=0; i<recs.length; i++) contents.push(recs[i].content())
+        return contents
+    }
+
+    // Finds ALL GedcomRecords matching the *type* and *context* starting at the top level
+    // and returns their <GedcomRecord> references in an array
+    findAllRecords(key, context) {
         const found = []
         const head = this.findHead(context[0], key)
         if (head) {
@@ -104,11 +113,18 @@ export class GedcomRecords {
         return found
     }
 
-    // Returns reference to the FIRST GedcomRecord matching the context with level 0 *key*
-    // or 'missing' if none found
-    findFirst(key, context, missing=null) {
-        const recs = this.findAll(key, context)
-        return recs.length ? recs[0] : missing
+    // Finds FIRST GedcomRecords matching the *type* and *context* starting at the top level
+    // and returns its contents as a string
+    findFirstContent(key, context, missing='') {
+        const rec = this.findFirstRecord(key, context)
+        return rec ? rec.content() : missing
+    }
+
+    // Finds FIRST GedcomRecords matching the *type* and *context* starting at the top level
+    // and returns its reference or NULL
+    findFirstRecord(key, context) {
+        const recs = this.findAllRecords(key, context)
+        return recs.length ? recs[0] : null
     }
     
     // Returns reference to the Level 0 GedcomRecord with *key*
@@ -137,13 +153,11 @@ export class GedcomRecords {
     }
 
     isAncestry() {
-        const recs = this.findAll('', ['HEAD','SOUR','NAME'])
-        return recs.length > 0 && recs[0].content() === 'Ancestry.com Member Trees'
+        return this.findFirstContent('', ['HEAD','SOUR','NAME']) === 'Ancestry.com Member Trees'
     }
 
     isRootsMagic() {
-        const recs = this.findAll('', ['HEAD','SOUR','NAME'])
-        return recs.length > 0 && recs[0].content() == 'RootsMagic'
+        return this.findFirstContent('', ['HEAD','SOUR','NAME']) === 'RootsMagic'
     }
 
     // Returns array of [type0, count] arrays of all Level 0 record types

@@ -5,6 +5,8 @@
 import * as process from 'process'
 import { GedcomReader } from './GedcomReader.js'
 import { locations } from './Locations.js'
+import { Families } from './Families.js'
+import { People } from './People.js'
 
 const time1 = new Date()
 const parms = getArgs()
@@ -22,19 +24,12 @@ async function mission(parms) {
     console.log(`\n${source} GEDCOM File: '${parms.file}' has ${reader.messages().length} GedcomReader messages:`)
     if (reader.messages().length) console.log(reader.messages())
 
-    // Display top level record counts
-    if (parms.toplevels) displayTopLevelCounts(gedrecs)
-
-    // Display record context counts
     if (parms.contexts) displayContextCounts(gedrecs)
-
-    // Display all subrecords for a specific toplevel key
-    if (parms.block) displayTopLevelBlock(gedrecs, 'INDI', '@I13@')
-
-    // Find all GedcomRecords of a specific context for a specific level0 type
     if (parms.findall) displayFindAll(gedrecs, '@I100@', ['INDI','NAME','GIVN'])
-
     if (parms.locations) displayLocations(gedrecs)
+    if (parms.people) displayPeople(gedrecs)
+    if (parms.block) displayTopLevelBlock(gedrecs, 'INDI', '@I13@')
+    if (parms.toplevels) displayTopLevelCounts(gedrecs)
 }
 
 function getArgs() {
@@ -58,6 +53,7 @@ function getArgs() {
         else if (a === 'c') parms.contexts = true
         else if (a === 'f') parms.findall = true
         else if (a === 'l') parms.locations = true
+        else if (a === 'p') parms.people = true
         else if (a === 't') parms.toplevels = true
         else {
             for(let i=0; i<gedcoms.length; i++) {
@@ -94,6 +90,20 @@ function displayLocations(gedrecs) {
         const [key, stnd, lat, lon] = ar[i]
         console.log(key.padEnd(60), '=>', stnd, lat, lon)
     }
+}
+
+// Illustrates how to hydrate the entire GEDCOM Tree
+function displayPeople(gedrecs) {
+    // Cretae the People instance
+    const people = new People(gedrecs)
+    console.log(`There are ${people.size()} Persons`)
+    const families = new Families(gedrecs, people)
+    console.log(`There are ${families.size()} Familys`)
+    const person = people.find('CollinDouglasBevins1952')
+    console.log(`${person.fullName()} ${person.mother().fullName()} ${person.father().fullName()}`)
+    // Create the Families instance
+    // for(const[key,person] of people.gedKeyMap().entries())
+    //     console.log(person.gedKey(), person.nameKey(), person.nameLabel())
 }
 
 function displayTopLevelBlock(gedrecs, type, key) {

@@ -17,7 +17,7 @@ async function mission(parms) {
     const reader = new GedcomReader()
     const gedrecs = await reader.readFile(parms.file)
     const family = new FamilyJson(gedrecs)
-    console.log(family.toJsonFile(2))
+    family.writeFile('../data/FamilyJson.js')
 }
 
 function getArgs() {
