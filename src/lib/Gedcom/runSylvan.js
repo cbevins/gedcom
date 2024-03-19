@@ -14,16 +14,16 @@ console.log(`Elapsed : ${(time2-time1).toString().padStart(5)} msec`)
 
 async function mission(parms) {
     const sylvan = new Sylvan()
-    await sylvan.init(parms.file)
+    await sylvan.init(parms.file, true)
 
     console.log(`\n${sylvan.source()} GEDCOM File: '${parms.file} has ${sylvan.readerMessages().length} GedcomReader messages:`)
     if (sylvan.readerMessages().length) console.log(sylvan.readerMessages())
 
     if (parms.contexts) displayContextCounts(sylvan)
-    if (parms.findall) displayFindAll(sylvan, '@I100@', ['INDI','NAME','GIVN'])
+    if (parms.findall) displayFindAll(sylvan, '@I896@', ['INDI','NAME','GIVN'])
     if (parms.locations) displayLocations(sylvan)
     if (parms.people) displayPeople(sylvan)
-    if (parms.block) displayTopLevelBlock(sylvan, 'INDI', '@I13@')
+    if (parms.block) displayTopLevelBlock(sylvan, 'INDI', '@I896@')
     if (parms.toplevels) displayTopLevelCounts(sylvan)
 }
 
@@ -61,19 +61,25 @@ function getArgs() {
 }
 
 function displayContextCounts(sylvan) {
-    const gedrecs = sylvan.gedrecs()
-    const contexts = gedrecs.contexts()
+    const contexts = sylvan.contexts()
     console.log(`\nGedcomRecord Contexts and Counts:`)
+    let total = 0
     for(let i=0; i<contexts.length; i++) {
-        const [ctx, cnt] = contexts[i]
-        console.log(cnt.toString().padStart(5), ctx)
+        const [context, count] = contexts[i]
+        console.log(count.toString().padStart(7), context)
+        total += count
     }
+    console.log(total.toString().padStart(7), 'Total Records')
 }
 
+// This only works of GEDCOM was saved by new Sylvan(fileName, TRUE)
 function displayFindAll(sylvan, key, context) {
+    if (! sylvan.gedrecs()) {
+        console.log('displayFindAll() not available because GedcomRecords were not saved')
+        return
+    }
     const gedrecs = sylvan.gedrecs()
-    // Returns array of references to all GedcomRecord objects whose top level key and context array matches
-    const records = gedrecs.findAll(key, context)
+    const records = gedrecs.findAllRecords(key, context)
     console.log(`\nResults of findAll('${key}', '${context.join('-')}'):`)
     for(let i=0; i<records.length; i++) {
         const rec = records[i]
@@ -100,9 +106,8 @@ function displayPeople(sylvan) {
     console.log(`  ${sylvan.locations().size()} Locations`)
 
     // Conduct a Review
-    const review = new Review(sylvan.people(), sylvan.families(), sylvan.places(), sylvan.locations())
-    console.log('MULTIPLE MOTHERS', review.multipleMotherMessages())
-    console.log('MULTIPLE FATHERS', review.multipleFatherMessages())
+    displayMultipleFathers(sylvan)
+    displayMultipleMothers(sylvan)
 
     // Use the data
     // const person = people.find('CollinDouglasBevins1952')
@@ -112,24 +117,56 @@ function displayPeople(sylvan) {
     // console.log(fam.xParent().fullName(), 'MARR', fam.unionDate(), 'DIV', fam.disunionDate())
 }
 
-function displayTopLevelBlock(gedrecs, type, key) {
+// This only works of GEDCOM was saved by new Sylvan(fileName, TRUE)
+function displayTopLevelBlock(sylvan, type, key) {
+    if (! sylvan.gedrecs()) {
+        console.log('displayTopLevelBlock() not available because GedcomRecords were not saved')
+        return
+    }
+    const head = sylvan.gedrecs().findHead(type, key)
     console.log(`\nGedcomRecord Block for ${type} '${key}':`)
-    const head = gedrecs.findHead(type, key)
     const block = head.listBlock() // Returns array of strings indented by level
     for (let i=0; i<block.length; i++)
         console.log(block[i])
 }
 
-function displayTopLevelCounts(gedrecs) {
+function displayTopLevelCounts(sylvan) {
     // Returns array of [type0, count] arrays of all Level 0 record types
-    const topLevels = gedrecs.topLevelCounts()
-    console.log(`\nGEDCOM File has ${topLevels.length} Level 0 record types.\n Count Type`)
+    const topLevels = sylvan.topLevelRecords()
+    console.log(`\nGEDCOM File has ${topLevels.length} Level 0 record types.\nRecord Count`)
     let total = 0
     for(let i=0; i<topLevels.length; i++) {
         const [type, count] = topLevels[i]
-        console.log(count.toString().padStart(6), type)
+        console.log(type.padStart(8), count.toString().padStart(6))
         total += count
     }
-    console.log(total.toString().padStart(6), 'TOTAL TOP LEVEL 0 RECORDS')
+    console.log('Level 0 ', total.toString().padStart(6))
 }
+
+function displayMultipleFathers(sylvan) {
+    const persons = sylvan.multipleFathers()
+    console.log(`\n${persons.length} MULTIPLE FATHERS:`)
+    for (let i=0; i<persons.length; i++) {
+        const person = persons[i]
+        console.log(`  ${i+1} Person ${person.label()} has ${person.fathers().length} fathers:`)
+        for (let j=0; j<person.fathers().length; j++) {
+            const father = person.father(j)
+            console.log(`    ${j+1}: ${father.label()} [${father.gedKey()}]`)
+        }
+    }
+}
+
+function displayMultipleMothers(sylvan) {
+    const persons = sylvan.multipleMothers()
+    console.log(`\n${persons.length} MULTIPLE MOTHERS:`)
+    for (let i=0; i<persons.length; i++) {
+        const person = persons[i]
+        console.log(`  ${i+1} Person ${person.label()} has ${person.mothers().length} mothers:`)
+        for (let j=0; j<person.mothers().length; j++) {
+            const mother = person.mother(j)
+            console.log(`    ${j+1}: ${mother.label()} [${mother.gedKey()}]`)
+        }
+    }
+}
+
     

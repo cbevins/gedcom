@@ -64,7 +64,6 @@ export class GedcomRecords {
     contexts() {
         const contextMap = new Map()
         for(const [type0, typeMap] of this._topLevel.entries()) {
-            console.log(type0, typeMap.size)
             const context = []
             for(const [gedKey, gedRec] of typeMap.entries()) {
                 this._contextsRecurse(gedRec, context, contextMap)
