@@ -4,10 +4,11 @@
  */
 import * as process from 'process'
 import { GedcomReader } from './GedcomReader.js'
-import { locations } from './Locations.js'
+import { Locations } from './Locations.js'
 import { Families } from './Families.js'
 import { People } from './People.js'
 import { Places } from './Places.js'
+import { Review } from './Review.js'
 
 const time1 = new Date()
 const parms = getArgs()
@@ -41,7 +42,7 @@ function getArgs() {
 
     const gedcoms = [
         {flag: 'ancestry', file: "../data/Bevins-Riley Family Tree.ged"},
-        {flag: 'roots', file: "../data/Root Magic Bevins-Riley Ancestry Ged.ged"},
+        {flag: 'roots', file: "../data/RootsMagicAncestrySync.ged"},
     ]
     const parms = {
         file : gedcoms[1].file,
@@ -86,11 +87,13 @@ function displayFindAll(gedrecs, key, context) {
 }
 
 function displayLocations(gedrecs) {
-    const ar = locations(gedrecs)
-    for(let i=0; i<ar.length; i++) {
-        const [key, stnd, lat, lon] = ar[i]
-        console.log(key.padEnd(60), '=>', stnd, lat, lon)
-    }
+    console.log('UPDATE THIS METHOD')
+    return
+    // const ar = locations(gedrecs)
+    // for(let i=0; i<ar.length; i++) {
+    //     const [key, stnd, lat, lon] = ar[i]
+    //     console.log(key.padEnd(60), '=>', stnd, lat, lon)
+    // }
 }
 
 // Illustrates how to hydrate the entire GEDCOM Tree
@@ -105,13 +108,23 @@ function displayPeople(gedrecs) {
     // Step 3 - Create the Families instance
     const families = new Families(gedrecs, people, places)
     console.log(`There are ${families.size()} Families`)
-    
+
     // How many places are there?
     console.log(`There are ${places.size()} Places`)
+
+    // How many Locations?
+    const locations = new Locations(gedrecs)
+    console.log(`There are ${locations.size()} Locations`)
+
+    // Conduct a Review
+    const review = new Review(people, families, places, locations)
+    console.log('MULTIPLE MOTHERS', review.multipleMotherMessages())
+    console.log('MULTIPLE FATHERS', review.multipleFatherMessages())
+
     // Use the data
-    const person = people.find('CollinDouglasBevins1952')
-    console.log(`${person.nameLabel()} ${person.mother().fullName()} ${person.father().fullName()}`)
-    console.log(person.birthPlace())
+    // const person = people.find('CollinDouglasBevins1952')
+    // console.log(`${person.nameLabel()} ${person.mother().fullName()} ${person.father().fullName()}`)
+    // console.log(person.birthPlace())
     // const fam = person.familyParents()[0]
     // console.log(fam.xParent().fullName(), 'MARR', fam.unionDate(), 'DIV', fam.disunionDate())
 }

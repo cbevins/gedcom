@@ -56,6 +56,8 @@ export class Families {
             this._hydrate(famKey, family)
             this.famKeyMap().set(famKey, family)
         }
+        // Update Person families
+        this.people().updateFamily(this)
     }
 
     _hydrate(famKey, family) {
@@ -65,7 +67,7 @@ export class Families {
         const children = []
         for(let i=0; i<ar.length; i++) children.push(this.person(ar[i]))
         family._data.children = children
-        // Add this family to each of the parents' spousal family
+        // // Add this family to each of the parents' spousal family
         if (family.xParent()) family.xParent().addSpouseFamily(family)
         if (family.yParent()) family.yParent().addSpouseFamily(family)
         // Add this family to each of the children's parent family
@@ -85,6 +87,10 @@ export class Families {
             sources: this._divSourceAll(famKey)       // array of sources keys like '@S1234@'
         }
     }
+
+    // ----------------------------------------------------------------------
+    // Private methods for accessing GedcomRecords
+    // ----------------------------------------------------------------------
 
     _divDate(key) { return this.gedcom().findFirstContent(key, ['FAM', 'DIV', 'DATE']) }
     _divNoteAll(key) { return this.gedcom().findAllContent(key, ['FAM', 'DIV', 'NOTE']) }

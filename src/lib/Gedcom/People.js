@@ -56,13 +56,37 @@ export class People {
         return a
     }
 
-    // Returns array of *references* to People who are list as children in more than 1 family
-    checkMultipleParentalFamilies() {
-        const people = []
-        for (const [key, person] of this.gedKeyMap().entries()) {
-            if (person.familyParents().length > 1) people.push(person)
+    updateFamily(families) {
+        for (const [gedKey, person] of this.gedKeyMap().entries()) {
+            person._data.family.fathers = []
+            person._data.family.mothers = []
+            person._data.family.siblings = []
+            for (let i=0; i< person.familyParentKeys().length; i++) {
+                const famKey = person.familyParentKey(i)
+                const family = families.find(famKey)
+                if (! family) throw new Error(`*** Unable to find Family '${famKey}'`)
+                if (family.xParent() && ! person._data.family.mothers.includes(family.xParent()))
+                    person._data.family.mothers.push(family.xParent())
+                if (family.yParent() && ! person._data.family.fathers.includes(family.yParent()))
+                    person._data.family.fathers.push(family.yParent())
+                for (let j=0; j<family.children.length; j++) {
+                    if (family.child(i)) person._data.family.siblings.push(family.child(i))
+                }
+            }
+            person._data.family.spouses = []
+            person._data.family.issue = []
+            for (let i=0; i< person.familySpouseKeys().length; i++) {
+                const famKey = person.familySpouseKey(i)
+                const family = families.find(famKey)
+                if (family.xParent() && family.yParent()) {
+                    const spouse = (person.gedKey() === family.xParent().gedKey()) ? family.yParent() : family.xParent()
+                    if (spouse) person._data.family.spouses.push(spouse)
+                    for (let j=0; j<family.children.length; j++) {
+                        if (family.child(i)) person._data.family.issue.push(family.child(i))
+                    }
+                }
+            }
         }
-        return people
     }
 
     // ----------------------------------------------------------------------
@@ -117,7 +141,11 @@ export class People {
             parentKeys: this._parentalFamilyKeys(key),   // array of FAMC '@F123@' keys
             parents: [],                                // array of Family references (filled by Families constructor)
             spouseKeys: this._spousalFamilyKeys(key),    // array of FAMS '@F123@' keys
-            spouses: []                                 // array of Family references (filled by Families constructor)
+            spouses: [],
+            issue: [],
+            fathers: [],                                 // array of Family references (filled by Families constructor),
+            mothers: [],
+            siblings: []
         }
         return person
     }

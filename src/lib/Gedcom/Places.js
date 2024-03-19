@@ -8,11 +8,19 @@ export class Places {
         }
     }
 
+    // ----------------------------------------------------------------------
+    // Public data access methods
+    // ----------------------------------------------------------------------
+
     get(text) { return this.map().get(text) }
 
     has(text) { return this.map().has(text) }
 
     map() { return this._data.textMap }
+
+    // ----------------------------------------------------------------------
+    // Private methods
+    // ----------------------------------------------------------------------
 
     // text is, hopefully, a comma-delimited place name
     parsePlace(text) {
