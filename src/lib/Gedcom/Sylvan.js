@@ -66,14 +66,28 @@ export class Sylvan {
     // Returns an array of Persons with more than 1 mother
     multipleMothers() { return this._data.messages.multipleMothers }
 
-    async init(gedcomFile, store=false) {
+    // One-step method for Nodejs
+    async initFromFile(gedcomFile, store=false) {
         // Step 1 - Read the raw GEDCOM file into a GedcomRecords instance
         this._data.gedcom.fileName = gedcomFile
         const reader = new GedcomReader()
         const gedrecs = await reader.readFile(this.gedcomFile())
-
-        // Store stats
         this._data.messages.reader = reader.messages()
+        this.init(gedrecs, store)
+    }
+    
+    // Two-step method where first step is run on server and second step on client
+    async initFromArray(lines, store=false) {
+        // Step 1 - Read the raw GEDCOM file into a GedcomRecords instance
+        this._data.gedcom.fileName = 'Array'
+        const reader = new GedcomReader()
+        const gedrecs = reader.readArray(lines)
+        this._data.messages.reader = reader.messages()
+        this.init(gedrecs, store)
+    }
+
+    init(gedrecs, store) {
+        // Store stats
         this._data.source = gedrecs.isAncestry() ? 'Accestry.com' : 'Roots Magic'
         this._data.gedcom.level0 = gedrecs.topLevelCounts()
         this._data.gedcom.contexts = gedrecs.contexts()

@@ -1,9 +1,13 @@
 <script>
 	import { ged } from '$lib/js/store.js'
 	import Diagnostics from '$lib/svelte/Diagnostics.svelte'
-	
+	import SylvanSummary from '$lib/svelte/SylvanSummary.svelte'
+	import { getSylvan } from '$lib/js/sylvan.js'
+
+	const sylvan = getSylvan()
     const tabs = [
-        {href: '#bh', title: 'Bevins-Heddens', c: 'nav-link active'},
+        {href: '#gedcom', title: 'GEDCOM File', c: 'nav-link ative'},
+        {href: '#bh', title: 'Bevins-Heddens', c: 'nav-link'},
         {href: '#rt', title: 'Riley-Trombley', c: 'nav-link'},
     ]
 </script>
@@ -22,7 +26,15 @@
 
 		<!-- Tab panes -->
 		<div class="tab-content">
-			<div id="bh" class="container tab-pane active"><br>
+			<div id="gedcom" class="container tab-pane active"><br>
+				<div class="card">
+					<div class="card-body">
+						<SylvanSummary sylvan={sylvan} />
+					</div>
+				</div>
+			</div>
+
+			<div id="bh" class="container tab-pane"><br>
 				<div class="card">
 					<div class="card-body">
 						<Diagnostics ged={$ged} subjectNameKey='CollinDouglasBevins1952' prefix='BH'/>

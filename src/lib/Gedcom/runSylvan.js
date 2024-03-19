@@ -14,7 +14,7 @@ console.log(`Elapsed : ${(time2-time1).toString().padStart(5)} msec`)
 
 async function mission(parms) {
     const sylvan = new Sylvan()
-    await sylvan.init(parms.file, true)
+    await sylvan.initFromFile(parms.file, true)
 
     console.log(`\n${sylvan.source()} GEDCOM File: '${parms.file} has ${sylvan.readerMessages().length} GedcomReader messages:`)
     if (sylvan.readerMessages().length) console.log(sylvan.readerMessages())

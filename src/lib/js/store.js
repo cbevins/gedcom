@@ -14,7 +14,7 @@ export const ged = readable(null, function start(set) {
 	const time1 = new Date()
     const g = new GedStore(gedJson)
     set(g)
-    console.log('lib/js/store.js built GedStore "ged"'
+    console.log('lib/js/store.js: built GedStore "ged"'
     + ` with ${g.persons().size} persons in ${new Date()-time1} msec`)
     
     // teardown code goes in the stop() function

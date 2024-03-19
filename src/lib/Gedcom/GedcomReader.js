@@ -65,6 +65,7 @@ export class GedcomReader {
 
     messages() { return this._msg }
 
+    // Reads the GEDCOM file and returns a new GedcomRecords instance
     async readFile(fileName, onCloseCallback=null) {
         this._init(fileName)
         const stream = fs.createReadStream(fileName)
@@ -76,5 +77,28 @@ export class GedcomReader {
         // IMPORTANT!!! MUST USE FOLLOWING INSTEAD OF 'reader.on("line")' TO GET PROPER AWAIT
         for await (const line of reader) { this._parseRecord(line) }
         return this._gedcom
+    }
+
+    // Reads an array of GEDCOM file lines and returns a new GedcomRecords instance
+    readArray(lines) {
+        this._init('')
+        for(let i=0; i<lines.length; i++) {
+            this._parseRecord(lines[i])
+        }
+        return this._gedcom
+    }
+
+    // Reads a GEDCOM file and returns an array of all the GEDCOM file lines
+    async toArray(fileName, onCloseCallback=null) {
+        const stream = fs.createReadStream(fileName)
+        const reader = readline.createInterface({ input: stream })
+        reader.on('error', (err) => {
+            throw new Error(`Unable to read GEDCOM file '${fileName}': ${err}`)
+        })
+        reader.on('close', () => { if (onCloseCallback) onCloseCallback(this) })
+        // IMPORTANT!!! MUST USE FOLLOWING INSTEAD OF 'reader.on("line")' TO GET PROPER AWAIT
+        const lines = []
+        for await (const line of reader) { lines.push(line) }
+        return lines
     }
 }

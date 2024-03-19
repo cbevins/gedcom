@@ -1,6 +1,7 @@
 <script>
 	import Surname from '$lib/svelte/Surname.svelte'
 	import Title1 from '$lib/svelte/Title1.svelte'
+	export let data	// whatever is returned from +page.js
 </script>
 
 <svelte:head>
