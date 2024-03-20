@@ -1,9 +1,9 @@
 <script>
 	import { ged } from '$lib/js/store.js'
-	import Diagnostics from '$lib/svelte/Diagnostics.svelte'
 	import GedcomContexts from '$lib/svelte/GedcomContexts.svelte'
 	import GedcomTopLevel from '$lib/svelte/GedcomTopLevel.svelte'
 	import MultipleParents from '$lib/svelte/MultipleParents.svelte'
+	import SylvanDiagnostics from '$lib/svelte/SylvanDiagnostics.svelte'
 	import SylvanSummary from '$lib/svelte/SylvanSummary.svelte'
 	import { getSylvan } from '$lib/js/sylvan.js'
 
@@ -85,14 +85,6 @@
 				</div>
 			</div>
 
-			<div id="bh" class="container tab-pane fade"><br>
-				<div class="card">
-					<div class="card-body">
-						<Diagnostics ged={$ged} subjectNameKey='CollinDouglasBevins1952' prefix='BH'/>
-					</div>
-				</div>
-			</div>
-
 			<div id="parents" class="container tab-pane fade"><br>
 				<div class="card">
 					<div class="card-body">
@@ -101,10 +93,18 @@
 				</div>
 			</div>
 
+			<div id="bh" class="container tab-pane fade"><br>
+				<div class="card">
+					<div class="card-body">
+						<SylvanDiagnostics sylvan={sylvan} subjectNameKey='CollinDouglasBevins1952' prefix='BH'/>
+					</div>
+				</div>
+			</div>
+
 			<div id="rt" class="container tab-pane fade"><br>
 				<div class="card">
 					<div class="card-body">
-						<Diagnostics ged={$ged} subjectNameKey='BarbaraJeanneRiley1953' prefix='RT'/>
+						<SylvanDiagnostics sylvan={sylvan} subjectNameKey='BarbaraJeanneRiley1953' prefix='RT'/>
 					</div>
 				</div>
 			</div>
