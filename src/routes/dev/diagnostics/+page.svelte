@@ -1,12 +1,14 @@
 <script>
 	import { ged } from '$lib/js/store.js'
 	import Diagnostics from '$lib/svelte/Diagnostics.svelte'
+	import GedcomContexts from '$lib/svelte/GedcomContexts.svelte'
+	import GedcomTopLevel from '$lib/svelte/GedcomTopLevel.svelte'
 	import SylvanSummary from '$lib/svelte/SylvanSummary.svelte'
 	import { getSylvan } from '$lib/js/sylvan.js'
 
 	const sylvan = getSylvan()
     const tabs = [
-        {href: '#gedcom', title: 'GEDCOM File', c: 'nav-link ative'},
+        {href: '#gedcom', title: 'GEDCOM File', c: 'nav-link active'},
         {href: '#bh', title: 'Bevins-Heddens', c: 'nav-link'},
         {href: '#rt', title: 'Riley-Trombley', c: 'nav-link'},
     ]
@@ -29,12 +31,59 @@
 			<div id="gedcom" class="container tab-pane active"><br>
 				<div class="card">
 					<div class="card-body">
-						<SylvanSummary sylvan={sylvan} />
+
+						<p></p>
+						<div class="accordion" id="fileCard">
+							<div class="accordion-item">
+								<h1 class="accordion-header" id={"sylvan-summary-heading"}>
+									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={"#sylvan-summary-collapse"} aria-expanded="true" aria-controls={"sylvan-summary-collapse"}>
+										<h3>Sylvian Record Summary</h3>
+									</button>
+								</h1>
+								<div id={"sylvan-summary-collapse"} class="accordion-collapse collapse show" aria-labelledby={"sylvan-summary-siblings-heading"}>
+									<div class="accordion-body">
+										<SylvanSummary sylvan={sylvan} />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<p></p>
+						<div class="accordion" id="fileCard">
+							<div class="accordion-item">
+								<h1 class="accordion-header" id={"gedcom-toplevel-heading"}>
+									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={"#gedcom-toplevel-collapse"} aria-expanded="true" aria-controls={"gedcom-toplevel-collapse"}>
+										<h3>GEDCOM Top Level Record Counts</h3>
+									</button>
+								</h1>
+								<div id={"gedcom-toplevel-collapse"} class="accordion-collapse collapse" aria-labelledby={"gedcom-toplevel-heading"}>
+									<div class="accordion-body">
+										<GedcomTopLevel sylvan={sylvan} />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<p></p>
+						<div class="accordion" id="fileCard">
+							<div class="accordion-item">
+								<h1 class="accordion-header" id={"gedcom-contexts-heading"}>
+									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={"#gedcom-contexts-collapse"} aria-expanded="true" aria-controls={"gedcom-contexts-collapse"}>
+										<h3>GEDCOM File Record Context Counts</h3>
+									</button>
+								</h1>
+								<div id={"gedcom-contexts-collapse"} class="accordion-collapse collapse" aria-labelledby={"gedcom-contexts-heading"}>
+									<div class="accordion-body">
+										<GedcomContexts sylvan={sylvan} />
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 
-			<div id="bh" class="container tab-pane"><br>
+			<div id="bh" class="container tab-pane fade"><br>
 				<div class="card">
 					<div class="card-body">
 						<Diagnostics ged={$ged} subjectNameKey='CollinDouglasBevins1952' prefix='BH'/>

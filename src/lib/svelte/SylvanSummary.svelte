@@ -8,7 +8,7 @@ function html() {
 	html += `<tr><td>Places</td><td>${sylvan.places().size()}</td></tr>`
 	html += `<tr><td>Locations</td><td>${sylvan.locations().size()}</td></tr>`
 	html += '</tbody></table>'
-	return `<h3>Sylvan Record Summary</h3>` + html
+	return html
 }
 </script>
 
