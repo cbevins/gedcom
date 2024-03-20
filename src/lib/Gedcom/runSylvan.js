@@ -3,6 +3,7 @@
  */
 import * as process from 'process'
 import { Review } from './Review.js'
+import { Ancestors } from './Ancestors.js'
 import { Sylvan } from './Sylvan.js'
 
 const time1 = new Date()
@@ -105,6 +106,9 @@ function displayPeople(sylvan) {
     console.log(`  ${sylvan.places().size()} Places`)
     console.log(`  ${sylvan.locations().size()} Locations`)
 
+    const subject = sylvan.people().find('CollinDouglasBevins1952')
+    // const ancestors = new Ancestors(subject)
+    // ancestors.list()
     // Conduct a Review
     displayMultipleFathers(sylvan)
     displayMultipleMothers(sylvan)

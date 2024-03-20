@@ -24,6 +24,7 @@ export class Person {
     fullName() { return this._data.name.full }      // same as nameFull()
     gedKey() { return this._data.gedKey }           // INDI GEDCOM key like '@I123@'
     gender() { return this._data.life.gender }      // string 'F' or 'M'
+    isDeceased() { return ! this.isLiving() }       // boolean TRUE or FALSE
     isFemale() { return this.gender() === 'F'}      // boolean TRUE or FALSE
     isLiving() { return this._data.life.isLiving }  // boolean TRUE or FALSE
     isMale() { return this.gender() === 'M'}        // boolean TRUE or FALSE
@@ -39,6 +40,11 @@ export class Person {
     nameSuffix() { return this._data.name.suffix }
     nameSurnames() { return this._data.name.surnames }
     nameSurnamePrefix() { return this._data.name.surnamePrefix }
+
+    isImmigrant() {
+        return this.isDeceased() && this.birthPlace().country() && this.deathPlace().country()
+            && this.birthPlace().country() != this.deathPlace().country()
+    }
 
     // Additional access methods
     // father() { return this.familyParents().length ? this.familyParents()[0].yParent() : null }

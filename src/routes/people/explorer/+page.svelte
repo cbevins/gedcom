@@ -6,7 +6,11 @@
 	import Profile from '$lib/svelte/Profile.svelte'
     import RootSelector from '$lib/svelte/RootSelector.svelte'
     import SubjectSelector from '$lib/svelte/SubjectSelector.svelte'
+	import SylvanAncestors from '$lib/svelte/SylvanAncestors.svelte'
     import { ged, rootNameKey, subjectNameKey } from '$lib/js/store.js'
+	import { getSylvan } from '$lib/js/sylvan.js'
+
+	const sylvan = getSylvan()
 
     const tabs = [
         {href: '#family', title: 'Family Groups', c: 'nav-link active'},
@@ -56,7 +60,8 @@
             <div id="ancestors" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <AncestorTree ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+                        <!-- <AncestorTree ged={$ged} bind:subjectNameKey={$subjectNameKey}/> -->
+                        <SylvanAncestors sylvan={sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
