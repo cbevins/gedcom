@@ -151,6 +151,7 @@ export const Regions = new Map([
     ['cornwall', ['Cornwall', 'England']],
     ['derbyshire', ['Derbyshire', 'England']],
     ['devon', ['Devonshire', 'England']],
+    ['devonshire', ['Devonshire', 'England']],
     ['dorset', ['Dorset', 'England']],
     ['drenthe', ['Drenthe', 'Netherlands']],
     ['durham', ['County Durham', 'England']],

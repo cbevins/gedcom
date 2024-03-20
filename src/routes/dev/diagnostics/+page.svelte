@@ -3,12 +3,14 @@
 	import Diagnostics from '$lib/svelte/Diagnostics.svelte'
 	import GedcomContexts from '$lib/svelte/GedcomContexts.svelte'
 	import GedcomTopLevel from '$lib/svelte/GedcomTopLevel.svelte'
+	import MultipleParents from '$lib/svelte/MultipleParents.svelte'
 	import SylvanSummary from '$lib/svelte/SylvanSummary.svelte'
 	import { getSylvan } from '$lib/js/sylvan.js'
 
 	const sylvan = getSylvan()
     const tabs = [
         {href: '#gedcom', title: 'GEDCOM File', c: 'nav-link active'},
+        {href: '#parents', title: 'Multiple Parents', c: 'nav-link'},
         {href: '#bh', title: 'Bevins-Heddens', c: 'nav-link'},
         {href: '#rt', title: 'Riley-Trombley', c: 'nav-link'},
     ]
@@ -87,6 +89,14 @@
 				<div class="card">
 					<div class="card-body">
 						<Diagnostics ged={$ged} subjectNameKey='CollinDouglasBevins1952' prefix='BH'/>
+					</div>
+				</div>
+			</div>
+
+			<div id="parents" class="container tab-pane fade"><br>
+				<div class="card">
+					<div class="card-body">
+						<MultipleParents sylvan={sylvan}/>
 					</div>
 				</div>
 			</div>
