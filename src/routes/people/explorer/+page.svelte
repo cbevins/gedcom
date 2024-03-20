@@ -1,12 +1,11 @@
 <script>
-	import AncestorTree from '$lib/svelte/AncestorTree.svelte'
 	import Demographics from '$lib/svelte/Demographics.svelte'
-	import Immigrants from '$lib/svelte/Immigrants.svelte'
 	import Origins from '$lib/svelte/Origins.svelte'
 	import Profile from '$lib/svelte/Profile.svelte'
     import RootSelector from '$lib/svelte/RootSelector.svelte'
-    import SubjectSelector from '$lib/svelte/SubjectSelector.svelte'
 	import SylvanAncestors from '$lib/svelte/SylvanAncestors.svelte'
+	import SylvanImmigrants from '$lib/svelte/SylvanImmigrants.svelte'
+    import SylvanSubjectSelector from '$lib/svelte/SylvanSubjectSelector.svelte'
     import { ged, rootNameKey, subjectNameKey } from '$lib/js/store.js'
 	import { getSylvan } from '$lib/js/sylvan.js'
 
@@ -28,8 +27,8 @@
         <h5 class="card-title">People Explorer</h5>
         <div class="card">
             <div>
-                Subject: {$subjectNameKey}
-                <SubjectSelector />
+                SYLVAN Subject: {$subjectNameKey}
+                <SylvanSubjectSelector sylvan={sylvan} />
             </div>
             <!-- <div>
                 Root: {$rootNameKey}
@@ -60,7 +59,6 @@
             <div id="ancestors" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <!-- <AncestorTree ged={$ged} bind:subjectNameKey={$subjectNameKey}/> -->
                         <SylvanAncestors sylvan={sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
@@ -69,7 +67,7 @@
             <div id="immigrants" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <Immigrants ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanImmigrants sylvan={sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>

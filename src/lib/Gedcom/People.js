@@ -43,9 +43,18 @@ export class People {
 
     places() { return this._data.places }
 
-    type() { return this._data.type }
+    // Returns an array of {key: <string>, label: <string>} objects used by Svelecte selector component
+    selectors() {
+        const options = []
+        for (const [gedKey, person] of this.gedKeyMap().entries()) {
+            options.push({key: person.nameKey(), label: person.label()})
+        }
+        return options
+    }
 
     size() { return this.gedKeyMap().size }
+
+    type() { return this._data.type }
 
     // ----------------------------------------------------------------------
     // Public validation methods

@@ -1,11 +1,10 @@
 <script>
-	import { ged } from '$lib/js/store.js'
+	import { getSylvan } from '$lib/js/sylvan.js'
 	import GedcomContexts from '$lib/svelte/GedcomContexts.svelte'
 	import GedcomTopLevel from '$lib/svelte/GedcomTopLevel.svelte'
 	import MultipleParents from '$lib/svelte/MultipleParents.svelte'
 	import SylvanDiagnostics from '$lib/svelte/SylvanDiagnostics.svelte'
 	import SylvanSummary from '$lib/svelte/SylvanSummary.svelte'
-	import { getSylvan } from '$lib/js/sylvan.js'
 
 	const sylvan = getSylvan()
     const tabs = [
