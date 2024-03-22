@@ -3,11 +3,11 @@
 	import Origins from '$lib/svelte/Origins.svelte'
 	import Profile from '$lib/svelte/Profile.svelte'
     import RootSelector from '$lib/svelte/RootSelector.svelte'
-	import SylvanAncestors from '$lib/svelte/SylvanAncestors.svelte'
-	import SylvanImmigrants from '$lib/svelte/SylvanImmigrants.svelte'
-    import SylvanSubjectSelector from '$lib/svelte/SylvanSubjectSelector.svelte'
+	import SylvanAncestors from '$lib/Sylvan/svelte/SylvanAncestors.svelte'
+	import SylvanImmigrants from '$lib/Sylvan/svelte/SylvanImmigrants.svelte'
+    import SylvanSubjectSelector from '$lib/Sylvan/svelte/SylvanSubjectSelector.svelte'
     import { ged, rootNameKey, subjectNameKey } from '$lib/js/store.js'
-	import { getSylvan } from '$lib/js/sylvan.js'
+	import { getSylvan } from '$lib/Sylvan/js/singletons.js'
 
 	const sylvan = getSylvan()
 

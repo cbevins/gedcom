@@ -3,6 +3,7 @@
  */
 import * as process from 'process'
 import { file2JsonArray } from '../js/file2JsonArray.js'
+import { Ancestors } from '../class/Ancestors.js'
 import { Sylvan } from '../class/Sylvan.js'
 const fileName = "../../data/RootsMagicAncestrySync.ged"
 
@@ -21,35 +22,48 @@ async function mainFunction(parms) {
     console.log(`\n${sylvan.source()} GEDCOM File: '${parms.file} has ${sylvan.readerMessages().length} GedcomReader messages:`)
     if (sylvan.readerMessages().length) console.log(sylvan.readerMessages())
 
+    if (parms.ancestors) displayAncestors(sylvan)
+    if (parms.block) displayTopLevelBlock(sylvan, 'INDI', '@I896@')
     if (parms.contexts) displayContextCounts(sylvan)
     if (parms.findall) displayFindAll(sylvan, '@I896@', ['INDI','NAME','GIVN'])
     if (parms.locations) displayLocations(sylvan)
-    if (parms.people) displayPeople(sylvan)
-    if (parms.block) displayTopLevelBlock(sylvan, 'INDI', '@I896@')
+    if (parms.person) displayPerson(sylvan)
+    if (parms.summary) displaySummary(sylvan)
     if (parms.toplevels) displayTopLevelCounts(sylvan)
 }
 
 function getArgs() {
     if (process.argv.length < 3) {
-        console.log('***\n*** usage: node runSylvan.js ["block", "contexts", "find", "locations", "toplevels"] where:\n')
+        console.log('***\n*** usage: node runSylvan.js ["ancestors", "block", "contexts", "find", "locations", "summary", "toplevels"] where:')
+        console.log("   ancestors: displays my ancestors")
         console.log("   block: displays GEDCOM top level block for 'INDI @I896@'")
         console.log("   contexts: displays all the GEDCOM record type contexts and their counts")
-        console.log("   toplevels: displays all the GEDCOM Level 0 command types and their counts")
         console.log("   find: displays finding all the GEDCOM records for @I896@ with context INDI-NAME-GIVN")
+        console.log("   person: displays person brief")
+        console.log("   summary: displays Sylvan records summaryperson brief")
+        console.log("   toplevels: displays all the GEDCOM Level 0 command types and their counts")
         process.exit()
     }
-    const parms = {block: false, contexts: false, findall: false, locations: false, toplevels: false}
+    const parms = {}
     for (let i=2; i<process.argv.length; i++) {
         const arg = (process.argv[i]).toLowerCase()
         const a = arg.substring(0, 1)
-        if (a === 'b') parms.block = true
+        if (a === 'a') parms.ancestors = true
+        else if (a === 'b') parms.block = true
         else if (a === 'c') parms.contexts = true
         else if (a === 'f') parms.findall = true
         else if (a === 'l') parms.locations = true
-        else if (a === 'p') parms.people = true
+        else if (a === 'p') parms.person = true
+        else if (a === 's') parms.summary = true
         else if (a === 't') parms.toplevels = true
     }
     return parms
+}
+
+function displayAncestors(sylvan) {
+    const subject = sylvan.people().find('CollinDouglasBevins1952')
+    const ancestors = new Ancestors(subject)
+    ancestors.list()
 }
 
 function displayContextCounts(sylvan) {
@@ -90,26 +104,25 @@ function displayLocations(sylvan) {
 }
 
 // Illustrates how to hydrate the entire GEDCOM Tree
-function displayPeople(sylvan) {
-    console.log(`Sylvan has:`)
-    console.log(`  ${sylvan.people().size()} Persons`)
-    console.log(`  ${sylvan.families().size()} Families`)
-    console.log(`  ${sylvan.places().size()} Places`)
-    console.log(`  ${sylvan.locations().size()} Locations`)
+function displayPerson(sylvan) {
+    const people = sylvan.people()
+    const person = people.find('CollinDouglasBevins1952')
+    console.log(`${person.nameLabel()} ${person.mother().fullName()} ${person.father().fullName()}`)
+    console.log(person.birthPlace())
+    // const fam = person.familyParents()[0]
+    // console.log(fam.xParent().fullName(), 'MARR', fam.unionDate(), 'DIV', fam.disunionDate())
+}
 
-    const subject = sylvan.people().find('CollinDouglasBevins1952')
-    // const ancestors = new Ancestors(subject)
-    // ancestors.list()
+function displaySummary(sylvan) {
+    console.log(`Sylvan has:`)
+    console.log(`  Persons   ${sylvan.people().size()}`)
+    console.log(`  Families  ${sylvan.families().size()}`)
+    console.log(`  Places    ${sylvan.places().size()}`)
+    console.log(`  Locations ${sylvan.locations().size()}`)
+
     // Conduct a Review
     displayMultipleFathers(sylvan)
     displayMultipleMothers(sylvan)
-
-    // Use the data
-    // const person = people.find('CollinDouglasBevins1952')
-    // console.log(`${person.nameLabel()} ${person.mother().fullName()} ${person.father().fullName()}`)
-    // console.log(person.birthPlace())
-    // const fam = person.familyParents()[0]
-    // console.log(fam.xParent().fullName(), 'MARR', fam.unionDate(), 'DIV', fam.disunionDate())
 }
 
 // This only works of GEDCOM was saved by new Sylvan(fileName, TRUE)
