@@ -63,7 +63,7 @@ export class People {
     // ----------------------------------------------------------------------
 
     // msg must be a 2-element array of [<type>, <text>]
-    addMsg(msg) { this._data.msg.push(msg); console.log(msg) }
+    addMsg(msg) { this._data.msg.push(msg) }
 
     checkAll() {
         const a = this.checkMultipleParentalFamilies()
@@ -174,6 +174,13 @@ export class People {
                 person._data.name.key = newKey
             }
             this.nameKeyMap().set(person.nameKey(), person)
+
+            if (this.nameLabelMap().has(person.label())) {
+                const current = this.nameLabelMap().get(person.label())
+                const newKey = person.label() + ' ' + person.gedKey()
+                this.addMsg(['DUPLICATE LABEL KEY', `'${person.label()}' exists for ${current.gedKey()} and now ${person.gedKey()}; reset to '${newKey}'`])
+                person._data.name.label = newKey
+            }
             this.nameLabelMap().set(person.label(), person)
         }
     }
