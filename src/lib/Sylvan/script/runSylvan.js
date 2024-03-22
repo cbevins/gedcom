@@ -4,6 +4,7 @@
 import * as process from 'process'
 import { file2JsonArray } from '../js/file2JsonArray.js'
 import { Ancestors } from '../class/Ancestors.js'
+import { lineage } from '../js/lineage.js'
 import { Sylvan } from '../class/Sylvan.js'
 const fileName = "../../data/RootsMagicAncestrySync.ged"
 
@@ -26,7 +27,7 @@ async function mainFunction(parms) {
     if (parms.block) displayTopLevelBlock(sylvan, 'INDI', '@I896@')
     if (parms.contexts) displayContextCounts(sylvan)
     if (parms.findall) displayFindAll(sylvan, '@I896@', ['INDI','NAME','GIVN'])
-    if (parms.locations) displayLocations(sylvan)
+    if (parms.lineage) displayLineage(sylvan)
     if (parms.person) displayPerson(sylvan)
     if (parms.summary) displaySummary(sylvan)
     if (parms.toplevels) displayTopLevelCounts(sylvan)
@@ -39,6 +40,7 @@ function getArgs() {
         console.log("   block: displays GEDCOM top level block for 'INDI @I896@'")
         console.log("   contexts: displays all the GEDCOM record type contexts and their counts")
         console.log("   find: displays finding all the GEDCOM records for @I896@ with context INDI-NAME-GIVN")
+        console.log("   lineage: displays lineage from CDB to Hannah Hunter")
         console.log("   person: displays person brief")
         console.log("   summary: displays Sylvan records summaryperson brief")
         console.log("   toplevels: displays all the GEDCOM Level 0 command types and their counts")
@@ -52,7 +54,7 @@ function getArgs() {
         else if (a === 'b') parms.block = true
         else if (a === 'c') parms.contexts = true
         else if (a === 'f') parms.findall = true
-        else if (a === 'l') parms.locations = true
+        else if (a === 'l') parms.lineage = true
         else if (a === 'p') parms.person = true
         else if (a === 's') parms.summary = true
         else if (a === 't') parms.toplevels = true
@@ -90,6 +92,17 @@ function displayFindAll(sylvan, key, context) {
     for(let i=0; i<records.length; i++) {
         const rec = records[i]
         console.log(rec.lineNo(), rec.level(), rec.content())
+    }
+}
+
+function displayLineage(sylvan) {
+    const subject = sylvan.people().find('CollinDouglasBevins1952')
+    const target = sylvan.people().find('HannahHunter1753')
+    console.log(`${subject.fullName()} to ${target.fullName()}`)
+    const chain = lineage(subject, target)
+    console.log(`The lineage chain is ${chain.length} links:`)
+    for (let i=0; i< chain.length; i++) {
+        console.log(`  ${i+1}: ${chain[i][0].fullName()} by ${chain[i][1].fullName()}`)
     }
 }
 

@@ -1,5 +1,5 @@
 <script>
-	import { Ancestors } from '$lib/Gedcom/Ancestors.js'
+	import { Ancestors } from '$lib/Sylvan/class/Ancestors.js'
 	export let sylvan
     export let subjectNameKey
 
@@ -13,7 +13,6 @@
     $: immigrants = findImmigrants(subjectNameKey)
 
 	// Returns an array of Ancestor instances whose known birth and death countries are different
-
 	function findImmigrants(subjectKey) {
         const subject = sylvan.people().find(subjectKey)
         const ancestors = new Ancestors(subject)
@@ -29,7 +28,7 @@
 	function immigrantsTable(subjectKey) {
 		immigrants.sort(function(a, b) {return a.person().birthYear() - b.person().birthYear()})
         const subject = sylvan.people().find(subjectKey)
-		let html = `<h3>SYLVAN2 ${subject.fullName()} has ${immigrants.length} apparent immigrant ancestors:</h3>`
+		let html = `<h3>SYLVAN ${subject.fullName()} has ${immigrants.length} apparent immigrant ancestors:</h3>`
 		html += '<table class="table table-striped"><tbody>'
 		html += '<tr><th class="text-center">Gen</th><th>Name</th><th class="text-center">Lived</th><th>Born</th><th>Died</th></tr>'
 		for(let i=0; i<immigrants.length; i++) {
