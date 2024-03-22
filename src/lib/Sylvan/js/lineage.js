@@ -9,7 +9,6 @@
  *  and the subject Person is NOT appended to the array
  */
 export function lineage(subject, target, chain=[]) {
-    console.log(`Checking parents of: ${subject.fullName()}`)
     if (subject === target) {
         return chain
     } else if (subject.mother() && lineage(subject.mother(), target, chain)) {

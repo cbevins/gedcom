@@ -2,14 +2,14 @@
 	import { getSylvan } from '$lib/Sylvan/js/singletons.js'
 	import GedcomContexts from '$lib/Sylvan/svelte/GedcomContexts.svelte'
 	import GedcomTopLevel from '$lib/Sylvan/svelte/GedcomTopLevel.svelte'
-	import MultipleParents from '$lib/Sylvan/svelte/MultipleParents.svelte'
 	import SylvanDiagnostics from '$lib/Sylvan/svelte/SylvanDiagnostics.svelte'
+	import SylvanReview from '$lib/Sylvan/svelte/SylvanReview.svelte'
 	import SylvanSummary from '$lib/Sylvan/svelte/SylvanSummary.svelte'
 
 	const sylvan = getSylvan()
     const tabs = [
         {href: '#gedcom', title: 'GEDCOM File', c: 'nav-link active'},
-        {href: '#parents', title: 'Multiple Parents', c: 'nav-link'},
+        {href: '#parents', title: 'Sylvan Review', c: 'nav-link'},
         {href: '#bh', title: 'Bevins-Heddens', c: 'nav-link'},
         {href: '#rt', title: 'Riley-Trombley', c: 'nav-link'},
     ]
@@ -85,11 +85,7 @@
 			</div>
 
 			<div id="parents" class="container tab-pane fade"><br>
-				<div class="card">
-					<div class="card-body">
-						<MultipleParents sylvan={sylvan}/>
-					</div>
-				</div>
+				<SylvanReview sylvan={sylvan}/>
 			</div>
 
 			<div id="bh" class="container tab-pane fade"><br>

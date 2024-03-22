@@ -1,16 +1,21 @@
 <script>
 	export let sylvan
 
-    function html() {
-        let html = oneParent(true)
-        html += oneParent(false)
+    function duplicatePersons() {
+        const dups = sylvan.duplicatePersons()
+        let html = `<p>There are ${dups.length} Persons with duplicate name keys:<ol>`
+        for (let i=0; i<dups.length; i++) {
+            const [type, text] = dups[i]
+            html += `<li>${text}</li>`
+        }
+        html += '</ol></p>'
         return html
     }
 
     function oneParent(isMother) {
         const persons = isMother ? sylvan.multipleMothers() : sylvan.multipleFathers()
         const word = isMother ? 'mothers' : 'fathers'
-        let html = `SYLVAN: There are ${persons.length} Persons with multiple ${word}:<ol>`
+        let html = `<p>There are ${persons.length} Persons with multiple ${word}:<ol>`
         for (let i=0; i<persons.length; i++) {
             const person = persons[i]
             html += `<li>${person.label()} has ${person.fathers().length} ${word}:<ol>`
@@ -21,9 +26,25 @@
             }
             html += '</ol>'
         }
-        html += '</ol>'
+        html += '</ol></p>'
         return html
     }
 </script>
 
-{@html html()} 
+<div class="card">
+    <div class="card-body">
+        {@html duplicatePersons()} 
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {@html oneParent(true)} 
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {@html oneParent(false)} 
+    </div>
+</div>

@@ -19,6 +19,7 @@ export class Sylvan {
             },
             locations: null,    // Locations reference
             messages: {
+                duplicatePersons: [],   // Array of [<type>, <text>] pairs from People,messages()
                 multipleFathers: [],    // Array of Persons with more than 1 father
                 multipleMothers: [],    // Array of Persons with more than 1 mother
                 reader: [],             // Array of GedcomReader messages
@@ -32,6 +33,9 @@ export class Sylvan {
 
     // Returns an array of [context, count] arrays sorted by context
     contexts() { return this._data.gedcom.contexts }
+
+    // Returns an array of [<type>, <text>] pairs
+    duplicatePersons() { return this._data.messages.duplicatePersons }
 
     // Returns reference to a Families instance
     families() { return this._data.families }
@@ -94,6 +98,7 @@ export class Sylvan {
 
         // Step 6 - Perform review and store messages
         const review = new Review(this.people(), this.families(), this.places(), this.locations())
+        this._data.messages.duplicatePersons = this.people().messages()
         this._data.messages.multipleMothers = review.multipleMothers()
         this._data.messages.multipleFathers = review.multipleFathers()
     }

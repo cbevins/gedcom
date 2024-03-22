@@ -3,15 +3,15 @@
  */
 import { EvDate } from './EvDate.js'
 import { Person } from './Person.js'
-import { parseDate } from '../js/parseDate.js'
 
 export class People {
     // Creates hydrated Person instances for each GEDCOM INDI reord
     constructor(gedcom, places) {
         this._data = {
-            gedcom: gedcom,
-            gedKeyMap:  null, // Map of gedKey => Person
-            nameKeyMap: null,  // Map of nameKey => person
+            gedcom: gedcom,     // GedcomRecords instance
+            gedKeyMap:  null,   // Map of gedKey => Person
+            msg: [],            // Processing messages
+            nameKeyMap: null,   // Map of nameKey => person
             nameLabelMap: null, // map of nameLabel => person
             places: places,
             type: 'INDI'
@@ -37,6 +37,8 @@ export class People {
 
     gedKeyMap() { return this._data.gedKeyMap }
 
+    messages() { return this._data.msg }
+
     nameKeyMap() { return this._data.nameKeyMap }
 
     nameLabelMap() { return this._data.nameLabelMap }
@@ -59,6 +61,9 @@ export class People {
     // ----------------------------------------------------------------------
     // Public validation methods
     // ----------------------------------------------------------------------
+
+    // msg must be a 2-element array of [<type>, <text>]
+    addMsg(msg) { this._data.msg.push(msg); console.log(msg) }
 
     checkAll() {
         const a = this.checkMultipleParentalFamilies()
@@ -162,14 +167,15 @@ export class People {
     _hydrateAll() {
         for(const [key, person] of this.gedKeyMap().entries()) {
             this._hydrate(key, person)
-            this._data.nameKeyMap.set(person._data.name.key, person)
-            this._data.nameLabelMap.set(person._data.name.label, person)
+            if (this.nameKeyMap().has(person.nameKey())) {
+                const current = this.nameKeyMap().get(person.nameKey())
+                const newKey = person.nameKey()+person.gedKey()
+                this.addMsg(['DUPLICATE NAME KEY', `'${person.nameKey()}' exists for ${current.gedKey()} and now ${person.gedKey()}; reset to '${newKey}'`])
+                person._data.name.key = newKey
+            }
+            this.nameKeyMap().set(person.nameKey(), person)
+            this.nameLabelMap().set(person.label(), person)
         }
-    }
-
-    _year(dateText, missing='?') {
-        const date = new EvDate(dateText)
-        return date.year() ? date.year() : missing
     }
 
     // Initializes the gedKeyMap with dehydrated Persons
@@ -179,6 +185,11 @@ export class People {
         this._data.nameLabelMap = new Map()
         const recsMap = this.gedcom().topLevelRecordsFor(this.type())
         for(const key of recsMap.keys()) this.gedKeyMap().set(key, new Person(key))
+    }
+
+    _year(dateText, missing='?') {
+        const date = new EvDate(dateText)
+        return date.year() ? date.year() : missing
     }
 
     // ----------------------------------------------------------------------
