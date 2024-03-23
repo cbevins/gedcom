@@ -1,6 +1,6 @@
 <script>
-	import { ged } from '$lib/js/store.js'
-	import NotablesPage from '$lib/svelte/NotablesPage.svelte'
+	import { getSylvan } from '$lib/Sylvan/js/singletons.js'
+	import NotablesPage from '$lib/Sylvan/svelte/NotablesPage.svelte'
 	
     const tabs = [
         {id: 'BH', title: 'Bevins-Heddens', c: 'nav-link active', class: 'active'},
@@ -26,7 +26,7 @@
 				<div id={tab.id} class="container tab-pane {tab.class}"><br>
 					<div class="card">
 						<div class="card-body">
-							<NotablesPage ged={$ged} tree={tab.id}/>
+							<NotablesPage sylvan={getSylvan()} tree={tab.id}/>
 						</div>
 					</div>
 				</div>
