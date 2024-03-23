@@ -32,7 +32,7 @@ export class Ancestors {
         console.log(`${this.subject().label()} has ${this.size()} known ancestors:\n`)
         for (const [person, ancestor] of this.map().entries()) {
             const gen = ancestor.gen()
-            let str = `${''.padStart(4*gen, ' ')} |-${gen.toString().padStart(3)} ${person.label()} [${ancestor.id()}]`
+            let str = `${''.padStart(4*gen, ' ')} |-${gen.toString().padStart(3)} ${person.label()} [${ancestor.id()}] [${ancestor.person().birthCountry()}]`
             console.log(str)
         }
         return this

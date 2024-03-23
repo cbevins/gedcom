@@ -6,7 +6,6 @@
 	import SylvanReview from '$lib/Sylvan/svelte/SylvanReview.svelte'
 	import SylvanSummary from '$lib/Sylvan/svelte/SylvanSummary.svelte'
 
-	const sylvan = getSylvan()
     const tabs = [
         {href: '#gedcom', title: 'GEDCOM File', c: 'nav-link active'},
         {href: '#parents', title: 'Sylvan Review', c: 'nav-link'},
@@ -43,7 +42,7 @@
 								</h1>
 								<div id={"sylvan-summary-collapse"} class="accordion-collapse collapse show" aria-labelledby={"sylvan-summary-siblings-heading"}>
 									<div class="accordion-body">
-										<SylvanSummary sylvan={sylvan} />
+										<SylvanSummary sylvan={getSylvan()} />
 									</div>
 								</div>
 							</div>
@@ -59,7 +58,7 @@
 								</h1>
 								<div id={"gedcom-toplevel-collapse"} class="accordion-collapse collapse" aria-labelledby={"gedcom-toplevel-heading"}>
 									<div class="accordion-body">
-										<GedcomTopLevel sylvan={sylvan} />
+										<GedcomTopLevel sylvan={getSylvan()} />
 									</div>
 								</div>
 							</div>
@@ -75,7 +74,7 @@
 								</h1>
 								<div id={"gedcom-contexts-collapse"} class="accordion-collapse collapse" aria-labelledby={"gedcom-contexts-heading"}>
 									<div class="accordion-body">
-										<GedcomContexts sylvan={sylvan} />
+										<GedcomContexts sylvan={getSylvan()} />
 									</div>
 								</div>
 							</div>
@@ -85,13 +84,13 @@
 			</div>
 
 			<div id="parents" class="container tab-pane fade"><br>
-				<SylvanReview sylvan={sylvan}/>
+				<SylvanReview sylvan={getSylvan()}/>
 			</div>
 
 			<div id="bh" class="container tab-pane fade"><br>
 				<div class="card">
 					<div class="card-body">
-						<SylvanDiagnostics sylvan={sylvan} subjectNameKey='CollinDouglasBevins1952' prefix='BH'/>
+						<SylvanDiagnostics sylvan={getSylvan()} subjectNameKey='CollinDouglasBevins1952' prefix='BH'/>
 					</div>
 				</div>
 			</div>
@@ -99,7 +98,7 @@
 			<div id="rt" class="container tab-pane fade"><br>
 				<div class="card">
 					<div class="card-body">
-						<SylvanDiagnostics sylvan={sylvan} subjectNameKey='BarbaraJeanneRiley1953' prefix='RT'/>
+						<SylvanDiagnostics sylvan={getSylvan()} subjectNameKey='BarbaraJeanneRiley1953' prefix='RT'/>
 					</div>
 				</div>
 			</div>

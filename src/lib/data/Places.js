@@ -209,6 +209,7 @@ export const Regions = new Map([
     ['somerset', ['Somerset', 'England']],
     ['south holland', ['Zuid-Holland', 'Netherlands']],
     ['staffordshire', ['Staffordshire', 'England']],
+    ['stirlingshire', ['Stirlingshire', 'Scotland']],
     ['suffolk', ['Suffolk', 'England']],
     ['sulawesi tengah', ['Sulawesi Tengah', 'Indonesia']],
     ['ulster', ['Ulster', 'Northern Ireland']],   // One of the 4 provinces of Ireland with Connacht, Leinster, and Munster

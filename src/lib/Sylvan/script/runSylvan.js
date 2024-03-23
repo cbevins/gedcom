@@ -5,6 +5,7 @@ import * as process from 'process'
 import { file2JsonArray } from '../js/file2JsonArray.js'
 import { Ancestors } from '../class/Ancestors.js'
 import { lineage } from '../js/lineage.js'
+import { origins } from '../js/origins.js'
 import { Sylvan } from '../class/Sylvan.js'
 const fileName = "../../data/RootsMagicAncestrySync.ged"
 
@@ -12,7 +13,7 @@ const time1 = new Date()
 const parms = getArgs()
 await mainFunction(parms)
 const time2 = new Date()
-console.log(`Elapsed : ${(time2-time1).toString().padStart(5)} msec`)
+console.log(`\nElapsed : ${(time2-time1).toString().padStart(5)} msec`)
 
 async function mainFunction(parms) {
     // First load the GEDCOM file into a POJO array
@@ -20,7 +21,7 @@ async function mainFunction(parms) {
     // Then parse the GEDCOM lines and create the Sylvan instance
     const sylvan = new Sylvan(lines, true)
 
-    console.log(`\n${sylvan.source()} GEDCOM File: '${parms.file} has ${sylvan.readerMessages().length} GedcomReader messages:`)
+    console.log(`\n${sylvan.source()} GEDCOM File: '${fileName}' has ${sylvan.readerMessages().length} GedcomReader messages:`)
     if (sylvan.readerMessages().length) console.log(sylvan.readerMessages())
 
     if (parms.ancestors) displayAncestors(sylvan)
@@ -28,6 +29,13 @@ async function mainFunction(parms) {
     if (parms.contexts) displayContextCounts(sylvan)
     if (parms.findall) displayFindAll(sylvan, '@I896@', ['INDI','NAME','GIVN'])
     if (parms.lineage) displayLineage(sylvan)
+    // if (parms.origins) displayOrigins(sylvan, 'WilliamBevins1705')
+    // if (parms.origins) displayOrigins(sylvan, 'SarahWilkinson1696')
+    // if (parms.origins) displayOrigins(sylvan, 'ThomasBevins1731')
+    // if (parms.origins) displayOrigins(sylvan, 'PatrickCollins1755')
+    // if (parms.origins) displayOrigins(sylvan, 'ElizabethOldhamPepper1755')
+    // if (parms.origins) displayOrigins(sylvan, 'Rhesa"Reese"Collins1780')
+    if (parms.origins) displayOrigins(sylvan, 'CollinDouglasBevins1952')
     if (parms.person) displayPerson(sylvan)
     if (parms.summary) displaySummary(sylvan)
     if (parms.toplevels) displayTopLevelCounts(sylvan)
@@ -41,6 +49,7 @@ function getArgs() {
         console.log("   contexts: displays all the GEDCOM record type contexts and their counts")
         console.log("   find: displays finding all the GEDCOM records for @I896@ with context INDI-NAME-GIVN")
         console.log("   lineage: displays lineage from CDB to Hannah Hunter")
+        console.log("   origins: displays persons ancestral origins")
         console.log("   person: displays person brief")
         console.log("   summary: displays Sylvan records summaryperson brief")
         console.log("   toplevels: displays all the GEDCOM Level 0 command types and their counts")
@@ -55,6 +64,7 @@ function getArgs() {
         else if (a === 'c') parms.contexts = true
         else if (a === 'f') parms.findall = true
         else if (a === 'l') parms.lineage = true
+        else if (a === 'o') parms.origins = true
         else if (a === 'p') parms.person = true
         else if (a === 's') parms.summary = true
         else if (a === 't') parms.toplevels = true
@@ -66,7 +76,7 @@ function displayAncestors(sylvan) {
     const subject = sylvan.people().find('CollinDouglasBevins1952')
     const ancestors = new Ancestors(subject)
     ancestors.list()
-}
+} 
 
 function displayContextCounts(sylvan) {
     const contexts = sylvan.contexts()
@@ -114,6 +124,17 @@ function displayLocations(sylvan) {
     //     const [key, stnd, lat, lon] = ar[i]
     //     console.log(key.padEnd(60), '=>', stnd, lat, lon)
     // }
+}
+
+function displayOrigins(sylvan, subjectKey) {
+    const subject = sylvan.people().find(subjectKey)
+    console.log(`\n${subject.fullName()} Ancestral Origins:`)
+    const map = origins(subject)
+    const ar = Array.from(map).sort((a,b) => { return b[1] - a[1]})
+    for (let i=0; i<ar.length; i++) {
+        const [country, value] = ar[i]
+        console.log(country.padEnd(16), value.toFixed(6))
+    }
 }
 
 // Illustrates how to hydrate the entire GEDCOM Tree
