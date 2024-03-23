@@ -83,8 +83,9 @@ export class People {
                     person._data.family.mothers.push(family.xParent())
                 if (family.yParent() && ! person._data.family.fathers.includes(family.yParent()))
                     person._data.family.fathers.push(family.yParent())
-                for (let j=0; j<family.children.length; j++) {
-                    if (family.child(i)) person._data.family.siblings.push(family.child(i))
+                for (let j=0; j<family.children().length; j++) {
+                    const child = family.child(j)
+                    if (child && child !== person) person._data.family.siblings.push(child)
                 }
             }
             person._data.family.spouses = []
@@ -95,8 +96,9 @@ export class People {
                 if (family.xParent() && family.yParent()) {
                     const spouse = (person.gedKey() === family.xParent().gedKey()) ? family.yParent() : family.xParent()
                     if (spouse) person._data.family.spouses.push(spouse)
-                    for (let j=0; j<family.children.length; j++) {
-                        if (family.child(i)) person._data.family.issue.push(family.child(i))
+                    for (let j=0; j<family.children().length; j++) {
+                        const child = family.child(j)
+                        if (child) person._data.family.issue.push(child)
                     }
                 }
             }

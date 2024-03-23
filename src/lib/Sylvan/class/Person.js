@@ -41,6 +41,7 @@ export class Person {
     deathState() { return this.deathPlace().state() }
     deathYear() { return this.deathDate().year() }
 
+    // These all return Family keys or references!
     familyParents() { return this._data.family.parents }                // array of Family *references* for all this Person's parents
     familyParentKey(idx) { return this._data.family.parentKeys[idx] }   // FAM '@F123@' key for parent idx
     familyParentKeys() { return this._data.family.parentKeys }          // array of FAM '@F123@' keys for all this Person's parents
@@ -78,15 +79,17 @@ export class Person {
             && this.birthPlace().country() != this.deathPlace().country()
     }
 
-    // Additional access methods
+    // These all return Person references
     // father() { return this.familyParents().length ? this.familyParents()[0].yParent() : null }
     // mother() { return this.familyParents().length ? this.familyParents()[0].xParent() : null }
-    father(idx=0) { return this.fathers().length ? this.fathers()[idx] : null}
+    father(idx=0) { return this.fathers().length ? this.fathers()[idx] : null }
     fathers() { return this._data.family.fathers }
     issue() { return this._data.family.issue }
-    mother(idx=0) { return this.mothers().length ? this.mothers()[idx] : null}
+    mother(idx=0) { return this.mothers().length ? this.mothers()[idx] : null }
     mothers() { return this._data.family.mothers }
+    sibling(idx=0) { return this.siblings().length ? this.siblings()[idx] : null }
     siblings() { return this._data.family.siblings }
+    spouse(idx=0) { return this.spouses().length ? this.spouses()[idx] : null }
     spouses() { return this._data.family.spouses }
 
     // Update methods

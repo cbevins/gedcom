@@ -141,9 +141,22 @@ function displayOrigins(sylvan, subjectKey) {
 // Illustrates how to hydrate the entire GEDCOM Tree
 function displayPerson(sylvan) {
     const people = sylvan.people()
-    const person = people.find('CollinDouglasBevins1952')
-    console.log(`${person.nameLabel()} ${person.mother().fullName()} ${person.father().fullName()}`)
-    console.log(person.birthPlace())
+    const subject = people.find('CollinDouglasBevins1952')
+    console.log(`${subject.nameLabel()}  `)
+    console.log(subject.birthPlace())
+
+    const fathers = subject.fathers()
+    const mothers = subject.mothers()
+    const siblings = subject.siblings()
+    const spouses = subject.spouses()
+    const issue = subject.issue()
+    console.log(`${subject.fullName()} has ${mothers.length} mothers: ${subject.mother().fullName()}`)
+    console.log(`${subject.fullName()} has ${fathers.length} fathers: ${subject.father().fullName()}`)
+    console.log(`${subject.fullName()} has ${siblings.length} siblings:`)
+    for(let i=0; i<siblings.length; i++) console.log(siblings[i].fullName())
+    console.log(`\n${subject.fullName()} has ${spouses.length} spouses: ${subject.spouse().fullName()}`)
+    console.log(`${subject.fullName()} has ${issue.length} children:`)
+    for(let i=0; i<issue.length; i++) console.log(issue[i].fullName())
     // const fam = person.familyParents()[0]
     // console.log(fam.xParent().fullName(), 'MARR', fam.unionDate(), 'DIV', fam.disunionDate())
 }
