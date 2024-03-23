@@ -29,7 +29,11 @@ export class Person {
     familySpouses() { return this._data.family.spouses }                // array of Family *references* for all this Person's spouses
     familySpouseKey(idx) { return this._data.family.spouseKeys[idx] }   // FAM '@F123@' key for spouse idx
     familySpouseKeys() { return this._data.family.spouseKeys }          // array of FAM '@F123@' keys for all this person's spouses
-    
+  
+    fileId() {
+        let pos = this.nameSuffix().indexOf('(#')
+        return (pos > -1) ? this.nameSuffix().slice(pos) : ''
+    }
     gender() { return this._data.life.gender }      // string 'F' or 'M'
     isDeceased() { return ! this.isLiving() }       // boolean TRUE or FALSE
     isFemale() { return this.gender() === 'F'}      // boolean TRUE or FALSE

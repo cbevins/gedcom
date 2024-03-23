@@ -75,7 +75,8 @@ function getArgs() {
 function displayAncestors(sylvan) {
     const subject = sylvan.people().find('CollinDouglasBevins1952')
     const ancestors = new Ancestors(subject)
-    ancestors.list()
+    ancestors.listTree()
+    ancestors.listById()
 } 
 
 function displayContextCounts(sylvan) {

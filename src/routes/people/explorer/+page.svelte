@@ -1,6 +1,5 @@
 <script>
 	import Demographics from '$lib/svelte/Demographics.svelte'
-	import Origins from '$lib/svelte/Origins.svelte'
 	import SylvanOrigins from '$lib/Sylvan/svelte/SylvanOrigins.svelte'
 	import Profile from '$lib/svelte/Profile.svelte'
     import RootSelector from '$lib/svelte/RootSelector.svelte'
@@ -77,7 +76,6 @@
                 <div class="card">
                     <div class="card-body">
                         <SylvanOrigins sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
-                        <Origins ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
