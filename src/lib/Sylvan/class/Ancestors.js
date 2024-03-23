@@ -40,7 +40,7 @@ export class Ancestors {
             const gen = ancestor.gen()
             const pad = ''.padStart(4*gen, ' ')
             const id = `${gen.toString()}.${ancestor.id()}`.padEnd(8)
-            let str = `${pad} |-${id} ${person.label()} [${ancestor.person().birthCountry()}]`
+            let str = `${pad} |-${id} ${person.label()}  [${person.ageString()}] [${ancestor.person().birthCountry()}]`
             console.log(str)
         }
         return this

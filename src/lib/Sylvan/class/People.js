@@ -134,10 +134,9 @@ export class People {
             suffix: this._nameSuffix(key)
         }
         person._data.life = {
-            age: null,                      // [years, months, days], calculated later
-            gender: this._gender(key),       // string 'F' or 'M'
-            isLiving: this._isLiving(key),   // boolean TRUE or FALSE
-            span: this._lifeSpan(key)        // string like '(1815-1888)'
+            gender: this._gender(key),          // string 'F' or 'M'
+            isLiving: this._isLiving(key),      // boolean TRUE or FALSE
+            span: this._lifeSpan(key)           // string like '(1815-1888)'
         }
         person._data.birth = {
             date: new EvDate(this._birthDate(key)),     // EvDate instance
@@ -161,6 +160,7 @@ export class People {
             mothers: [],
             siblings: []
         }
+        if (person.isDeceased())
         return person
     }
 

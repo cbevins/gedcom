@@ -1,9 +1,27 @@
 /**
  * People are top level GEDCOM 'SOUR' records stored in a Map
  */
+import { age } from '../js/age.js'
+
 export class Person {
     constructor(gedKey) {
         this._data = {gedKey: gedKey, messages: []}
+    }
+
+    // Returns [years, months, days] between birth and current/death dates.
+    age() {
+        let a = age(this.birthDate(), (this.isLiving() ? null : this.deathDate()))
+        if (a[0]<0 || a[0] === null) a[0] = 0
+        if (a[1]<0 || a[1] === null) a[1] = 0
+        if (a[2]<0 || a[2] === null) a[2] = 0
+        return a
+    }
+    ageString() {
+        const a = this.age()
+        const y = a[0] ? a[0] : '?'
+        const m = a[1] ? a[1] : '?'
+        const d = a[2] ? a[2] : '?'
+        return `${y}y, ${m}m, ${d}d`
     }
 
     // Data access methods
@@ -29,7 +47,7 @@ export class Person {
     familySpouses() { return this._data.family.spouses }                // array of Family *references* for all this Person's spouses
     familySpouseKey(idx) { return this._data.family.spouseKeys[idx] }   // FAM '@F123@' key for spouse idx
     familySpouseKeys() { return this._data.family.spouseKeys }          // array of FAM '@F123@' keys for all this person's spouses
-  
+
     fileId() {
         let pos = this.nameSuffix().indexOf('(#')
         return (pos > -1) ? this.nameSuffix().slice(pos) : ''
