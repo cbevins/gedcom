@@ -18,6 +18,13 @@ export class Ancestors {
 
     map() { return this._data.map }
 
+    // Returns an array of all Person references
+    persons() {
+        const persons = []
+        for (const [person, ancestor] of this.map().entries()) persons.push(person)
+        return persons
+    }
+
     size() { return this._data.map.size }
 
     subject() { return this._data.subject }

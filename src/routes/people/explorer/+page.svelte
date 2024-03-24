@@ -1,9 +1,9 @@
 <script>
-	import Demographics from '$lib/svelte/Demographics.svelte'
 	import SylvanOrigins from '$lib/Sylvan/svelte/SylvanOrigins.svelte'
 	import Profile from '$lib/svelte/Profile.svelte'
     import RootSelector from '$lib/svelte/RootSelector.svelte'
 	import SylvanAncestors from '$lib/Sylvan/svelte/SylvanAncestors.svelte'
+	import SylvanDemographics from '$lib/Sylvan/svelte/SylvanDemographics.svelte'
 	import SylvanGenerations from '$lib/Sylvan/svelte/SylvanGenerations.svelte'
 	import SylvanImmigrants from '$lib/Sylvan/svelte/SylvanImmigrants.svelte'
     import SylvanSubjectSelector from '$lib/Sylvan/svelte/SylvanSubjectSelector.svelte'
@@ -93,7 +93,7 @@
             <div id="demographics" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <Demographics ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanDemographics sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>

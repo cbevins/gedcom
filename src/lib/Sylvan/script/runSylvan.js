@@ -4,6 +4,7 @@
 import * as process from 'process'
 import { file2JsonArray } from '../js/file2JsonArray.js'
 import { Ancestors } from '../class/Ancestors.js'
+import { Demographics } from '../class/Demographics.js'
 import { Generations } from '../class/Generations.js'
 import { lineage } from '../js/lineage.js'
 import { origins } from '../js/origins.js'
@@ -28,6 +29,7 @@ async function mainFunction(parms) {
     if (parms.ancestors) displayAncestors(sylvan)
     if (parms.block) displayTopLevelBlock(sylvan, 'INDI', '@I896@')
     if (parms.contexts) displayContextCounts(sylvan)
+    if (parms.demographics) displayDemographics(sylvan)
     if (parms.findall) displayFindAll(sylvan, '@I896@', ['INDI','NAME','GIVN'])
     if (parms.generations) displayGenerations(sylvan)
     if (parms.lineage) displayLineage(sylvan)
@@ -49,6 +51,7 @@ function getArgs() {
         console.log("   ancestors: displays my ancestors")
         console.log("   block: displays GEDCOM top level block for 'INDI @I896@'")
         console.log("   contexts: displays all the GEDCOM record type contexts and their counts")
+        console.log("   demographics: displays demographics for CDB")
         console.log("   find: displays finding all the GEDCOM records for @I896@ with context INDI-NAME-GIVN")
         console.log("   lineage: displays lineage from CDB to Hannah Hunter")
         console.log("   origins: displays persons ancestral origins")
@@ -64,6 +67,7 @@ function getArgs() {
         if (a === 'a') parms.ancestors = true
         else if (a === 'b') parms.block = true
         else if (a === 'c') parms.contexts = true
+        else if (a === 'd') parms.demographics = true
         else if (a === 'f') parms.findall = true
         else if (a === 'g') parms.generations = true
         else if (a === 'l') parms.lineage = true
@@ -93,6 +97,16 @@ function displayContextCounts(sylvan) {
     }
     console.log(total.toString().padStart(7), 'Total Records')
 }
+
+function displayDemographics(sylvan) {
+    const demog = new Demographics(sylvan)
+    const subject = sylvan.people().find('CollinDouglasBevins1952')
+    const ancestors = new Ancestors(subject)
+    demog.collectData(ancestors.persons())
+    demog.log(0)
+    demog.log(1)
+    demog.log(2)
+} 
 
 // This only works of GEDCOM was saved by new Sylvan(fileName, TRUE)
 function displayFindAll(sylvan, key, context) {
