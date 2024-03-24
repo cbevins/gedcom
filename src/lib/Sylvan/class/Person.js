@@ -24,42 +24,89 @@ export class Person {
         return `${y}y, ${m}m, ${d}d`
     }
 
-    // Data access methods
+    //---------------------------------------------------------------------------------
+    // Birth status access and update methods
+    //---------------------------------------------------------------------------------
     birthCountry() { return this.birthPlace().country() }
     birthDate() { return this._data.birth.date }
+    birthLine() { return `on ${this.birthDate().str()} at ${this.birthPlace().text()}`}
     birthNotes() { return this._data.birth.notes }
     birthPlace() { return this._data.birth.place }
-    birthSources() { return this._data.birth.sources }
+    birthSourceKeys() { return this._data.birth.sourceKeys }
     birthState() { return this.birthPlace().state() }
     birthYear() { return this.birthDate().year() }
+
+    //---------------------------------------------------------------------------------
+    // Death status access and update methods
+    //---------------------------------------------------------------------------------
     
     deathCountry() { return this.deathPlace().country() }
     deathDate() { return this._data.death.date }
+    deathLine() {
+        return this.isLiving() ? `Living (currently ${this.ageString()})`
+            : `on ${this.deathDate().str()} at ${this.deathPlace().text()} (aged ${this.ageString()}d)`
+    }
     deathNotes() { return this._data.death.notes }
     deathPlace() { return this._data.death.place }
-    deathSources() { return this._data.death.sources }
+    deathSourceKeys() { return this._data.death.sourceKeys }
     deathState() { return this.deathPlace().state() }
     deathYear() { return this.deathDate().year() }
 
-    // These all return Family keys or references!
+    //---------------------------------------------------------------------------------
+    // Family instance access and update methods
+    //---------------------------------------------------------------------------------
+
+    familyParent(idx) { return this._data.family.parents[idx] }         // Family *reference* for this Person's parent idx
     familyParents() { return this._data.family.parents }                // array of Family *references* for all this Person's parents
     familyParentKey(idx) { return this._data.family.parentKeys[idx] }   // FAM '@F123@' key for parent idx
     familyParentKeys() { return this._data.family.parentKeys }          // array of FAM '@F123@' keys for all this Person's parents
-    familySpouses() { return this._data.family.spouses }                // array of Family *references* for all this Person's spouses
+    familySpouse(idx) { return this._data.family.spouses[idx] }         // Family *references* for this Person's spouse idx
+    familySpouses() { return this._data.family.spouses } //.sort(function(a, b) {return a.unionDate().year() - b.unionDate().year()})}                // array of Family *references* for all this Person's spouses
     familySpouseKey(idx) { return this._data.family.spouseKeys[idx] }   // FAM '@F123@' key for spouse idx
-    familySpouseKeys() { return this._data.family.spouseKeys }          // array of FAM '@F123@' keys for all this person's spouses
+    familySpouseKeys() { return this._data.family.spouseKeys }          // array of FAM '@F123@' keys for all this Person's spouses
+
+    //---------------------------------------------------------------------------------
+    // Life status access and update methods
+    //---------------------------------------------------------------------------------
 
     fileId() {
         let pos = this.nameSuffix().indexOf('(#')
         return (pos > -1) ? this.nameSuffix().slice(pos) : ''
     }
-    gender() { return this._data.life.gender }      // string 'F' or 'M'
-    isDeceased() { return ! this.isLiving() }       // boolean TRUE or FALSE
-    isFemale() { return this.gender() === 'F'}      // boolean TRUE or FALSE
-    isLiving() { return this._data.life.isLiving }  // boolean TRUE or FALSE
-    isMale() { return this.gender() === 'M'}        // boolean TRUE or FALSE
-    lifeSpan() { return this._data.life.span }      // string like '(1815-1888)'
+
+    // Returns string 'F' or 'M'
+    gender() { return this._data.life.gender }
+
+    // Returns boolean TRUE or FALSE
+    isDeceased() { return ! this.isLiving() }
+
+    // Returns boolean TRUE or FALSE
+    isFemale() { return this.gender() === 'F'}
+    
+    // Returns boolena TRUE or FALSE
+    isImmigrant() {
+        return this.isDeceased() && this.birthPlace().country() && this.deathPlace().country()
+            && this.birthPlace().country() != this.deathPlace().country()
+    }
+
+    // Returns boolena TRUE or FALSE
+    isLiving() { return this._data.life.isLiving }
+
+    // Returns boolena TRUE or FALSE
+    isMale() { return this.gender() === 'M'}
+
+    // Returns a string like '(1815-1888)'
+    lifeSpan() { return this._data.life.span }
+
     messages() { return this._data.messages }
+
+    notes() { return this._data.life.notes }
+
+    sourceKeys() { return this._data.life.sourceKeys }
+
+    //---------------------------------------------------------------------------------
+    // Name access and update methods
+    //---------------------------------------------------------------------------------
     
     fullName() { return this.nameFull() }           // same as nameFull()
     gedKey() { return this._data.gedKey }           // INDI GEDCOM key like '@I123@'
@@ -74,28 +121,50 @@ export class Person {
     nameSurnames() { return this._data.name.surnames }
     nameSurnamePrefix() { return this._data.name.surnamePrefix }
 
-    isImmigrant() {
-        return this.isDeceased() && this.birthPlace().country() && this.deathPlace().country()
-            && this.birthPlace().country() != this.deathPlace().country()
+    //---------------------------------------------------------------------------------
+    // Person access and update methods
+    //---------------------------------------------------------------------------------
+
+    child(idx) { return this.children().length ? this.children()[idx] : null }
+    children() { return this._data.person.children }
+    father(idx=0) { return this.fathers().length ? this.fathers()[idx] : null }
+    fathers() { return this._data.person.fathers }
+    mother(idx=0) { return this.mothers().length ? this.mothers()[idx] : null }
+    mothers() { return this._data.person.mothers }
+    parents() { return this.mothers().concat(this.fathers()) }
+    sibling(idx=0) { return this.siblings().length ? this.siblings()[idx] : null }
+
+    // Returns an array of Person references to all this Person's siblings
+    // Creates a siblings list on first request
+    siblings() {
+        if (! this._data.person.siblings ) {
+            const siblings = new Set()
+            const parents = this.parents()
+            for (let i=0; i<parents.length; i++) {
+                for (let j=0; j<parents[i].children().length; j++) {
+                    const child = parents[i].child(j)
+                    if (child !== this) siblings.add(child)
+                }
+            }
+            this._data.person.siblings = Array.from(siblings)
+                .sort(function(a, b) {return a.birthYear() - b.birthYear()})
+        }
+        return this._data.person.siblings
     }
 
-    // These all return Person references
-    // father() { return this.familyParents().length ? this.familyParents()[0].yParent() : null }
-    // mother() { return this.familyParents().length ? this.familyParents()[0].xParent() : null }
-    father(idx=0) { return this.fathers().length ? this.fathers()[idx] : null }
-    fathers() { return this._data.family.fathers }
-    issue() { return this._data.family.issue }
-    mother(idx=0) { return this.mothers().length ? this.mothers()[idx] : null }
-    mothers() { return this._data.family.mothers }
-    sibling(idx=0) { return this.siblings().length ? this.siblings()[idx] : null }
-    siblings() { return this._data.family.siblings }
     spouse(idx=0) { return this.spouses().length ? this.spouses()[idx] : null }
-    spouses() { return this._data.family.spouses }
+    spouses() { return this._data.person.spouses }
 
-    // Update methods
-    addParentFamily(family) { this._data.family.parents.push(family) }
+    // Update methods called by Families.hydrate()
+    addChild(person) { if (! this.children().includes(person)) this.children().push(person)}
+    addFather(person) { if (! this.fathers().includes(person)) this.fathers().push(person) }
     addMessage(msg) { this._data.messages.push(msg) }
-    addSpouseFamily(family) { this._data.family.spouses.push(family) }
+    addMother(person) { if (! this.mothers().includes(person)) this.mothers().push(person) }
+    addSibling(person) { if (! this.siblings().includes(person)) this.siblings().push(person) }
+    addSpouse(person) { if (! this.spouses().includes(person)) this.spouses().push(person) }
+    // Also called by Families._hydrate() to update Family references
+    addParentFamily(family) { if (! this.familyParents().includes(family)) this.familyParents().push(family) }
+    addSpouseFamily(family) { if (! this.familySpouses().includes(family)) this.familySpouses().push(family) }
 
     // Returns an array of warning or error message [type, text]
     review() {

@@ -113,7 +113,7 @@ export class EvDate {
         if (this.day()) {
             d += this.day() + ' ' + MonthAbr[this.month()] + ' '+ this.year()
         } else if (this.month()) {
-            d += MonthAbr[this.month()] + ' ' + this.year
+            d += MonthAbr[this.month()] + ' ' + this.year()
         } else if (this.year()) {
             d += this.year()
             if (this.year2()) d += '-' + this.year2()

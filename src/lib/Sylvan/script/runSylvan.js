@@ -8,6 +8,7 @@ import { Demographics } from '../class/Demographics.js'
 import { Generations } from '../class/Generations.js'
 import { lineage } from '../js/lineage.js'
 import { origins } from '../js/origins.js'
+import { profile } from '../js/profile.js'
 import { Sylvan } from '../class/Sylvan.js'
 const fileName = "../../data/RootsMagicAncestrySync.ged"
 
@@ -40,7 +41,7 @@ async function mainFunction(parms) {
     // if (parms.origins) displayOrigins(sylvan, 'ElizabethOldhamPepper1755')
     // if (parms.origins) displayOrigins(sylvan, 'Rhesa"Reese"Collins1780')
     if (parms.origins) displayOrigins(sylvan, 'CollinDouglasBevins1952')
-    if (parms.person) displayPerson(sylvan)
+    if (parms.profile) displayProfile(sylvan)
     if (parms.summary) displaySummary(sylvan)
     if (parms.toplevels) displayTopLevelCounts(sylvan)
 }
@@ -55,7 +56,7 @@ function getArgs() {
         console.log("   find: displays finding all the GEDCOM records for @I896@ with context INDI-NAME-GIVN")
         console.log("   lineage: displays lineage from CDB to Hannah Hunter")
         console.log("   origins: displays persons ancestral origins")
-        console.log("   person: displays person brief")
+        console.log("   profile: displays person profile")
         console.log("   summary: displays Sylvan records summaryperson brief")
         console.log("   toplevels: displays all the GEDCOM Level 0 command types and their counts")
         process.exit()
@@ -72,7 +73,7 @@ function getArgs() {
         else if (a === 'g') parms.generations = true
         else if (a === 'l') parms.lineage = true
         else if (a === 'o') parms.origins = true
-        else if (a === 'p') parms.person = true
+        else if (a === 'p') parms.profile = true
         else if (a === 's') parms.summary = true
         else if (a === 't') parms.toplevels = true
     }
@@ -165,12 +166,12 @@ function displayOrigins(sylvan, subjectKey) {
 }
 
 // Illustrates how to hydrate the entire GEDCOM Tree
-function displayPerson(sylvan) {
+function displayProfile(sylvan) {
     const people = sylvan.people()
     const subject = people.find('CollinDouglasBevins1952')
-    console.log(`${subject.nameLabel()}  `)
-    console.log(subject.birthPlace())
-
+    // console.log(profile(subject))
+    console.log(profile(people.find('WilliamLongfordBevins1815')))
+    return
     const fathers = subject.fathers()
     const mothers = subject.mothers()
     const siblings = subject.siblings()

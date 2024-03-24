@@ -16,6 +16,7 @@ export class Family {
     children() { return this._data.children }
 
     disunionDate() { return this._data.disunion.date }
+    disunionLine() { return `on ${this.disunionDate().str()} at ${this.disunionPlace().text()}`}
     disunionNotes() { return this._data.disunion.notes }
     disunionPlace() { return this._data.disunion.place }
     disunionSources() { return this._data.disunion.sources }
@@ -23,6 +24,7 @@ export class Family {
     gedKey() { return this._data.gedKey }
 
     unionDate() { return this._data.union.date }
+    unionLine() { return `on ${this.unionDate().str()} at ${this.unionPlace().text()}`}
     unionNotes() { return this._data.union.notes }
     unionPlace() { return this._data.union.place }
     unionSources() { return this._data.union.sources }

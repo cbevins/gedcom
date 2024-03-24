@@ -70,41 +70,6 @@ export class People {
         return a
     }
 
-    updateFamily(families) {
-        for (const [gedKey, person] of this.gedKeyMap().entries()) {
-            person._data.family.fathers = []
-            person._data.family.mothers = []
-            person._data.family.siblings = []
-            for (let i=0; i< person.familyParentKeys().length; i++) {
-                const famKey = person.familyParentKey(i)
-                const family = families.find(famKey)
-                if (! family) throw new Error(`*** Unable to find Family '${famKey}'`)
-                if (family.xParent() && ! person._data.family.mothers.includes(family.xParent()))
-                    person._data.family.mothers.push(family.xParent())
-                if (family.yParent() && ! person._data.family.fathers.includes(family.yParent()))
-                    person._data.family.fathers.push(family.yParent())
-                for (let j=0; j<family.children().length; j++) {
-                    const child = family.child(j)
-                    if (child && child !== person) person._data.family.siblings.push(child)
-                }
-            }
-            person._data.family.spouses = []
-            person._data.family.issue = []
-            for (let i=0; i< person.familySpouseKeys().length; i++) {
-                const famKey = person.familySpouseKey(i)
-                const family = families.find(famKey)
-                if (family.xParent() && family.yParent()) {
-                    const spouse = (person.gedKey() === family.xParent().gedKey()) ? family.yParent() : family.xParent()
-                    if (spouse) person._data.family.spouses.push(spouse)
-                    for (let j=0; j<family.children().length; j++) {
-                        const child = family.child(j)
-                        if (child) person._data.family.issue.push(child)
-                    }
-                }
-            }
-        }
-    }
-
     // ----------------------------------------------------------------------
     // Private methods
     // ----------------------------------------------------------------------
@@ -138,29 +103,34 @@ export class People {
         person._data.life = {
             gender: this._gender(key),          // string 'F' or 'M'
             isLiving: this._isLiving(key),      // boolean TRUE or FALSE
+            notes: this._notes(key),
+            sourceKeys: this._sourceKeysAll(key),
             span: this._lifeSpan(key)           // string like '(1815-1888)'
         }
         person._data.birth = {
             date: new EvDate(this._birthDate(key)),     // EvDate instance
             notes: this._birthNoteAll(key),             // array of notes, which may contain newline separators '/n'
             place: this._addPlace(this._birthPlace(key), person, 'birth'), // {text:, key:, count:, country:, state:, county:, locale:}
-            sources: this._birthSourceAll(key)          // array of sources keys like '@S1234@'
+            sourceKeys: this._birthSourceKeysAll(key)   // array of sources keys like '@S1234@'
         },
         person._data.death = {
             date: new EvDate(this._deathDate(key)),     // EvDate instance
             notes: this._deathNoteAll(key),             // array of notes, which may contain newline separators '/n'
             place: this._addPlace(this._deathPlace(key), person, 'death'), // {text:, key:, count:, country:, state:, county:, locale:}
-            sources: this._deathSourceAll(key)          // array of sources keys like '@S1234@'
+            sourceKeys: this._deathSourceKeysAll(key)          // array of sources keys like '@S1234@'
         }
-        person._data.family = {
-            parentKeys: this._parentalFamilyKeys(key),   // array of FAMC '@F123@' keys
-            parents: [],                                // array of Family references (filled by Families constructor)
-            spouseKeys: this._spousalFamilyKeys(key),    // array of FAMS '@F123@' keys
-            spouses: [],
-            issue: [],
-            fathers: [],                                 // array of Family references (filled by Families constructor),
+        person._data.family = {                         // FAM keys and Family references
+            parents: [],                                // array of Family references (filled by Families._hydrate() from 0 FAM recordfs)
+            parentKeys: this._parentalFamilyKeys(key),  // array of FAMC '@F123@' keys (filled from INDI-FAMC records)
+            spouses: [],                                // array of Family references (filled by Families._hydrate() from 0 FAM records)
+            spouseKeys: this._spousalFamilyKeys(key),   // array of FAMS '@F123@' keys (filled from INDI-FAMS records)
+        }
+        person._data.person = {
+            children: [],                               // array of all children Persons by all spouses
+            fathers: [],                                // array of all father Person references
             mothers: [],
-            siblings: []
+            siblings: null,                             // filled on first access
+            spouses: []                                 // array of spouse Person references
         }
         if (person.isDeceased())
         return person
@@ -169,6 +139,7 @@ export class People {
     _hydrateAll() {
         for(const [key, person] of this.gedKeyMap().entries()) {
             this._hydrate(key, person)
+            // Add this Person to the nameKey lookup table, checking for duplicate keys first
             if (this.nameKeyMap().has(person.nameKey())) {
                 const current = this.nameKeyMap().get(person.nameKey())
                 const newKey = person.nameKey()+person.gedKey()
@@ -177,6 +148,7 @@ export class People {
             }
             this.nameKeyMap().set(person.nameKey(), person)
 
+            // Add this Person to the label lookup table, checking for duplicate keys first
             if (this.nameLabelMap().has(person.label())) {
                 const current = this.nameLabelMap().get(person.label())
                 const newKey = person.label() + ' ' + person.gedKey()
@@ -213,7 +185,7 @@ export class People {
     _birthPlace(key) { return this.gedcom().findFirstContent(key, ['INDI', 'BIRT', 'PLAC']) }
     // birthPlaceAll(key) { return this._all(key, ['INDI', 'BIRT', 'PLAC']) }
     // birthSource(key) { return this.gedcom().findFirstContent(key, ['INDI', 'BIRT', 'SOUR']) }
-    _birthSourceAll(key) { return this.gedcom().findAllContent(key, ['INDI', 'BIRT', 'SOUR']) }
+    _birthSourceKeysAll(key) { return this.gedcom().findAllContent(key, ['INDI', 'BIRT', 'SOUR']) }
     _birthYear(key, missing='?') { return this._year(this._birthDate(key), missing) }
 
     // INDI-DEAT
@@ -223,13 +195,15 @@ export class People {
     _deathNoteAll(key) { return this.gedcom().findAllContent(key, ['INDI', 'DEAT', 'NOTE']) }
     _deathPlace(key) { return this.gedcom().findFirstContent(key, ['INDI', 'DEAT', 'PLAC']) }
     // deathPlaceAll(key) { return this._all(key, ['INDI', 'DEAT', 'PLAC']) }
-    // deathSource(key) { return this.gedcom().findFirstContent(key, ['INDI', 'DEAT', 'SOUR']) }
-    _deathSourceAll(key) { return this.gedcom().findAllContent(key, ['INDI', 'DEAT', 'SOUR']) }
+    // _deathSourceKeys(key) { return this.gedcom().findFirstContent(key, ['INDI', 'DEAT', 'SOUR']) }
+    _deathSourceKeysAll(key) { return this.gedcom().findAllContent(key, ['INDI', 'DEAT', 'SOUR']) }
     _deathYear(key, missing='?') { return this._year(this._deathDate(key), missing) }
 
     // INDI-FAMC, INDI-FAMS
     _parentalFamilyKeys(key) { return this.gedcom().findAllContent(key, ['INDI', 'FAMC'])}
     _spousalFamilyKeys(key) { return this.gedcom().findAllContent(key, ['INDI', 'FAMS'])}
+    _notes(key) { return this.gedcom().findAllContent(key, ['INDI', 'NOTE']) }
+    _sourceKeysAll(key) { return this.gedcom().findAllContent(key, ['INDI', 'SOUR']) }
 
     // Life
     _gender(key) { return this.gedcom().findFirstContent(key, ['INDI', 'SEX']) }
