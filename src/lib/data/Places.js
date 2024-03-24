@@ -8,7 +8,7 @@ export const Countries = new Map([
     ['australia', 'Australia'],
     ['belgique', 'Belgium'],
     ['belgium', 'Belgium'],
-    ['colonial america', 'Colonial America'],
+    ['colonial america', 'USA'],
     ['england', 'England'],
     ['canada', 'Canada'],
     ['france', 'France'],

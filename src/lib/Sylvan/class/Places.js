@@ -12,6 +12,14 @@ export class Places {
     // Public data access methods
     // ----------------------------------------------------------------------
 
+    countries() {
+        const country = new Set()
+        for(const [text, place] of this.map().entries()) {
+            country.add(place.country())
+        }
+        return Array.from(country).sort()
+    }
+
     get(text) { return this.map().get(text) }
 
     has(text) { return this.map().has(text) }

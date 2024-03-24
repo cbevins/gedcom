@@ -4,6 +4,7 @@
 	import Profile from '$lib/svelte/Profile.svelte'
     import RootSelector from '$lib/svelte/RootSelector.svelte'
 	import SylvanAncestors from '$lib/Sylvan/svelte/SylvanAncestors.svelte'
+	import SylvanGenerations from '$lib/Sylvan/svelte/SylvanGenerations.svelte'
 	import SylvanImmigrants from '$lib/Sylvan/svelte/SylvanImmigrants.svelte'
     import SylvanSubjectSelector from '$lib/Sylvan/svelte/SylvanSubjectSelector.svelte'
     import { ged, rootNameKey, subjectNameKey } from '$lib/js/store.js'
@@ -84,6 +85,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h3>{$subjectNameKey} Ancestral Migration Routes</h3>
+                        <SylvanGenerations sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>

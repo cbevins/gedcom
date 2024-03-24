@@ -4,6 +4,7 @@
 import * as process from 'process'
 import { file2JsonArray } from '../js/file2JsonArray.js'
 import { Ancestors } from '../class/Ancestors.js'
+import { Generations } from '../class/Generations.js'
 import { lineage } from '../js/lineage.js'
 import { origins } from '../js/origins.js'
 import { Sylvan } from '../class/Sylvan.js'
@@ -28,6 +29,7 @@ async function mainFunction(parms) {
     if (parms.block) displayTopLevelBlock(sylvan, 'INDI', '@I896@')
     if (parms.contexts) displayContextCounts(sylvan)
     if (parms.findall) displayFindAll(sylvan, '@I896@', ['INDI','NAME','GIVN'])
+    if (parms.generations) displayGenerations(sylvan)
     if (parms.lineage) displayLineage(sylvan)
     // if (parms.origins) displayOrigins(sylvan, 'WilliamBevins1705')
     // if (parms.origins) displayOrigins(sylvan, 'SarahWilkinson1696')
@@ -63,6 +65,7 @@ function getArgs() {
         else if (a === 'b') parms.block = true
         else if (a === 'c') parms.contexts = true
         else if (a === 'f') parms.findall = true
+        else if (a === 'g') parms.generations = true
         else if (a === 'l') parms.lineage = true
         else if (a === 'o') parms.origins = true
         else if (a === 'p') parms.person = true
@@ -104,6 +107,15 @@ function displayFindAll(sylvan, key, context) {
         const rec = records[i]
         console.log(rec.lineNo(), rec.level(), rec.content())
     }
+}
+
+function displayGenerations(sylvan) {
+    const gen = new Generations(sylvan)
+    // Select the population of Persons
+    const subject = sylvan.people().find('CollinDouglasBevins1952')
+    gen.calc(subject)
+    const lines = gen.lines()
+    console.log(lines)
 }
 
 function displayLineage(sylvan) {
