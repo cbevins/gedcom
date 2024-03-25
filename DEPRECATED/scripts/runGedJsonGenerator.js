@@ -1,7 +1,7 @@
 // Parses a GEDCOM file into a network-transportable JSON object
 // and writes it to a 'GedJson<Source>.js' file for subsequent browser access.
 import fs from 'fs'
-import { Gedcom } from '../../src/lib/js/Gedcom.js'
+import { Gedcom } from '../js/Gedcom.js'
 
 const AncestryFileName = "../data/Bevins-Riley Family Tree.ged"
 const RootsMagicFileName = "../dataRootsMagic.ged"

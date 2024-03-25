@@ -1,6 +1,6 @@
 <script>
     import Svelecte from 'svelecte'
-    import { subjectNameKey } from '$lib/js/store.js'
+    import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
     export let sylvan
 

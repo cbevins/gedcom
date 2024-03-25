@@ -1,5 +1,5 @@
 import { GedStore } from '../js/GedStore.js'
-import { gedJson } from '../data/GedJsonAncestry.js'
+import { gedJson } from '../../src/lib/data/GedJsonAncestry.js'
 import { relationship } from '../js/relationship.js'
 
 const time1 = new Date()

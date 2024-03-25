@@ -1,7 +1,7 @@
 // EXPERIMENTAL
-import { GedStore } from '../../src/lib/js/GedStore.js'
+import { GedStore } from '../js/GedStore.js'
 import { gedJson } from '../../src/lib/data/GedJsonAncestry.js'
-import { Relate } from '../../src/lib/js/Relate.js'
+import { Relate } from '../js/Relate.js'
 
 const ged = new GedStore(gedJson)
 const rel = new Relate(ged)

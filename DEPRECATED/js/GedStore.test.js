@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { GedStore } from './GedStore.js'
-import { gedJson } from '../data/GedJsonAncestry.js'
+import { gedJson } from '../../src/lib/data/GedJsonAncestry.js'
 import { relationship } from './relationship.js'
 
 const gd = new GedStore(gedJson)

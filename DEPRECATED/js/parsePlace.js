@@ -1,4 +1,4 @@
-import {Countries, Regions, States, Recodes} from '../data/Places.js'
+import {Countries, Regions, States, Recodes} from '../../src/lib/data/Places.js'
 
 // Attempts to resolve each segment into a standard place string.
 // Returns an array of place name segments and error message

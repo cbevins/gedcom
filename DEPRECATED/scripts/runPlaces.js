@@ -1,6 +1,6 @@
 // Writes all the standardized Place names and their counts to a file
 import fs from 'fs'
-import { GedStore } from '../../src/lib/js/GedStore.js'
+import { GedStore } from '../js/GedStore.js'
 import { gedJson } from '../../src/lib/data/GedJsonAncestry.js'
 import {Countries, Regions, States, Recodes} from '../../src/lib/data/Places.js'
 

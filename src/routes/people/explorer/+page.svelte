@@ -6,7 +6,7 @@
 	import SylvanOrigins from '$lib/Sylvan/svelte/SylvanOrigins.svelte'
     import SylvanProfile from '$lib/Sylvan/svelte/SylvanProfile.svelte'
     import SylvanSubjectSelector from '$lib/Sylvan/svelte/SylvanSubjectSelector.svelte'
-    import { subjectNameKey } from '$lib/js/store.js'
+    import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
     export let data // contain data.sylvan loaded and passed here by ./+page.js:load()
 

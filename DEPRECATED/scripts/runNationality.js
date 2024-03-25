@@ -3,9 +3,9 @@ A simple script showing how to determine and display
 the subject's ancestral country of origin fractions.
 Currently uses the last location segment as the 'origin'.
 */
-import { GedStore } from '../../src/lib/js/GedStore.js'
+import { GedStore } from '../js/GedStore.js'
 import { gedJson } from '../../src/lib/data/GedJsonAncestry.js'
-import { calcNationality, logNationality } from '../../src/lib/js/nationality.js'
+import { calcNationality, logNationality } from '../js/nationality.js'
 
 const time1 = new Date()
 const gedStore = new GedStore(gedJson)

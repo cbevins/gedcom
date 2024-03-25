@@ -1,5 +1,5 @@
 <script>
-	import Title1 from '$lib/svelte/Title1.svelte'
+	import Title1 from '$lib/Sylvan/svelte/Title1.svelte'
 </script>
 <div>
 	<Title1 title='Notation' />

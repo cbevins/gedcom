@@ -1,7 +1,7 @@
 // EXPERIMENTAL
-import { GedStore } from '../../src/lib/js/GedStore.js'
+import { GedStore } from '../js/GedStore.js'
 import { gedJson } from '../../src/lib/data/GedJsonAncestry.js'
-import { Family } from '../../src/lib/js/Family.js'
+import { Family } from '../js/Family.js'
 
 const gedStore = new GedStore(gedJson)
 const family = new Family(gedStore)
