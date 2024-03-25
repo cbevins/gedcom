@@ -1,8 +1,8 @@
 <script>
     import { Ancestors } from '$lib/Sylvan/class/Ancestors.js'
     import { Demographics } from '$lib/Sylvan/class/Demographics.js'
-	export let sylvan
     export let subjectNameKey
+	export let sylvan
 
     // 'dem' is an instance of Demographics class
     $: dem = new Demographics(sylvan)

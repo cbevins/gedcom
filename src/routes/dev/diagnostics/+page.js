@@ -6,7 +6,7 @@
  * This function then parses the file array to create and hydrate the master Sylvan instance.
  */
 import { Sylvan } from '$lib/Sylvan/class/Sylvan.js'
-import { getSylvan, setSylvan } from '$lib/Sylvan/js/singletons.js'
+import { getSylvan, setSylvan, setPersonSelectors } from '$lib/Sylvan/js/singletons.js'
 
 // since there's no dynamic data here, we can prerender
 // it so that it gets served as a static asset in production
@@ -18,11 +18,16 @@ export const prerender = true
  */
 /** @type {import('./$types').PageLoad} */
 export async function load({ data }) {
-    console.log(`CLIENT: src/routes/+page.js:load() - received GEDCOM array with ${data.gedcomLines.length} lines.`)
+    const self = 'CLIENT: src/routes/dev/diagnostics/+page.js:load() -'
+    console.log(`${self} received GEDCOM array with ${data.gedcomLines.length} lines.`)
     if (! getSylvan()) {
         const sylvan = new Sylvan(data.gedcomLines)
         setSylvan(sylvan)
-        console.log(`CLIENT: src/routes/+page.js:load() - created Sylvan with ${sylvan.people().size()} Persons`)
+        setPersonSelectors(sylvan.people().selectors())
+        console.log(`${self} created Sylvan with ${sylvan.people().size()} Persons`)
+        return {sylvan: sylvan}
+    } else {
+        console.log(`${self} - Sylvan was previously loaded`)
+        return {sylvan: getSylvan()}
     }
-    return {sylvan: getSylvan()}
 }

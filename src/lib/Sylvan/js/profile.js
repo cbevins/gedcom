@@ -43,6 +43,8 @@ export function profile(subject, recurse=false) {
         const spouse = (subject === family.xParent()) ? family.yParent() : family.xParent()
         str += `Spouse ${i+1}: ${spouse ? spouse.fullName(): 'unknown'}\n`
         str += `Married: ${family.unionLine()}\n`
+        str += `Marr Notes: ${family.unionNotes()}\n`
+        str += `Marr Source Keys: ${family.unionSourceKeys()}\n`
         str += `Children: ${family.children().length}\n`
         for (let j=0; j<family.children().length; j++) {
             const child = family.child(j)

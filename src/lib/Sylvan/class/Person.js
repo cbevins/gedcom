@@ -43,7 +43,7 @@ export class Person {
     deathCountry() { return this.deathPlace().country() }
     deathDate() { return this._data.death.date }
     deathLine() {
-        return this.isLiving() ? `Living (currently ${this.ageString()})`
+        return this.isLiving() ? `currently ${this.ageString()}`
             : `on ${this.deathDate().str()} at ${this.deathPlace().text()} (aged ${this.ageString()}d)`
     }
     deathNotes() { return this._data.death.notes }

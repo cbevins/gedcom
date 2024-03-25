@@ -1,16 +1,17 @@
 <script>
-	import SylvanOrigins from '$lib/Sylvan/svelte/SylvanOrigins.svelte'
-	import Profile from '$lib/svelte/Profile.svelte'
+	import Cartouche from '$lib/Sylvan/svelte/Profile/Cartouche.svelte'
+    import Profile from '$lib/svelte/Profile.svelte'
     import RootSelector from '$lib/svelte/RootSelector.svelte'
 	import SylvanAncestors from '$lib/Sylvan/svelte/SylvanAncestors.svelte'
 	import SylvanDemographics from '$lib/Sylvan/svelte/SylvanDemographics.svelte'
 	import SylvanGenerations from '$lib/Sylvan/svelte/SylvanGenerations.svelte'
 	import SylvanImmigrants from '$lib/Sylvan/svelte/SylvanImmigrants.svelte'
+	import SylvanOrigins from '$lib/Sylvan/svelte/SylvanOrigins.svelte'
+    import SylvanProfile from '$lib/Sylvan/svelte/SylvanProfile.svelte'
     import SylvanSubjectSelector from '$lib/Sylvan/svelte/SylvanSubjectSelector.svelte'
     import { ged, rootNameKey, subjectNameKey } from '$lib/js/store.js'
-	import { getSylvan } from '$lib/Sylvan/js/singletons.js'
 
-	const sylvan = getSylvan()
+    export let data
 
     const tabs = [
         {href: '#family', title: 'Family Groups', c: 'nav-link active'},
@@ -29,7 +30,7 @@
         <div class="card">
             <div>
                 SYLVAN Subject: {$subjectNameKey}
-                <SylvanSubjectSelector sylvan={sylvan} />
+                <SylvanSubjectSelector sylvan={data.sylvan}/>
             </div>
             <!-- <div>
                 Root: {$rootNameKey}
@@ -60,7 +61,7 @@
             <div id="ancestors" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanAncestors sylvan={sylvan} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanAncestors sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -68,7 +69,7 @@
             <div id="immigrants" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanImmigrants sylvan={sylvan} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanImmigrants sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -76,7 +77,7 @@
             <div id="origins" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanOrigins sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanOrigins sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -85,7 +86,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h3>{$subjectNameKey} Ancestral Migration Routes</h3>
-                        <SylvanGenerations sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanGenerations sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -93,7 +94,7 @@
             <div id="demographics" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanDemographics sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanDemographics sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -101,7 +102,7 @@
             <div id="relationships" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <h3>{$subjectNameKey} Relationships</h3>
+                        <SylvanProfile sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>

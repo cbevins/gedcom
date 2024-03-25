@@ -77,7 +77,7 @@ export class Demographics {
                 // Calculate age at death
                 const ages = person.age()
                 const decAge = ages[0] + (ages[1] ? (ages[1]-1)/12 + ages[2]/30/12 : 0)
-                this._addDatum(gender, century, [decAge, person.spouses().length, person.issue().length])
+                this._addDatum(gender, century, [decAge, person.spouses().length, person.children().length])
             }
         }
     }

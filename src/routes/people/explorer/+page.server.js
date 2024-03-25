@@ -11,6 +11,7 @@ import { file2JsonArray } from '$lib/Sylvan/js/file2JsonArray.js'
 export async function load() {
     const fileName = 'src/lib/data/RootsMagicAncestrySync.ged'
     const lines = await file2JsonArray(fileName)
-    console.log(`SERVER: src/routes/+page.server.js:load() - read ${lines.length} lines from GEDCOM file '${fileName}'`)
-	return {gedcomLines: lines, serverMessage: 'src/routes/+page.server.js'}
+    const self = 'SERVER: src/routes/people/explorer/+page.server.js:load()'
+    console.log(`${self} - read ${lines.length} lines from GEDCOM file '${fileName}'`)
+	return {gedcomLines: lines, loader: self}
 }

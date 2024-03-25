@@ -10,6 +10,10 @@ import { lineage } from '../js/lineage.js'
 import { origins } from '../js/origins.js'
 import { profile } from '../js/profile.js'
 import { Sylvan } from '../class/Sylvan.js'
+
+const cdb  = 'CollinDouglasBevins1952'
+const wlb = 'WilliamLongfordBevins1815'
+
 const fileName = "../../data/RootsMagicAncestrySync.ged"
 
 const time1 = new Date()
@@ -127,14 +131,14 @@ function displayFindAll(sylvan, key, context) {
 function displayGenerations(sylvan) {
     const gen = new Generations(sylvan)
     // Select the population of Persons
-    const subject = sylvan.people().find('CollinDouglasBevins1952')
+    const subject = sylvan.people().find(cdb)
     gen.calc(subject)
     const lines = gen.lines()
     console.log(lines)
 }
 
 function displayLineage(sylvan) {
-    const subject = sylvan.people().find('CollinDouglasBevins1952')
+    const subject = sylvan.people().find(cdb)
     const target = sylvan.people().find('HannahHunter1753')
     console.log(`${subject.fullName()} to ${target.fullName()}`)
     const chain = lineage(subject, target)
@@ -172,20 +176,6 @@ function displayProfile(sylvan) {
     // console.log(profile(subject))
     console.log(profile(people.find('WilliamLongfordBevins1815')))
     return
-    const fathers = subject.fathers()
-    const mothers = subject.mothers()
-    const siblings = subject.siblings()
-    const spouses = subject.spouses()
-    const issue = subject.issue()
-    console.log(`${subject.fullName()} has ${mothers.length} mothers: ${subject.mother().fullName()}`)
-    console.log(`${subject.fullName()} has ${fathers.length} fathers: ${subject.father().fullName()}`)
-    console.log(`${subject.fullName()} has ${siblings.length} siblings:`)
-    for(let i=0; i<siblings.length; i++) console.log(siblings[i].fullName())
-    console.log(`\n${subject.fullName()} has ${spouses.length} spouses: ${subject.spouse().fullName()}`)
-    console.log(`${subject.fullName()} has ${issue.length} children:`)
-    for(let i=0; i<issue.length; i++) console.log(issue[i].fullName())
-    // const fam = person.familyParents()[0]
-    // console.log(fam.xParent().fullName(), 'MARR', fam.unionDate(), 'DIV', fam.disunionDate())
 }
 
 function displaySummary(sylvan) {

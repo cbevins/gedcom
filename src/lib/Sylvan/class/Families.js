@@ -67,8 +67,10 @@ export class Families {
         for(let i=0; i<ar.length; i++) family.children().push(this.person(ar[i]))
         
         // Add this Family to each of the parents' spousal family array
-        if (family.xParent()) family.xParent().addSpouseFamily(family)
-        if (family.yParent()) family.yParent().addSpouseFamily(family)
+        if (family.xParent() && family.yParent()) {
+            family.xParent().addSpouseFamily(family)
+            family.yParent().addSpouseFamily(family)
+        }
         // Add this spouse to each of the other's spousal Person array
         if (family.xParent() && family.yParent()) {
             family.xParent().addSpouse(family.yParent())
@@ -92,14 +94,14 @@ export class Families {
             date: new EvDate(this._marrDate(famKey)),   // EvDate instance
             notes: this._marrNoteAll(famKey),           // array of notes, which may contain newline separators '/n'
             place: this._addPlace(this._marrPlace(famKey), family.xParent(), 'union'),
-            sources: this._marrSourceAll(famKey)        // array of sources keys like '@S1234@'
+            sourceKeys: this._marrSourceAll(famKey)     // array of sources keys like '@S1234@'
         }
 
         family._data.disunion = {
             date: new EvDate(this._divDate(famKey)),    // EvDate instance
             notes: this._divNoteAll(famKey),            // array of notes, which may contain newline separators '/n'
             place: this._addPlace(this._marrPlace(famKey), family.xParent(), 'union'),
-            sources: this._divSourceAll(famKey)         // array of sources keys like '@S1234@'
+            sourceKeys: this._divSourceAll(famKey)      // array of sources keys like '@S1234@'
         }
     }
 

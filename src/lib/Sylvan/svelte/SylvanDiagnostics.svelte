@@ -1,8 +1,8 @@
 <script>
 	import { Ancestors } from '$lib/Sylvan/class/Ancestors.js'
-	export let sylvan
-    export let subjectNameKey
     export let prefix
+    export let subjectNameKey
+	export let sylvan
 
 function diagnosticsHtml(sylvan, subjectKey, prefix) {
     const subject = sylvan.people().find(subjectKey)

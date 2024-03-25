@@ -1,7 +1,7 @@
 <script>
 	import { Ancestors } from '$lib/Sylvan/class/Ancestors.js'
-	export let sylvan
     export let subjectNameKey
+	export let sylvan
 
 	const Generations =[
     'Subject', 'Parent', 'GrandP', '1st GPP', '2nd GPP', '3rd GGP',

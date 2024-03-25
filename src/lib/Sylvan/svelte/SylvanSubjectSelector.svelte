@@ -1,6 +1,8 @@
 <script>
+    import { getPersonSelectors, getSylvan } from '$lib/Sylvan/js/singletons.js'
     import Svelecte from 'svelecte'
     import { subjectNameKey } from '$lib/js/store.js'
+
     export let sylvan
 
     let selectedOption = null
@@ -9,7 +11,13 @@
         ? (selectedValue === 'CollinDouglasBevins1952' ? '💀' : '👍')
         : '👉'
 
-    const options = sylvan.people().selectors()
+    const shortList = [
+        {key: 'CollinDouglasBevins1952', label: 'Collin'},
+        {key: 'BarbaraJeanneRiley1953', label: 'Barbie'},
+        {key: 'WilliamLongfordBevins1815', label: 'William Longford Bevins'}
+    ]
+    // $: options = getPersonSelectors()
+    $: options = shortList
     function changed(ev) {
         if (selectedValue && sylvan.people().find(selectedValue)) {
             // console.log(`subjectNameKey UPDATED to '${selectedValue}'`)
@@ -22,7 +30,7 @@
 
 <Svelecte options={options}
     on:change={changed}
-    inputId="person"
+    inputId="sylvanPersonSelector"
     valueField="key"
     labelField="label"
     clearable
