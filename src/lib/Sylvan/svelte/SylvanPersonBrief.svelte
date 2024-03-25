@@ -2,11 +2,11 @@
 	import NotesBadge from '$lib/Sylvan/svelte/Profile/NotesBadge.svelte'
 	import SourcesBadge from '$lib/Sylvan/svelte/Profile/SourcesBadge.svelte'
 	import UnionLine from '$lib/Sylvan/svelte/Profile/UnionLine.svelte'
+    
     export let label = ''
+    export let person
     export let subjectNameKey
     export let sylvan
-
-    $: subject = sylvan.people().find(subjectNameKey)
 
     function changeSubject(newKey) {
         const newPerson = sylvan.people().find(newKey)
@@ -16,18 +16,18 @@
 
 <span class='detail'>{label}</span>
 {#if label!==''}
-    <a href="#/" on:click={changeSubject(subject.nameKey())}>{subject.label()}</a>
+    <a href="#/" on:click={changeSubject(person.nameKey())}>{person.label()}</a>
 {:else}
-    {subject.label()}
+    {person.label()}
 {/if}
 
 <div class='details'>
-    <span class='detail'>Born:</span> {subject.birthLine()}
-    <NotesBadge label='Birth' notes={subject.birthNotes()} />
-    <SourcesBadge label='Birth' sources={subject.birthSourceKeys()} />
+    <span class='detail'>Born:</span> {person.birthLine()}
+    <NotesBadge label='Birth' notes={person.birthNotes()} />
+    <SourcesBadge label='Birth' sources={person.birthSourceKeys()} />
 </div>
 
-{#each subject.familySpouses() as family, i}
+{#each person.familySpouses() as family, i}
     <div class='details'>
         <UnionLine {sylvan} bind:subjectNameKey={subjectNameKey} {family} />
         <NotesBadge label='Union' notes={family.unionNotes()} />
@@ -36,7 +36,7 @@
 {/each}
 
 <div class='details'>
-    <span class='detail'>{subject.isLiving() ? 'Living' : 'Died'}:</span> {subject.deathLine()}
-    <NotesBadge label='Death' notes={subject.deathNotes()} />
-    <SourcesBadge label='Death' sources={subject.deathSourceKeys()} />
+    <span class='detail'>{person.isLiving() ? 'Living' : 'Died'}:</span> {person.deathLine()}
+    <NotesBadge label='Death' notes={person.deathNotes()} />
+    <SourcesBadge label='Death' sources={person.deathSourceKeys()} />
 </div>
