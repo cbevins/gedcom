@@ -29,7 +29,7 @@
 
 {#each person.familySpouses() as family, i}
     <div class='details'>
-        <UnionLine {sylvan} bind:subjectNameKey={subjectNameKey} {family} />
+        <UnionLine {sylvan} spouse={family.spouse(person)} bind:subjectNameKey={subjectNameKey} {family} />
         <NotesBadge label='Union' notes={family.unionNotes()} />
         <SourcesBadge label='Union' sources={family.unionSourceKeys()} />
     </div>

@@ -1,10 +1,11 @@
 <script>
     export let subjectNameKey
     export let family
+    export let spouse
     export let sylvan
 
-    $: subject = sylvan.people().find(subjectNameKey)
-    $: spouse = family.spouse(subject)
+    // $: subject = sylvan.people().find(subjectNameKey)
+    // $: spouse = family.spouse(subject)
 
     function changeSubject(family) {
         const newKey = spouse.nameKey()
