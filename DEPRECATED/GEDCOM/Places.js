@@ -1,5 +1,5 @@
 import { Place } from './Place.js'
-import {Countries, Regions, States} from '../data/Places.js'
+import {Countries, Regions, States} from '../../src/lib/data/Places.js'
 
 export class Places {
     constructor() {

@@ -1,7 +1,4 @@
-// TO DO
-// Sort spouses by union date
-// Sort children by birth date
-
+// Just an example of collecting Person data for a family profile
 function noteLines(notes) {
     let a = []
     for (let i=0; i<notes.length; i++) a = a.concat(notes[i].split('/n'))

@@ -84,7 +84,6 @@ export function parseDate(text) {
     return date
 }
 
-
 // 'date' is object with: {year: 1952, month: 9, day: 4, qual: 'about', year2: 0, msg: null, time: null}
 export function formatDate(date, unknown='?') {
     let d = (date.qual === '') ? '' : date.qual + ' '

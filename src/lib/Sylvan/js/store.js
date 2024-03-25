@@ -1,9 +1,7 @@
 /**
  * This file is only used by the Svelte browser app
  */
-import { readable, writable } from 'svelte/store'
-// import { GedStore } from './GedStore.js'
-// import { gedJson } from '../data/GedJsonAncestry.js'
+import { writable } from 'svelte/store'
 
 export const rootNameKey = writable('CollinDouglasBevins1952')
 
