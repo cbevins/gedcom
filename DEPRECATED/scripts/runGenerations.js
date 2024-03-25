@@ -1,8 +1,8 @@
 // Demo program for reading a GEDCOM file via async or event callback
-import { Gedcom } from '../js/Gedcom.js'
-import { GedStore } from '../js/GedStore.js'
-import { Ancestors } from '../js/Ancestors.js'
-import { GenerationsData } from '../data/Generations.js'
+import { Gedcom } from '../../src/lib/js/Gedcom.js'
+import { GedStore } from '../../src/lib/js/GedStore.js'
+import { Ancestors } from '../../src/lib/js/Ancestors.js'
+import { GenerationsData } from '../../src/lib/data/Generations.js'
 
 const Ancestry = "../data/Bevins-Riley Family Tree.ged"
 const RootsMagic = "../data/RootsMagic.ged"

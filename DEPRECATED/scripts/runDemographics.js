@@ -1,6 +1,6 @@
-import { GedStore } from '../js/GedStore.js'
-import { gedJson } from '../data/GedJsonAncestry.js'
-import { demographics } from '../js/demographics.js'
+import { GedStore } from '../../src/lib/js/GedStore.js'
+import { gedJson } from '../../src/lib/data/GedJsonAncestry.js'
+import { demographics } from '../../src/lib/js/demographics.js'
 
 const YEARS = 0
 const SPOUSES = 1

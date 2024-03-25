@@ -1,6 +1,6 @@
-import { GedStore } from '../js/GedStore.js'
-import { gedJson } from '../data//GedJsonAncestry.js'
-import { profile, profileCard } from '../js/profile.js'
+import { GedStore } from '../../src/lib/js/GedStore.js'
+import { gedJson } from '../../src/lib/data/GedJsonAncestry.js'
+import { profile, profileCard } from '../../src/lib/js/profile.js'
 
 const time1 = new Date()
 const ged = new GedStore(gedJson)
