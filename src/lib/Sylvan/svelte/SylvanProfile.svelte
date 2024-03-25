@@ -1,21 +1,11 @@
 <script>
+	import Notes from '$lib/Sylvan/svelte/Profile/Notes.svelte'
 	import SylvanPersonBrief from '$lib/Sylvan/svelte/SylvanPersonBrief.svelte'
+
     export let subjectNameKey    // this is a nameKey like 'CollinDouglasBevins1952'
     export let sylvan
 
     $: subject = sylvan.people().find(subjectNameKey)
-    
-    function notesHtml(notes) {
-        let html = ''
-        for (let i=0; i<notes.length; i++) {
-            html += `<h3>Notes ${i+1}</h3>`
-            const lines = notes[i].split('/n')
-            for (let j=0; j<lines.length; j++)
-                html += lines[j] + '<br />'
-        }
-        return html
-    }
-
 </script>
 
 <h5 class="card-title mb-0">
@@ -82,9 +72,9 @@
         </h2>
         <div id="notes-collapse" class="accordion-collapse collapse" aria-labelledby="notes-heading">
             <div class="accordion-body">
-                {@html notesHtml(subject.notes())}
+                <Notes person={subject} />
+                <!-- {@html notesHtml(subject.notes())} -->
             </div>
         </div>
     </div>
-
 </div>

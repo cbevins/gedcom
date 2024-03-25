@@ -14,7 +14,9 @@
     const shortList = [
         {key: 'CollinDouglasBevins1952', label: 'Collin'},
         {key: 'BarbaraJeanneRiley1953', label: 'Barbie'},
-        {key: 'WilliamLongfordBevins1815', label: 'William Longford Bevins'}
+        {key: 'DrewallynBevinsRiley1982', label: 'Drewallyn'},
+        {key: 'WilliamLongfordBevins1815', label: 'William Longford Bevins'},
+        {key: 'HannahHunter1753', label: 'Hannah Hunter'}
     ]
     // $: options = getPersonSelectors()
     $: options = shortList
