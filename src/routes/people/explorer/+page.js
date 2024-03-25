@@ -19,12 +19,14 @@ export const prerender = true
 /** @type {import('./$types').PageLoad} */
 export async function load({ data }) {
     const self = 'CLIENT: src/routes/people/explorer/+page.js:load() -'
-    console.log(`${self} received GEDCOM array with ${data.gedcomLines.length} lines.`)
     if (! getSylvan()) {
+        const time1 = new Date()
         const sylvan = new Sylvan(data.gedcomLines)
         setSylvan(sylvan)
         setPersonSelectors(sylvan.people().selectors())
-        console.log(`${self} created Sylvan with ${sylvan.people().size()} Persons`)
+        const time2 = new Date()
+        console.log(`${self} received GEDCOM array with ${data.gedcomLines.length} lines.`)
+        console.log(`${self} created Sylvan with ${sylvan.people().size()} Persons in ${time2-time1} msec.`)
         return {sylvan: sylvan}
     } else {
         console.log(`${self} Sylvan was previously loaded`)

@@ -1,7 +1,4 @@
 <script>
-	import Cartouche from '$lib/Sylvan/svelte/Profile/Cartouche.svelte'
-    import Profile from '$lib/svelte/Profile.svelte'
-    import RootSelector from '$lib/svelte/RootSelector.svelte'
 	import SylvanAncestors from '$lib/Sylvan/svelte/SylvanAncestors.svelte'
 	import SylvanDemographics from '$lib/Sylvan/svelte/SylvanDemographics.svelte'
 	import SylvanGenerations from '$lib/Sylvan/svelte/SylvanGenerations.svelte'
@@ -9,9 +6,9 @@
 	import SylvanOrigins from '$lib/Sylvan/svelte/SylvanOrigins.svelte'
     import SylvanProfile from '$lib/Sylvan/svelte/SylvanProfile.svelte'
     import SylvanSubjectSelector from '$lib/Sylvan/svelte/SylvanSubjectSelector.svelte'
-    import { ged, rootNameKey, subjectNameKey } from '$lib/js/store.js'
+    import { subjectNameKey } from '$lib/js/store.js'
 
-    export let data
+    export let data // contain data.sylvan loaded and passed here by ./+page.js:load()
 
     const tabs = [
         {href: '#family', title: 'Family Groups', c: 'nav-link active'},
@@ -29,7 +26,7 @@
         <h5 class="card-title">People Explorer</h5>
         <div class="card">
             <div>
-                SYLVAN Subject: {$subjectNameKey}
+                Subject: {$subjectNameKey}
                 <SylvanSubjectSelector sylvan={data.sylvan}/>
             </div>
             <!-- <div>
@@ -53,7 +50,7 @@
             <div id="family" class="container tab-pane active"><br>
                 <div class="card">
                     <div class="card-body">
-                        <Profile ged={$ged} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanProfile sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -102,7 +99,7 @@
             <div id="relationships" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanProfile sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
+                        Under development
                     </div>
                 </div>
             </div>
