@@ -1,7 +1,7 @@
 <script>
-	import QuoteBox from '$lib/svelte/QuoteBox.svelte'
-	import Surname from '$lib/svelte/Surname.svelte'
-	import Title1 from '$lib/svelte/Title1.svelte'
+	import QuoteBox from '$lib/Sylvan/svelte/QuoteBox.svelte'
+	import Surname from '$lib/Sylvan/svelte/Surname.svelte'
+	import Title1 from '$lib/Sylvan/svelte/Title1.svelte'
 	let dafn = 'Dictionary of American Family Names [2nd edition, 2022]'
 </script>
 

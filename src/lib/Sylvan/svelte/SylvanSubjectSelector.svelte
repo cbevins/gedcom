@@ -1,5 +1,4 @@
 <script>
-    import { getPersonSelectors, getSylvan } from '$lib/Sylvan/js/singletons.js'
     import Svelecte from 'svelecte'
     import { subjectNameKey } from '$lib/js/store.js'
 

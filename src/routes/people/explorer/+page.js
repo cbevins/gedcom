@@ -25,8 +25,7 @@ export async function load({ data }) {
         setSylvan(sylvan)
         setPersonSelectors(sylvan.people().selectors())
         const time2 = new Date()
-        console.log(`${self} received GEDCOM array with ${data.gedcomLines.length} lines.`)
-        console.log(`${self} created Sylvan with ${sylvan.people().size()} Persons in ${time2-time1} msec.`)
+        console.log(`${self} created Sylvan with ${sylvan.people().size()} Persons from ${data.gedcomLines.length} GEDCOM records in ${time2-time1} msec.`)
         return {sylvan: sylvan}
     } else {
         console.log(`${self} Sylvan was previously loaded`)
