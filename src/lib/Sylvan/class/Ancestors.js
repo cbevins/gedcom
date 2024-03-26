@@ -16,6 +16,16 @@ export class Ancestors {
     // Returns array of [<Person>, <Ancestor>] ordered by Ancestor.id()
     arrayById() { return Array.from(this.map()).sort((a, b) => { return (a[1].id() - b[1].id()) }) }
 
+    find(person) { return this.map().get(person) }
+
+    // Adds linkages to parental Ancestor records
+    link() {
+        for (const [person, ancestor] of this.map()) {
+            if (ancestor.mother()) ancestor._data.mom = this.find(ancestor.mother())
+            if (ancestor.father()) ancestor._data.dad = this.find(ancestor.father())
+        }
+    }
+    
     map() { return this._data.map }
 
     // Returns an array of all Person references
