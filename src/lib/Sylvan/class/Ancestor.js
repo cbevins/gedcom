@@ -26,14 +26,14 @@ export class Ancestor {
     // These provide the Acestor's relative placement within the Ancestor tree
     //-------------------------------------------------------------------------
     
-    // Ancestor's tree horiz offset [base 0 from left] within their generation
-    offset() { return this.id() - 2**this.gen() }
+    // Ancestor's sequence [base 0 from left] within their generation
+    sequence() { return this.id() - 2**this.gen() }
 
     // Ancestor's tree horiz offset from tree midline, like [-4, -3, -2, -1, 1, 2, 3, 4]
     // NOTE that there is NO ZERO OFFSET
-    xpos() {
+    midlineOffset() {
         const n = this.genSize() / 2
-        const sym = this.offset() - n
+        const sym = this.sequence() - n
         return (sym < 0) ? sym : sym + 1
     }
 }
