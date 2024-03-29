@@ -1,5 +1,6 @@
 <script>
     import Svelecte from 'svelecte'
+    // BE SURE TO DEREFERENCE VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
     export let sylvan

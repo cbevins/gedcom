@@ -18,7 +18,7 @@ export const prerender = true
  */
 /** @type {import('./$types').PageLoad} */
 export async function load({ data }) {
-    const self = 'CLIENT: src/routes/people/explorer/+page.js:load() -'
+    const self = 'CLIENT: src/routes/+page.js:load() -'
     if (! getSylvan()) {
         const time1 = new Date()
         const sylvan = new Sylvan(data.gedcomLines)

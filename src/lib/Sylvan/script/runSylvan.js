@@ -5,6 +5,7 @@ import * as process from 'process'
 import { file2JsonArray } from '../js/file2JsonArray.js'
 import { Ancestors } from '../class/Ancestors.js'
 import { Demographics } from '../class/Demographics.js'
+import { FamilyTree } from '../class/FamilyTree.js'
 import { Generations } from '../class/Generations.js'
 import { lineage } from '../js/lineage.js'
 import { origins } from '../js/origins.js'
@@ -35,6 +36,7 @@ async function mainFunction(parms) {
     if (parms.block) displayTopLevelBlock(sylvan, 'INDI', '@I896@')
     if (parms.contexts) displayContextCounts(sylvan)
     if (parms.demographics) displayDemographics(sylvan)
+    if (parms.familyTree) displayFamilyTree(sylvan)
     if (parms.findall) displayFindAll(sylvan, '@I896@', ['INDI','NAME','GIVN'])
     if (parms.generations) displayGenerations(sylvan)
     if (parms.lineage) displayLineage(sylvan)
@@ -60,6 +62,7 @@ function getArgs() {
         console.log("   find: displays finding all the GEDCOM records for @I896@ with context INDI-NAME-GIVN")
         console.log("   lineage: displays lineage from CDB to Hannah Hunter")
         console.log("   origins: displays persons ancestral origins")
+        console.log("   nodes: FamilyTree and FamilyTreeNodes")
         console.log("   profile: displays person profile")
         console.log("   summary: displays Sylvan records summaryperson brief")
         console.log("   toplevels: displays all the GEDCOM Level 0 command types and their counts")
@@ -76,6 +79,7 @@ function getArgs() {
         else if (a === 'f') parms.findall = true
         else if (a === 'g') parms.generations = true
         else if (a === 'l') parms.lineage = true
+        else if (a === 'n') parms.familyTree = true
         else if (a === 'o') parms.origins = true
         else if (a === 'p') parms.profile = true
         else if (a === 's') parms.summary = true
@@ -112,6 +116,16 @@ function displayDemographics(sylvan) {
     demog.log(1)
     demog.log(2)
 } 
+
+function displayFamilyTree(sylvan) {
+    const subject = sylvan.people().find(cdb)
+    console.log(subject.fullName())
+    const ft = new FamilyTree(subject)
+    console.log(`FamilyTree has ${ft.size()} Families`)
+    for (const [family, node] of ft.map().entries()) {
+        console.log(node.gen(), node.parentNames())
+    }
+}
 
 // This only works of GEDCOM was saved by new Sylvan(fileName, TRUE)
 function displayFindAll(sylvan, key, context) {

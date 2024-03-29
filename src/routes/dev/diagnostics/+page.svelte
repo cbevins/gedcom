@@ -5,7 +5,7 @@
 	import SylvanReview from '$lib/Sylvan/svelte/SylvanReview.svelte'
 	import SylvanSummary from '$lib/Sylvan/svelte/SylvanSummary.svelte'
 
-	export let data
+	import { getSylvan } from '$lib/Sylvan/js/singletons.js'
 
     const tabs = [
         {href: '#gedcom', title: 'GEDCOM File', c: 'nav-link active'},
@@ -43,7 +43,7 @@
 								</h1>
 								<div id={"sylvan-summary-collapse"} class="accordion-collapse collapse show" aria-labelledby={"sylvan-summary-siblings-heading"}>
 									<div class="accordion-body">
-										<SylvanSummary sylvan={data.sylvan} />
+										<SylvanSummary sylvan={getSylvan()} />
 									</div>
 								</div>
 							</div>
@@ -59,7 +59,7 @@
 								</h1>
 								<div id={"gedcom-toplevel-collapse"} class="accordion-collapse collapse" aria-labelledby={"gedcom-toplevel-heading"}>
 									<div class="accordion-body">
-										<GedcomTopLevel sylvan={data.sylvan} />
+										<GedcomTopLevel sylvan={getSylvan()} />
 									</div>
 								</div>
 							</div>
@@ -75,7 +75,7 @@
 								</h1>
 								<div id={"gedcom-contexts-collapse"} class="accordion-collapse collapse" aria-labelledby={"gedcom-contexts-heading"}>
 									<div class="accordion-body">
-										<GedcomContexts sylvan={data.sylvan} />
+										<GedcomContexts sylvan={getSylvan()} />
 									</div>
 								</div>
 							</div>
@@ -85,13 +85,13 @@
 			</div>
 
 			<div id="parents" class="container tab-pane fade"><br>
-				<SylvanReview sylvan={data.sylvan}/>
+				<SylvanReview sylvan={getSylvan()}/>
 			</div>
 
 			<div id="bh" class="container tab-pane fade"><br>
 				<div class="card">
 					<div class="card-body">
-						<SylvanDiagnostics sylvan={data.sylvan} subjectNameKey='CollinDouglasBevins1952' prefix='BH'/>
+						<SylvanDiagnostics sylvan={getSylvan()} subjectNameKey='CollinDouglasBevins1952' prefix='BH'/>
 					</div>
 				</div>
 			</div>
@@ -99,7 +99,7 @@
 			<div id="rt" class="container tab-pane fade"><br>
 				<div class="card">
 					<div class="card-body">
-						<SylvanDiagnostics sylvan={data.sylvan} subjectNameKey='BarbaraJeanneRiley1953' prefix='RT'/>
+						<SylvanDiagnostics sylvan={getSylvan()} subjectNameKey='BarbaraJeanneRiley1953' prefix='RT'/>
 					</div>
 				</div>
 			</div>

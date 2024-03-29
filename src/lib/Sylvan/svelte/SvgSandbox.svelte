@@ -50,6 +50,8 @@
                 seq = 0
                 prevGen = a.gen()
             }
+            a._data.fill = seq
+            seq++
             const v = x(alist[i])
             xmax = v > xmax ? v : xmax
             xmin = v < xmin ? v : xmin

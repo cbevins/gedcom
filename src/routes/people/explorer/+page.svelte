@@ -6,9 +6,12 @@
 	import SylvanOrigins from '$lib/Sylvan/svelte/SylvanOrigins.svelte'
     import SylvanProfile from '$lib/Sylvan/svelte/SylvanProfile.svelte'
     import SylvanSubjectSelector from '$lib/Sylvan/svelte/SylvanSubjectSelector.svelte'
+
+    import { getSylvan } from '$lib/Sylvan/js/singletons.js'
+    // BE SURE TO DEREFERENCE VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
-    export let data // contain data.sylvan loaded and passed here by ./+page.js:load()
+    // export let data // contain getSylvan() loaded and passed here by ./+page.js:load()
 
     const tabs = [
         {href: '#family', title: 'Family Groups', c: 'nav-link active'},
@@ -27,7 +30,7 @@
         <div class="card">
             <div>
                 Subject: {$subjectNameKey}
-                <SylvanSubjectSelector sylvan={data.sylvan}/>
+                <SylvanSubjectSelector sylvan={getSylvan()}/>
             </div>
             <!-- <div>
                 Root: {$rootNameKey}
@@ -50,7 +53,7 @@
             <div id="family" class="container tab-pane active"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanProfile sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanProfile sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -58,7 +61,7 @@
             <div id="ancestors" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanAncestors sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanAncestors sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -66,7 +69,7 @@
             <div id="immigrants" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanImmigrants sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanImmigrants sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -74,7 +77,7 @@
             <div id="origins" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanOrigins sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanOrigins sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -83,7 +86,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h3>{$subjectNameKey} Ancestral Migration Routes</h3>
-                        <SylvanGenerations sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanGenerations sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>
@@ -91,7 +94,7 @@
             <div id="demographics" class="container tab-pane fade"><br>
                 <div class="card">
                     <div class="card-body">
-                        <SylvanDemographics sylvan={data.sylvan} bind:subjectNameKey={$subjectNameKey}/>
+                        <SylvanDemographics sylvan={getSylvan()} bind:subjectNameKey={$subjectNameKey}/>
                     </div>
                 </div>
             </div>

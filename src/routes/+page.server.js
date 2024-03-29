@@ -12,7 +12,7 @@ export async function load() {
     const time1 = new Date()
     const fileName = 'src/lib/data/RootsMagicAncestrySync.ged'
     const lines = await file2JsonArray(fileName)
-    const self = 'SERVER: src/routes/people/explorer/+page.server.js:load()'
+    const self = 'SERVER: src/routes/+page.server.js:load()'
     const time2 = new Date()
     console.log(`${self} - read ${lines.length} lines from GEDCOM file '${fileName}' in ${time2-time1} msec.`)
 	return {gedcomLines: lines, loader: self}
