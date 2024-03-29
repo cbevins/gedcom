@@ -1,4 +1,5 @@
 <script>
+    export let family
     export let model
     export let x
     export let y
@@ -15,7 +16,8 @@
 
 <text x={model.tagTextX(x)} y={model.tagTextY(y, 0)}
     font-size={model.tagFontSize()} fill={model.tagFontColor()}>
-    Collin Douglas Bevins</text>
+    {family.yParent() ? family.yParent().fullName() : 'unknown'}
+</text>
 
 <circle r="5" cx={model.tagRight(x)} cy={model.tagMidline(y, 0)} fill="red" />
 
@@ -25,7 +27,8 @@
 
 <text x={model.tagTextX(x)} y={model.tagTextY(y, 1)}
     font-size={model.tagFontSize()} fill={model.tagFontColor()}>
-    Barbara Jeanne Riley</text>
+    {family.xParent() ? family.xParent().fullName() : 'unknown'}
+</text>
 
 <circle r="5" cx={model.tagRight(x)} cy={model.tagMidline(y, 1)} fill="red" />
 

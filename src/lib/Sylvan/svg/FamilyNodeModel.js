@@ -20,7 +20,7 @@ export class FamilyNodeModel {
                 height: 20,
                 padBottom: 5,
                 padLeft: 10,
-                width: 200,
+                width: 300,
             }
         }
     }

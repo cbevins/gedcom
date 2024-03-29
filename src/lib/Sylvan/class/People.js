@@ -25,6 +25,9 @@ export class People {
     // ----------------------------------------------------------------------
 
     find(key) {
+        if (! (typeof key === 'string') && ! (key instanceof String) ) {
+            throw new Error('People.find() was passed a non-string arg; is it a Svelte Store?')
+        }
         if (key.substring(0,1) === '@') {
             return this.gedKeyMap().get(key)
         } else if (this.nameKeyMap().has(key)) {

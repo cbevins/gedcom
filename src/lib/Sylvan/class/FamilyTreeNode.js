@@ -34,4 +34,8 @@ export class FamilyTreeNode {
     setXnode(xNode) { this._data.xNode = xNode }
 
     setYnode(yNode) { this._data.xNode = yNode }
+
+    xParent() { return this.family().xParent() }
+    
+    yParent() { return this.family().yParent() }
 }
