@@ -3,6 +3,7 @@
     export let model
     export let x
     export let y
+
 </script>
 
 <!-- Containing box -->

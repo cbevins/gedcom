@@ -6,33 +6,30 @@ import { FamilyTreeNode } from './FamilyTreeNode.js'
 export class FamilyTree {
     constructor(subject) {
         this._data = {
-            genNodes: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            lastGen: 0,
-            maxNodes: -1,
+            gens: [],               // Array of FamilyTreeNode arrays by generation
+            maxNodeCount: -1,       // Most nodes in any generation
             map: new Map(),         // Map() of [Family => FamilyTreeNode]
             root: null,             // Reference to subject's FamilyTreeNode instance
             subject: subject,       // reference to subject Person instance
         }
         this._init(subject)  
     }
+    
+    gen(idx) { return this._data.gens[idx] }
+    
+    gens() { return this._data.gens }
+    
+    map() { return this._data.map }
+
+    maxNodeCount() { return this._data.maxNodeCount }
 
     // Returns array of [<Family>, <FamilyTreeNode>] ordered by sequence
     nodesBySeq() { return Array.from(this.map()).sort((a, b) => { return (a[1].seq() - b[1].seq()) }) }
     
-    genNode(idx) { return this._data.genNodes[idx] }
-    
-    genNodes() { return this._data.genNodes }
-    
-    lastGen() { return this._data.lastGen }
-
-    map() { return this._data.map }
-
-    maxNodes() { return this._data.maxNodes }
-
-    size() { return this._data.map.size }
-
     // Returns reference to subject's family's FamilyTreeNode instance
     root() { return this._data.root }
+    
+    size() { return this._data.map.size }
     
     _init(subject) {
         // Find the subject's childhood family
@@ -67,12 +64,18 @@ export class FamilyTree {
     }
     
     _stats() {
-        for (const [family, node] of this.map().entries()) this._data.genNodes[node.gen()]++
-        for (let i=0; i<this.genNodes().length; i++) {
-            if (this.genNode(i) > this.maxNodes()) {
-                this._data.maxNodes = this.genNode(i)
+        let currGen = -1
+        const nodes = this.nodesBySeq() // array of [Family, FamilyTreeNode] pairs
+        for (let i=0; i<nodes.length; i++) {
+            const [family, node] = nodes[i]
+            if (node.gen() > currGen) {
+                this._data.gens.push([])
+                currGen++
             }
-            if (this.genNode(i)) this._data.lastGen = i
+            node._data.fill = this._data.gens[currGen].length
+            this._data.gens[currGen].push(node)
         }
+        for (let i=0; i<this.gens().length; i++)
+            this._data.maxNodeCount = Math.max(this._data.maxNodeCount, this.gen(i).length)
     }
 }

@@ -6,14 +6,17 @@ export class FamilyTreeNode {
         this._data = {
             family: family,         // Child's parental Family reference
             gen: gen,               // Generation number [base 0 for subject]
-            seq: seq,               // Family sequence number
-            prevNode: prevNode, // Reference to the later (lower id) generational Family
-            xNode: xNode,       // xParent's parental Family reference (next gen)
-            yNode: yNode,       // yParent's parental Family reference (next gen)
+            seq: seq,               // Family sequence number over entire tree
+            fill: 0,                // node sequence number within its generation
+            prevNode: prevNode,     // Reference to the later (lower id) generational Family
+            xNode: xNode,           // xParent's parental Family reference (next gen)
+            yNode: yNode,           // yParent's parental Family reference (next gen)
         }
     }
 
     family() { return this._data.family }
+
+    fill() { return this._data.fill }
 
     gen() { return this._data.gen }
 
@@ -36,6 +39,6 @@ export class FamilyTreeNode {
     setYnode(yNode) { this._data.xNode = yNode }
 
     xParent() { return this.family().xParent() }
-    
+
     yParent() { return this.family().yParent() }
 }
