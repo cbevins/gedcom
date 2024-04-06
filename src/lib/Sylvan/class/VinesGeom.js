@@ -8,7 +8,12 @@ export class VinesGeom {
                     bottom: 20,
                     middle: 10, left: 40, right: 40, width: null, height: null},
                 grid: {width: null, height: null, rows: null, cols: null},
-                tag: {width: 400, height: 20, left: 10, right: 5},
+                tag: {
+                    width: 400,
+                    height: 20,
+                    left: 10,
+                    right: 5,
+                    bottom: 5},
             },
             maxNodeCount: 0,    // maximum number of VineNodes in any generation
             vines: vines,       // reference to Vines instance

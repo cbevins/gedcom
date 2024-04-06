@@ -65,20 +65,22 @@
     {#each nodes as [person, node]}
         <use href="#node" transform="translate({geom.boxPosX(node)}, {geom.boxPosY(node)})"/>
 
-        <text x={geom.textPosX(node)}, y={geom.boxPosY(node)+35}>{node.yLabel()}</text>
+        <text x={geom.boxPosX(node)+10} y={geom.boxPosY(node)+18}>G{node.childGen()}, C{geom.nodeCol(node)}, R{geom.nodeRow(node)}</text>
+        
+        <text x={geom.textPosX(node)}, y={geom.textPosYFather(node)}>{node.yLabel()}</text>
 
         <text x={geom.textPosX(node)}, y={geom.boxPosY(node)+50}>
             {geom.nodeRow(node)}: {node.childLabel()}</text>
 
-        <text x={geom.textPosX(node)}, y={geom.boxPosY(node)+70}>{node.xLabel()}</text>
+        <text x={geom.textPosX(node)}, y={geom.textPosYMother(node)}>{node.xLabel()}</text>
         
-        <!-- {#if node.yNode() && node.yNode().hasParent() }
-            <use href="#linkY" transform="translate({nodeX(node)}, {nodeY(node)})" />
+        {#if node.yNode() && node.yNode().hasParent() }
+            <use href="#linkY" transform="translate({geom.boxPosX(node)}, {geom.boxPosY(node)})" />
         {/if}
         {#if node.xNode() && node.xNode().hasParent() }
-            <use href="#linkX" transform="translate({nodeX(node)}, {nodeY(node)})" />
+            <use href="#linkX" transform="translate({geom.boxPosX(node)}, {geom.boxPosY(node)})" />
         {/if}
-        {#if node.childNode()}
+        <!-- {#if node.childNode()}
             <line class="linkage" x1={pcx1(node)} y1={pcy1(node)} x2={pcx2(node)} y2={pcy2(node)} />
         {/if} -->
     {/each}
