@@ -18,8 +18,11 @@
         {key: 'WilliamLongfordBevins1815', label: 'William Longford Bevins'},
         {key: 'HannahHunter1753', label: 'Hannah Hunter'}
     ]
-    // $: options = getPersonSelectors()
+
+    // PICK A FULL OR SHORT LIST OF PEOPLE
+    // $: options = sylvan.people().selectors()
     $: options = shortList
+    
     function changed(ev) {
         if (selectedValue && sylvan.people().find(selectedValue)) {
             // console.log(`subjectNameKey UPDATED to '${selectedValue}'`)

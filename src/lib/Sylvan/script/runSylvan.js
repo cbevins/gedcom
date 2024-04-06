@@ -11,6 +11,8 @@ import { lineage } from '../js/lineage.js'
 import { origins } from '../js/origins.js'
 import { profile } from '../js/profile.js'
 import { Sylvan } from '../class/Sylvan.js'
+import { Vines } from '../class/Vines.js'
+import { VinesGeom } from '../class/VinesGeom.js'
 
 const cdb  = 'CollinDouglasBevins1952'
 const wlb = 'WilliamLongfordBevins1815'
@@ -49,7 +51,7 @@ async function mainFunction(parms) {
     if (parms.origins) displayOrigins(sylvan, 'CollinDouglasBevins1952')
     if (parms.profile) displayProfile(sylvan)
     if (parms.summary) displaySummary(sylvan)
-    if (parms.toplevels) displayTopLevelCounts(sylvan)
+    if (parms.vines) displayVines(sylvan)
 }
 
 function getArgs() {
@@ -66,6 +68,7 @@ function getArgs() {
         console.log("   profile: displays person profile")
         console.log("   summary: displays Sylvan records summaryperson brief")
         console.log("   toplevels: displays all the GEDCOM Level 0 command types and their counts")
+        console.log("   vines: displays the family Vine and VineNodes")
         process.exit()
     }
     const parms = {}
@@ -84,6 +87,7 @@ function getArgs() {
         else if (a === 'p') parms.profile = true
         else if (a === 's') parms.summary = true
         else if (a === 't') parms.toplevels = true
+        else if (a === 'v') parms.vines = true
     }
     return parms
 }
@@ -256,4 +260,20 @@ function displayMultipleMothers(sylvan) {
     }
 }
 
+function displayVines(sylvan) {
+    const subject = sylvan.people().find(cdb)
+    console.log(subject.fullName())
+    const vines = new Vines(subject)
+    const geom = new VinesGeom(vines)
+    console.log('--------------------------------------------------------------------')
+    const nodes = vines.nodesBySeq() // array of [Person, VineNode] pairs
+    // for (let i=0; i<nodes.length; i++) {
+    //     const [person, node] = nodes[[i]]
+    //     console.log(node.childSeq(), node.childGen(), geom.nodeCol(node), geom.nodeRow(node), node.childLabel(), node.yLabel(), node.xLabel())
+    // }
+    console.log(`Vines has ${vines.size()} VineNodes, ${vines.gens().length} Generations, Max Gen Nodes ${vines.maxNodeCount()}`)
+    console.log(`Vines boxWidth=${geom.boxWidth()} and boxHeight()=${geom.boxHeight()}`)
+    console.log(`Vines gridCols=${geom.gridCols()} and gridRows()=${geom.gridRows()}`)
+    console.log(`Vines gridWidth=${geom.gridWidth()} and gridHeight()=${geom.gridHeight()}`)
+}
     

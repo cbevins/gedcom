@@ -1,5 +1,5 @@
 /**
- * Families are top level GEDCOM 'SOUR' records stored in a Map
+ * Families are top level GEDCOM 'FAM' records stored in a Map
  */
 
 export class Family {

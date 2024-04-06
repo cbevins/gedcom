@@ -1,3 +1,6 @@
+/**
+ * Geometric model for drawing a FamilyTreeNode
+ */
 export class FamilyNodeModel {
     constructor() {
         this._data = {
@@ -25,6 +28,12 @@ export class FamilyNodeModel {
         }
     }
 
+    // Returns the connection point [x,y] from a FamilyTreeNode to its offspring and parents
+    connectOffspring(node) { return [node.posX(), this.nodeMidline(node.posY())] }
+    connectXparent(node) { return [this.tagRight(node.posX()), this.tagMidline(node.posY(), 1)] }
+    connectYparent(node) { return [this.tagRight(node.posX()), this.tagMidline(node.posY(), 0)] }
+
+    // Geometry model for the entire FamilyTreeNode
     node() { return this._data.node }
     nodeBackground() { return this.node().background }
     nodeBorderColor() { return this.node().borderColor }
@@ -38,6 +47,7 @@ export class FamilyNodeModel {
     nodePadTop() { return this.node().padTop }
     nodeWidth() { return this.nodePadLeft() + this.tagWidth() + this.nodePadRight()}
 
+    // Geometry model for each of the parents in the FamilyTreeNode
     tag() { return this._data.tag }
     tagBackground() { return this.tag().background }
     tagBorderColor() { return this.tag().borderColor }

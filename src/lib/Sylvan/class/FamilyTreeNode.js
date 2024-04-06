@@ -11,6 +11,8 @@ export class FamilyTreeNode {
             prevNode: prevNode,     // Reference to the later (lower id) generational Family
             xNode: xNode,           // xParent's parental Family reference (next gen)
             yNode: yNode,           // yParent's parental Family reference (next gen)
+            posX: 0,                // node's x offset in the FamilyTreeDiagram
+            posY: 0,                // node's y offset in the FamilyTreeDiagram
         }
     }
 
@@ -20,25 +22,31 @@ export class FamilyTreeNode {
 
     gen() { return this._data.gen }
 
-    parentNames() {
-        const xname = this.family().xParent() ? this.family().xParent().fullName() : 'unknown'
-        const yname = this.family().yParent() ? this.family().yParent().fullName() : 'unknown'
-        return `${xname} & ${yname}`
-    }
+    parentNames() { return `${this.xName()} & ${this.yName()}` }
 
+    posX() { return this._data.posX }
+
+    posY() { return this._data.posY }
+    
     prevNode() { return this._data.prevNode }
-
+    
     seq() { return this._data.seq }
-
-    xNode() { return this._data.xNode }
-
-    yNode() { return this._data.yNode }
-
+    
+    setPos(x, y) { this._data.posX = x; this._data.posY = y }
+    
     setXnode(xNode) { this._data.xNode = xNode }
-
-    setYnode(yNode) { this._data.xNode = yNode }
-
+    
+    setYnode(yNode) { this._data.yNode = yNode }
+    
+    xName() { return this.family().xParent() ? this.family().xParent().fullName() : 'unknown' }
+    
+    xNode() { return this._data.xNode }
+    
     xParent() { return this.family().xParent() }
-
+    
+    yName() { return this.family().yParent() ? this.family().yParent().fullName() : 'unknown' }
+    
+    yNode() { return this._data.yNode }
+    
     yParent() { return this.family().yParent() }
 }

@@ -11,7 +11,7 @@
     fill={model.nodeBackground()}
     stroke={model.nodeBorderColor()} stroke-width={model.nodeBorderWidth()}/>
 
-<!-- Top tag -->
+<!-- Top tag is the Y Parent-->
 <rect x={model.tagRectX(x)} y={model.tagRectY(y, 0)}
     width={model.tagWidth()} height={model.tagHeight()} fill={model.tagBackground()}/>
 
@@ -22,7 +22,7 @@
 
 <circle r="5" cx={model.tagRight(x)} cy={model.tagMidline(y, 0)} fill="red" />
 
-<!-- Bottom tag -->
+<!-- Bottom tag is the X Parent-->
 <rect x={model.tagRectX(x)} y={model.tagRectY(y, 1)}
     width={model.tagWidth()} height={model.tagHeight()} fill={model.tagBackground()}/>
 

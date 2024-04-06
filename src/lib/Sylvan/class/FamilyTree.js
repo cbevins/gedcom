@@ -45,7 +45,7 @@ export class FamilyTree {
     // prevNode has family, gen, and seq, and prevNode assigned, but not yet xNode or yNode
     _recurse(prevNode) {
         const family = prevNode.family()
-        let person = family.xParent()
+        let person = family.yParent()
         if (person && person.familyParents().length && person.familyParent(0)) {
             const family = person.familyParent(0)
             const node = new FamilyTreeNode(family, prevNode.gen()+1, 2*prevNode.seq(), prevNode)
@@ -53,7 +53,7 @@ export class FamilyTree {
             prevNode.setXnode(node)
             this._recurse(node)
         }
-        person = family.yParent()
+        person = family.xParent()
         if (person && person.familyParents().length && person.familyParent(0)) {
             const family = person.familyParent(0)
             const node = new FamilyTreeNode(family, prevNode.gen()+1, 2*prevNode.seq()+1, prevNode)
