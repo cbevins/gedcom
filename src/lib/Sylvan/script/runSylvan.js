@@ -271,9 +271,10 @@ function displayVines(sylvan) {
     //     const [person, node] = nodes[[i]]
     //     console.log(node.childSeq(), node.childGen(), geom.nodeCol(node), geom.nodeRow(node), node.childLabel(), node.yLabel(), node.xLabel())
     // }
-    console.log(`Vines has ${vines.size()} VineNodes, ${vines.gens().length} Generations, Max Gen Nodes ${vines.maxNodeCount()}`)
+    console.log(`Vines has ${vines.size()} VineNodes, ${geom.gens().length} Generations, Max Gen Nodes ${geom.maxNodeCount()}`)
     console.log(`Vines boxWidth=${geom.boxWidth()} and boxHeight()=${geom.boxHeight()}`)
     console.log(`Vines gridCols=${geom.gridCols()} and gridRows()=${geom.gridRows()}`)
     console.log(`Vines gridWidth=${geom.gridWidth()} and gridHeight()=${geom.gridHeight()}`)
+    console.log(geom.svg())
 }
     
