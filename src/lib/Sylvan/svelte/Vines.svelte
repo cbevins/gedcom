@@ -14,16 +14,20 @@
     $: console.log('Hello: Gens/Cols', geom.gridCols(), 'Rows/Nodes', geom.gridRows())
 </script>
 
-<svg width={geom.gridWidth()} height={geom.gridHeight()} xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg"
+    width={geom.gridWidth()} height={geom.gridHeight()}
+    viewBox="0, 0, {geom.gridWidth()}, {geom.gridHeight()}"
+    transform="scale(1, 1)">
     <!-- Reference grid background with labels -->
-    {#each Array(geom.gridCols()) as unused, col}
+    <rect class="grid" x="0" y="0" width={geom.gridWidth()} height={geom.gridHeight()} />
+    <!-- {#each Array(geom.gridCols()) as unused, col}
         {#each Array(geom.gridRows()) as moreUnused, row}
             <rect class="grid" x={col*geom.boxWidth()} y={row*geom.boxHeight()}
                 width={geom.boxWidth()} height={geom.boxHeight()} /> 
             <text x={col*geom.boxWidth() + geom.boxWidth()/2-10}
                 y={row*geom.boxHeight() + geom.boxHeight()/2+6}>{col},{row}</text>
         {/each}
-    {/each}
+    {/each} -->
 
     <defs>
         <g id="father">
@@ -53,14 +57,16 @@
     {#each nodes as [person, node]}
         <use href="#cell" transform="translate({geom.boxPosX(node)}, {geom.boxPosY(node)})"/>
 
-        <text x={geom.boxPosX(node)+10} y={geom.boxPosY(node)+18}>
+        <!-- Badges for generation, col, row, and seq -->
+        <text x={geom.boxPosX(node)+geom.boxPadLeft()+geom.tagPadLeft()} y={geom.boxPosY(node) + 15}>
             G{node.childGen()}, C{geom.nodeCol(node)}, R{geom.nodeRow(node)}, S{node.childSeq(node)}
         </text>
-        
+        <!-- Fathers label -->
         <text x={geom.textPosX(node)}, y={geom.textPosYFather(node)}>{node.yLabel()}</text>
-
-        <text x={geom.textPosX(node)}, y={geom.boxPosY(node)+50}>
-            {geom.nodeRow(node)}: {node.childLabel()}</text>
+        <!--  For now, display the connecting child's label -->
+        <text x={geom.textPosX(node)},
+            y={geom.boxPosY(node)+geom.boxPadTop() + geom.tagHeight() + geom.boxPadMiddle() - 5}>
+            {node.childSeq()}: {node.childLabel()}</text>
 
         <text x={geom.textPosX(node)}, y={geom.textPosYMother(node)}>{node.xLabel()}</text>
         
@@ -90,13 +96,13 @@
         stroke-width: 1;
     }
     .cell {
-        fill: lightgrey;
+        fill: grey;
         stroke: gray;
         stroke-width: 1;
     }
     .father {
-        fill: lightcyan;
-        stroke: lightcyan;
+        fill: cyan;
+        stroke: cyan;
         stroke-width: 1;
     }
     .mother {
