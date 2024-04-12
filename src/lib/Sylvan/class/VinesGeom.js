@@ -8,8 +8,8 @@ export class VinesGeom {
                     bottom: 20,     // padding between box bottom and bottom of mother's tag
                     height: null,   // total box height in SVG viewBox units
                     middle: 20,     // padding between the father's and mother's tags
-                    left: 100,       // padding between box left edge and tag left edge
-                    right: 100,      // padding between tag right edge and box right edge
+                    left: 100,      // padding between box left edge and tag left edge
+                    right: 100,     // padding between tag right edge and box right edge
                     top: 20,        // padding between box top and top of father's tag
                     width: null,    // total box width in SVG user units
                 },
@@ -22,7 +22,7 @@ export class VinesGeom {
                 link: {
                     len1: 20,       // length of child stub, left
                     len2: 20,       // length of child stub, right
-                    len3: 20,       // ;ength of parent's stub
+                    len3: 20,       // length of parent's stub
                 },
                 pos: new Map(),     // maps [VineNode => [col, row]]
                 tag: {
@@ -126,7 +126,8 @@ export class VinesGeom {
         const y1 = this.boxPadTop() + this.tagHeight()/2
         const y2 = y1 + this.boxPadMiddle() + this.tagHeight()
         const y3 = this.boxHeight() / 2
-        return `M ${x1}, ${y1} L ${x2} ${y1} L ${x2} ${y2} L ${x1} ${y2} M ${x2} ${y3} L ${x3} ${y3}`
+        // return `M ${x1} ${y1} L ${x2} ${y1} L ${x2} ${y2} L ${x1} ${y2} M ${x2} ${y3} L ${x3} ${y3}`
+        return `M ${x1} ${y1} C ${x2} ${y1} ${x2} ${y3} ${x3} ${y3} M ${x1} ${y2} C ${x2} ${y2} ${x2} ${y3} ${x3} ${y3}`
     }
 
     linkFatherData() {
@@ -205,7 +206,7 @@ export class VinesGeom {
         for (let i=0; i<this.gens().length; i++) {
             if (this.gen(i).length == this.maxNodeCount()) {
                 this.geom().bigGen = i
-                console.log('Biggest Generation is', this.geom().bigGen)
+                console.log(`Biggest Generation is ${this.geom().bigGen} with ${this.maxNodeCount()} Families`)
                 return
             }
         }
@@ -244,78 +245,5 @@ export class VinesGeom {
                 this.pos().set(node, [col, row])
             }
         }
-    }
-
-    svg() {
-        let html = `<svg width="${this.gridWidth()}" height="${this.gridHeight()}" xmlns="http://www.w3.org/2000/svg">\n`
-        //- Reference grid background with labels
-        let bwd = this.boxWidth()
-        let bht = this.boxHeight()
-        let col = 0
-        let row = 0
-        html += `<rect class="grid" x="${col*bwd}" y="${row*bht}" width="${bwd}" height="${bht}" />\n`
-        html += `<text x="${col*bwd + bwd/2 - 10}" y="${row*bht + bht/2 + 6}">${col},${row}</text>\n`
-        html += `</svg>`
-        return html
-        for (let col=0; col<this.gridCols(); col++) {
-            for (let row=0; row<this.gridRows(); row++) {
-                html += `<rect class="grid" x="${col*bwd}" y="${row*bht}" width="${bwd}" height="${bht}" />\n`
-                html += `<text x="${col*bwd + bwd/2 - 10}" y="${row*bht + bht/2 + 6}">${col},${row}</text>\n`
-            }
-        }
-
-        // Definitions of VineNode box and tag elements
-        let twd = this.tagWidth()
-        let tht = this.tagHeight()
-        html += `<defs>\n`
-        // Father's tag
-        html += `  <g id="father">\n`
-        html += `    <rect class="father" x="0" y="0" width="${twd}" height="${tht}" rx="10" ry="10"/>\n`
-        html += `  </g>\n`
-        // Mother's tag
-        html += `  <g id="mother">\n`
-        html += `    <rect class="mother" x="0" y="0" width="${twd}" height="${tht}" rx="10" ry="10"/>\n`
-        html += `  </g>\n`
-        // Enclosing box or figure
-        html += `  <g id="cell">\n`
-        html += `    <rect class="cell" x="0" y="0" width="${twd}" height="${tht}" />\n`
-        html += `    <use href="#father" transform="translate(40, 20)"/>\n`
-        html += `    <use href="#mother" transform="translate(40, 50)"/>\n`
-        // Connector stub to child's (previous) VineNode
-        html += `    <path class="linkage" d="M 40, 30 L 20 30 L 20 60 L 40 60 M 20 45 L 0 45" />\n`
-        html += `  </g>\n`
-        // Connector stub to mother's parental VineNode
-        html += `  <g id="linkX">\n`
-        html += `    <path class="linkage" d="M 440 60 L 460 60" />\n`
-        html += `  </g>\n`
-        // Connector stub to father's parental VineNode
-        html += `  <g id="linkY">\n`
-        html += `    <path class="linkage" d="M 440, 30 L 460 30" />\n`
-        html += `  </g>\n`
-        html += `</defs>\n`
-
-        // Insert VineNodes into the grid according to some this.pos() map positions
-        const nodes = this.vines().nodesBySeq()
-        for (let i=0; i<nodes.length; i++ ) {
-            const [person, node] = nodes[i] // Remember that *nodes* is an array of [Person, VineNode] pairs!
-            html += `<use href="#cell" transform="translate(${this.boxPosX(node)}, ${this.boxPosY(node)})"/>\n`
-            html += `<text x="${this.boxPosX(node)+10}" y="${this.boxPosY(node)+18}">`
-            html += `Gen:${node.childGen()}, Col:${this.nodeCol(node)}, Row:${this.nodeRow(node)}, Seq:${node.childSeq(node)}</text>\n`
-            html += `  <text class="tag-name-parent" x="${this.textPosX(node)}", y="${this.textPosYFather(node)}">${node.yLabel()}</text>\n`
-            html += `  <text class="tag-name-child" x="${this.textPosX(node)}", y="${this.boxPosY(node)+50}">${this.nodeRow(node)}: ${node.childLabel()}</text>\n`
-            html += `  <text class="tag-name-parent" x="${this.textPosX(node)}", y="${this.textPosYMother(node)}">${node.xLabel()}</text>\n`
-            if (node.yNode() && node.yNode().hasParent()) {
-                html += `<use href="#linkY" transform="translate(${this.boxPosX(node)}, ${this.boxPosY(node)})" />\n`
-            }
-            if (node.xNode() && node.xNode().hasParent()) {
-                html += `<use href="#linkX" transform="translate(${this.boxPosX(node)}, ${this.boxPosY(node)})" />\n`
-            }
-            if (node.childNode()) {
-                html += `<line class="linkage" x1="${this.linkPosParentX(node)}" y1="${this.linkPosParentY(node)}" `
-                html += `x2="${this.linkPosChildX(node)}" y2="${this.linkPosChildY(node)}" />\n`
-            }
-        }
-        html += `</svg>`
-        return html
     }
 }

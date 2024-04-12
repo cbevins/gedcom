@@ -24,7 +24,7 @@ export class VineNode {
     childPos() { return this._data.pos }
     childSeq() { return this._data.childSeq }
 
-    hasParent() { return this.xParent() !== null && this.yParent() !== null }
+    hasParent() { return this.xParent() !== null || this.yParent() !== null }
 
     // Demonstrates how to access parental Person information for *this* VineNode Person
     labelY() { return this.nextY() ? this.nextY().person().label() : 'unknown'}
