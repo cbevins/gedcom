@@ -3,7 +3,7 @@ export const GenerationsData = [
     {gen: 0, count: 1, from: 1, thru: 1, name: 'Self', abbr: 'Self'},
     {gen: 1, count: 2, from: 2, thru: 3, name: 'Parent', abbr: 'Parent'},
     {gen: 2, count: 4, from: 4, thru: 7, name: 'Grand', abbr: 'GrandP'},
-    {gen: 3, count: 8, from: 8, thru: 15, name: '1st Great Grand', abbr: '8 GGP'},
+    {gen: 3, count: 8, from: 8, thru: 15, name: '1st Great Grand', abbr: '1 GGP'},
     {gen: 4, count: 16, from: 16, thru: 31, name: '2nd Great Grand', abbr: '2 GGP'},
     {gen: 5, count: 32, from: 32, thru: 63, name: '3rd Great Grand', abbr: '3 GGP'},
     {gen: 6, count: 64, from: 64, thru: 127, name: '4th Great Grand', abbr: '4 GGP'},
@@ -23,6 +23,34 @@ export const GenerationsData = [
     {gen: 20, count: 1048576, from: 1048576, thru: 2097151, name: '18th Great Grand', abbr: '18 GGP'},
 ]
 
+//--------------------------------------------------------------------------------------
+// Given an Ancestor id (where subject id===1), returns a parameter of its generation
+//--------------------------------------------------------------------------------------
+
+export function idGen(id) {
+    for(let i=0; i<GenerationsData.length; i++) {
+        if (id <= GenerationsData[i].thru) return GenerationsData[i]
+    }
+    return GenerationsData[GenerationsData.length-1]
+}
+
+export function idGenAbbr(id) { return idGen(id).abbr }
+
+export function idGenCount(id) { return idGen(id).count }
+
+export function idGenFrom(id) { return idGen(id).from }
+
+export function idGenIdx(id) { return idGen(id).gen }
+
+export function idGenName(id) { return idGen(id).name }
+
+export function idGenSlot(id) { return id - idGen(id).from }
+
+export function idGenThru(id) { return idGen(id).thru }
+
+/**
+ * Calculates birth and death year ranges by generation
+ */
 export class Generations {
     constructor(sylvan) {
         this._data = {

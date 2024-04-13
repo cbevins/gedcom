@@ -10,6 +10,12 @@
         ['/dev', 'Dev Tools', [
             ['/dev/diagnostics', 'Diagnostics'],
         ]],
+        ['/diagrams', 'Diagrams', [
+            ['/diagrams/genl2r', 'Generation Chart (L2R)'],
+            ['/diagrams/scale', 'SVG Scale Demo'],
+            ['/diagrams/target', 'Generation Target'],
+            ['/diagrams/yearl2r', 'BirthYear (L2R)'],
+        ]],
         ['/people', 'People', [
             ['/people/explorer', 'Explorer'],
             ['/people/diagrams', 'Diagrams'],
