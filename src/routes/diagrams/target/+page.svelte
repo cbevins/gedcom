@@ -1,5 +1,5 @@
 <script>
-    import { idGenAbbr, idGenCount, idGenIdx, idGenSlot } from '$lib/Sylvan/class/Generations.js'
+    import { idGenCount, idGenIdx, idGenSlot } from '$lib/Sylvan/class/Generations.js'
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
     // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
@@ -54,7 +54,7 @@
     <!-- <line class='axis' x1={(xmax+xmin)/2} y1={ymin} x2={(xmax+xmin)/2} y2={ymax} />
     <line class='axis' y1={(ymax+ymin)/2} x1={xmin} y2={(ymax+ymin)/2} x2={xmax} /> -->
     <!-- Segments -->
-    {#each Array(1024) as unused, i}
+    {#each Array(2048) as unused, i}
         <path class='sep' d={poly(i)} />
     {/each}
 </svg>

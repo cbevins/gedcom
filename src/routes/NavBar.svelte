@@ -12,9 +12,10 @@
         ]],
         ['/diagrams', 'Diagrams', [
             ['/diagrams/genl2r', 'Generation Chart (L2R)'],
+            ['/diagrams/yearl2r', 'Birth Year Chart(L2R)'],
+            ['/diagrams/target', 'Generation Target Polygons'],
+            ['/diagrams/targetbirth', 'Generation Target Birth Year'],
             ['/diagrams/scale', 'SVG Scale Demo'],
-            ['/diagrams/target', 'Generation Target'],
-            ['/diagrams/yearl2r', 'BirthYear (L2R)'],
         ]],
         ['/people', 'People', [
             ['/people/explorer', 'Explorer'],
