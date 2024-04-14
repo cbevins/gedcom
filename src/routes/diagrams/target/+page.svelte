@@ -10,6 +10,20 @@
     const drawAncesterDots = true
     const drawLinks = true
 
+    const country = new Map([
+        ['',            ['brown', 'UNK']],
+        ['Canada',      ['pink', 'CAN']],
+        ['England',     ['magenta', 'ENG']],
+        ['France',      ['cyan', 'FRA']],
+        ['Germany',     ['gold', 'GER']],
+        ['Ireland',     ['lightgreen', 'IRE']],
+        ['Netherlands', ['orange', 'NET']],
+        ['Norway',      ['red', 'NOR']],
+        ['Scotland',    ['lightblue', 'SCO']],
+        ['USA',         ['white', 'USA']],
+        ['Wales',       ['darkgreen', 'WAL']],
+    ])
+
     // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
     $: subject = getSylvan().people().find($subjectNameKey)
 
@@ -29,7 +43,9 @@
 
     $: init(subject)
 
+    $: console.log('maxGen', maxGen, 'persons', 2**maxGen)
     function init(subject) {
+        const country = new Set()
         // Create the subject's ancestor nodes
         const a = new Anodes(subject)
         anodes = a.anodesBySeq()
@@ -37,6 +53,8 @@
         for (let i=0; i<anodes.length; i++) {
             const anode = anodes[i]
             anode.prop.label = anode.person.fullName()
+            anode.prop.country = anode.person.birthCountry()
+            country.add(anode.prop.country)
             anode.prop.poly = poly(anode.seq)
             const pt = pos(anode.seq)
             anode.x = pt[0]
@@ -45,9 +63,7 @@
         }
         anodes[0].x = 0
         anodes[0].y = 0
-        // adelta = width / (maxGen+1)
-        // bdelta = adelta * 0.6
-        // console.log('maxGen', maxGen)
+        console.log('Countries', country)
     }
 
     // Returns a string defining the SVG path for the seq polygon
@@ -122,6 +138,12 @@
         {#if drawLinks && anode.childAnode}
             <line class='link' x1={anode.x} y1={anode.y} x2={anode.childAnode.x} y2={anode.childAnode.y} />
         {/if}
+    {/each}
+
+    {#each Array.from(country) as [name, info], i}
+        {console.log(`${name} is ${info[0]}`)}
+        <rect x={xmin+100} y={ymin+i*100} width="100" height="100" fill={info[0]} stroke="black" stroke-width="1" />
+        <text class='dot' x={xmin+110} y={ymin+i*100+60}>{info[1]} is {info[0]}</text>
     {/each}
 </svg>
 
