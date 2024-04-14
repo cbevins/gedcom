@@ -38,13 +38,13 @@ export class VineNode {
     xGen() { return this.childGen() + 1 }
     xSeq() { return 2*this.childSeq() + 1 }
     xLabel() { return this.xNode() ? this.xParent().label() : 'unknown'}
-    xNode() { return this._data.xNode }
-    xParent() { return this._data.xParent }
+    xNode() { return this._data.xNode }     // mother's childhood family VineNode
+    xParent() { return this._data.xParent } // mother's Person instance
     
     // Access to Y parent (father's) info
     yGen() { return this.childGen() + 1 }
     ySeq() { return 2*this.childSeq() }
     yLabel() { return this.yNode() ? this.yParent().label() : 'unknown'}
-    yNode() { return this._data.yNode }
-    yParent() { return this._data.yParent }
+    yNode() { return this._data.yNode }     // father's childhood family VineNode
+    yParent() { return this._data.yParent } // father's Person instance
 }
