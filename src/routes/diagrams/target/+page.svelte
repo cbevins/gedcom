@@ -1,21 +1,56 @@
 <script>
+    import { Anodes } from '$lib/Sylvan/class/Anodes.js'
     import { idGenCount, idGenIdx, idGenSlot } from '$lib/Sylvan/class/Generations.js'
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
     // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
-    $: label = getSylvan().people().find($subjectNameKey).label()
+    
+    const drawAllPolygons = false
+    const drawAncestorPolygons = true
+    const drawAncesterDots = true
+    const drawLinks = true
 
-    $: xmin = -1000
-    $: xmax = 1000
-    $: ymin = -1000
-    $: ymax = 1000
+    // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
+    $: subject = getSylvan().people().find($subjectNameKey)
+
+    $: maxGen = 16
+    $: factor = 1
+    $: adelta = factor * 100
+    $: bdelta = factor * 60
+    $: xmin = -adelta * maxGen
+    $: xmax = adelta * maxGen
+    $: ymin = -bdelta * maxGen
+    $: ymax = bdelta * maxGen
     $: width = xmax - xmin
     $: height = ymax - ymin
 
     // Ellipse axis increase per generation
-    $: adelta = 100
-    $: bdelta = 60
+    $: anodes = []
 
+    $: init(subject)
+
+    function init(subject) {
+        // Create the subject's ancestor nodes
+        const a = new Anodes(subject)
+        anodes = a.anodesBySeq()
+        // Add Anode properties required by this diagram and determine position
+        for (let i=0; i<anodes.length; i++) {
+            const anode = anodes[i]
+            anode.prop.label = anode.person.fullName()
+            anode.prop.poly = poly(anode.seq)
+            const pt = pos(anode.seq)
+            anode.x = pt[0]
+            anode.y = pt[1]
+            // maxGen = Math.max(maxGen, anode.gen)
+        }
+        anodes[0].x = 0
+        anodes[0].y = 0
+        // adelta = width / (maxGen+1)
+        // bdelta = adelta * 0.6
+        // console.log('maxGen', maxGen)
+    }
+
+    // Returns a string defining the SVG path for the seq polygon
     function poly(id) {
         const gen = idGenIdx(id)        // subject gen === 0
         const segs =idGenCount(id)
@@ -40,6 +75,17 @@
         return d
     }
 
+    // Returns coordinates of the center of the seq polygon
+    function pos(id) {
+        const gen = idGenIdx(id)        // subject gen === 0
+        const segs =idGenCount(id)
+        const slot = idGenSlot(id)
+        const segDeg = 360 / segs
+        const fromDeg = slot * segDeg
+        const centerDeg = fromDeg + segDeg / 2
+        return point((gen+0.5)*adelta, (gen+0.5)*bdelta, centerDeg)
+    }
+
     function point(a, b, deg, xCenter=0, yCenter=0) {
         const rad = (360-deg) * Math.PI / 180
         const x = (xCenter - (a * Math.cos(rad))).toFixed(2)
@@ -48,27 +94,59 @@
     }
 </script>
 
-<h3>Generational Stadium for {label}</h3>
+<h3>Generational Disc for {subject.label()}</h3>
 <svg width={width} height={height} viewBox="{xmin} {ymin} {width} {height}">
-    <!-- Axis -->
-    <!-- <line class='axis' x1={(xmax+xmin)/2} y1={ymin} x2={(xmax+xmin)/2} y2={ymax} />
-    <line class='axis' y1={(ymax+ymin)/2} x1={xmin} y2={(ymax+ymin)/2} x2={xmax} /> -->
     <!-- Segments -->
-    {#each Array(2048) as unused, i}
-        <path class='sep' d={poly(i)} />
+    {#if drawAllPolygons}
+        {#each Array(2**(maxGen+1)) as unused, i}
+            <path class='grid' d={poly(i)} />
+        {/each}
+    {/if}
+
+    <!-- If filling polygons, draw them first so they don't cover up previous polygons -->
+    {#if drawAncestorPolygons }
+        {#each anodes as anode}
+            <path class='poly' d={poly(anode.seq)} />
+        {/each}
+    {/if}
+    
+    {#each anodes as anode}
+        {#if drawAncesterDots}
+            <circle class='dot' cx={anode.x} cy={anode.y} r={5}/>
+            <text class='dot'
+                    x={anode.x}
+                    y={anode.y}>
+                {anode.prop.label}
+            </text>
+        {/if}
+        {#if drawLinks && anode.childAnode}
+            <line class='link' x1={anode.x} y1={anode.y} x2={anode.childAnode.x} y2={anode.childAnode.y} />
+        {/if}
     {/each}
 </svg>
 
 <style>
-    .axis {
-        fill: none;
+    .dot {
+        fill: red;
+        font-family: Tahoma;
+        font-size: 0.75em;
+        font-weight: light;
         stroke: black;
-        stroke-width: 1;
-        stroke-linecap: flat;
+        stroke-width: 1
     }
-    .sep {
+    .grid {
         fill: none;
         stroke: black;
-        stroke-width: 2
+        stroke-width: 2;
+    }
+    .link {
+        fill: red;
+        stroke: red;
+        stroke-width: 1;
+    }
+    .poly {
+        fill: green;
+        stroke: grey;
+        stroke-width: 1;
     }
 </style>
