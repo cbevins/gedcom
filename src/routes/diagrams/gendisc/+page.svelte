@@ -24,13 +24,15 @@
         ['Wales',       ['darkgreen', 'WAL']],
     ])
 
-    // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
-    $: subject = getSylvan().people().find($subjectNameKey)
-
+    // Set the diagram scale, disc ellipse axis, and birth year dot radius
+    $: factor = 1               // scaling factor
+    $: adelta = factor * 100    // ellipse alpha axis step size
+    $: bdelta = factor * 100    // ellipse beta axis step size
+    $: radius = 5               // dot radius and half spacer distance
+    // The following are reset by createAnodes()
+    $: anodes = []
     $: maxGen = 16
-    $: factor = 1
-    $: adelta = factor * 100
-    $: bdelta = factor * 60
+    // The following are reset by setGeometry()
     $: xmin = -adelta * maxGen
     $: xmax = adelta * maxGen
     $: ymin = -bdelta * maxGen
@@ -38,32 +40,62 @@
     $: width = xmax - xmin
     $: height = ymax - ymin
 
-    // Ellipse axis increase per generation
-    $: anodes = []
-
+    // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
+    $: subject = getSylvan().people().find($subjectNameKey)
     $: init(subject)
 
-    $: console.log('maxGen', maxGen, 'persons', 2**maxGen)
     function init(subject) {
+        // Create all the subject's Anodes and determine max generation
+        createAnodes(subject)
+        setGeometry()
+        setAnodePositions()
+    }
+
+    function createAnodes(subject) {
         const country = new Set()
         // Create the subject's ancestor nodes
         const a = new Anodes(subject)
         anodes = a.anodesBySeq()
-        // Add Anode properties required by this diagram and determine position
+        maxGen = 0
+        // Add Anode properties required by this diagram
         for (let i=0; i<anodes.length; i++) {
             const anode = anodes[i]
             anode.prop.label = anode.person.fullName()
             anode.prop.country = anode.person.birthCountry()
             country.add(anode.prop.country)
-            anode.prop.poly = poly(anode.seq)
+            maxGen = Math.max(maxGen, anode.gen)
+        }
+        // console.log('Countries', country)
+        console.log('maxGen', maxGen, 'persons', 2**maxGen)
+    }
+
+    function setAnodePositions() {
+        for (let i=0; i<anodes.length; i++) {
+            const anode = anodes[i]
             const pt = pos(anode.seq)
             anode.x = pt[0]
             anode.y = pt[1]
-            // maxGen = Math.max(maxGen, anode.gen)
+            anode.prop.poly = poly(anode.seq)
+            if (i) {
+                const dx = anode.x - anodes[i-1].x
+                const dy = anode.y - anodes[i-1].y
+                const d = Math.sqrt(dx*dx+dy*dy)
+                if (d < 2*radius) {
+                    console.log(`Anodes ${i-1} (${anodes[i-1].seq}) and ${i} (${anode.seq}) of Gen ${anode.gen} are less than ${2*radius} px apart.`)
+                }
+            }
         }
         anodes[0].x = 0
         anodes[0].y = 0
-        console.log('Countries', country)
+    }
+
+    function setGeometry() {
+        xmin = -adelta * maxGen
+        xmax = adelta * maxGen
+        ymin = -bdelta * maxGen
+        ymax = bdelta * maxGen
+        width = xmax - xmin
+        height = ymax - ymin
     }
 
     // Returns a string defining the SVG path for the seq polygon
@@ -141,7 +173,6 @@
     {/each}
 
     {#each Array.from(country) as [name, info], i}
-        {console.log(`${name} is ${info[0]}`)}
         <rect x={xmin+100} y={ymin+i*100} width="100" height="100" fill={info[0]} stroke="black" stroke-width="1" />
         <text class='dot' x={xmin+110} y={ymin+i*100+60}>{info[1]} is {info[0]}</text>
     {/each}

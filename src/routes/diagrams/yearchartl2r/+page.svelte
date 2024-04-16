@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte'
-    import SylvanSvgBirthDots from '$lib/Sylvan/svelte/SylvanSvgBirthDots.svelte'
+    import SylvanSvgBirthYearChart from '$lib/Sylvan/svelte/SylvanSvgBirthYearChart.svelte'
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
     // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
@@ -12,5 +12,5 @@
     })
 </script>
 
-<h3>Ancestral Year-of-Birth for {label}</h3>
-<SylvanSvgBirthDots sylvan={getSylvan()} subjectNameKey={$subjectNameKey} />
+<h3>Ancestral Birth Year Chart (L2R) for {label}</h3>
+<SylvanSvgBirthYearChart sylvan={getSylvan()} subjectNameKey={$subjectNameKey} />

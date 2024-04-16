@@ -3,6 +3,7 @@
     const Menus = [
         ['/about', 'About', [
             ['/', 'Home'],
+            ['/about/methodology', 'Methodology'],
             ['/about/motivation', 'Motivation'],
             ['/about/notation', 'Notation'],
             ['/about/tools', 'Tools'],
@@ -11,15 +12,14 @@
             ['/dev/diagnostics', 'Diagnostics'],
         ]],
         ['/diagrams', 'Diagrams', [
-            ['/diagrams/genl2r', 'Generation Chart (L2R)'],
-            ['/diagrams/yearl2r', 'Birth Year Chart(L2R)'],
-            ['/diagrams/target', 'Generation Target Polygons'],
-            ['/diagrams/targetbirth', 'Generation Target Birth Year'],
+            ['/diagrams/genchartl2r', 'Generation Chart (L2R)'],
+            ['/diagrams/gendisc', 'Generation Disc'],
+            ['/diagrams/yearchartl2r', 'Birth Year Chart(L2R)'],
+            ['/diagrams/yeardisc', 'Birth Year Disc'],
             ['/diagrams/scale', 'SVG Scale Demo'],
         ]],
         ['/people', 'People', [
             ['/people/explorer', 'Explorer'],
-            ['/people/diagrams', 'Diagrams'],
             ['/people/interest', 'Interesting Notes'],
             ['/people/immigrants', 'Immigrants'],
             ['/people/surnames', 'Surnames'],
