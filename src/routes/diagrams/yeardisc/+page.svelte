@@ -5,24 +5,18 @@
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
+    // Diagram elements to enable/disable
     const drawCircles = true
     const radials = 0   // Number of disc radials to draw
     const yearsPerRing = 50
     let disc = null
-
     $: factor = 1               // scaling factor
-    $: vb = {xmin: factor * -1000, xmax: factor * 1000, ymin: factor * -1000, ymax: factor * 1000}
-
+    
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     $: subject = getSylvan().people().find($subjectNameKey)
-    $: anodes = init(subject)
+    $: anodes = init(subject, factor)
 
-    function init(subject) {
-        setViewBox()
-        return createAnodes(subject)
-    }
-
-    function createAnodes(subject) {
+    function init(subject, factor) {
         // Create the subject's ancestor nodes
         const a = new Anodes(subject)
         anodes = a.anodesBySeq()
@@ -38,14 +32,9 @@
             }
         }
         // Create the annular disc using Anodes with birth year stored in prop.year 
-        disc = new AnnularDisc(anodes, birth.min, birth.max, vb.width, yearsPerRing )
+        disc = new AnnularDisc(anodes, birth.min, birth.max, yearsPerRing, factor )
         console.log(`Birth Year Disc has ${anodes.length} persons born from ${birth.min} thru ${birth.max}`)
         return anodes
-    }
-
-    function setViewBox() {
-        vb.width = vb.xmax - vb.xmin
-        vb.height = vb.ymax - vb.ymin
     }
 
     function ringLabel(i) { return disc.yearOuter() - i * disc.yearsPerRing() }
@@ -53,7 +42,10 @@
 
 <h3>Ancestral Birth Year Disc for {subject.label()}</h3>
 
-<svg width={vb.width} height={vb.height} viewBox="{vb.xmin} {vb.ymin} {vb.width} {vb.height}">
+
+<svg width={disc.vbWidth()} height={disc.vbHeight()}
+    viewBox="{disc.vbXmin()} {disc.vbYmin()} {disc.vbWidth()} {disc.vbHeight()}">
+
     <!-- Disc isolines -->
     {#if drawCircles}
         {#each Array(disc.ringCount()+1) as unused, i}

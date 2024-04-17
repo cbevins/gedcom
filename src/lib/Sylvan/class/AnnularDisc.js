@@ -1,10 +1,10 @@
 /**
- * Class for constructing ancestral annual disc diagrams
+ * Class for constructing ancestral annular disc diagrams
  */
 import { idGenCount, idGenSlot } from '$lib/Sylvan/class/Generations.js'
 
 export class AnnularDisc {
-    constructor(anodes, dataYearMin, dataYearMax, viewBoxWidth, yearsPerRing=50, centerX=0, centerY=0) {
+    constructor(anodes, dataYearMin, dataYearMax, yearsPerRing=50, factor=1, centerX=0, centerY=0) {
         this._data = {
             anodes: anodes,
             centerX: 0,
@@ -12,6 +12,7 @@ export class AnnularDisc {
             dataYearMax: dataYearMax,
             dataYearMin: dataYearMin,
             dataYearSpan: dataYearMax - dataYearMin,
+            factor: factor,             // scaling factor
             ringCount: 0,
             yearCenter: 0,              // year represented by the disc center
             yearOuter: 0,               // year represented by the disc outer ring
@@ -19,8 +20,14 @@ export class AnnularDisc {
             yearsPerRing: yearsPerRing, // years represented by a single disc ring
             unitsPerRing: 1,
             unitsPerYear: 1,
-            viewBoxWidth: viewBoxWidth
+            vbHeight: 0,
+            vbWidth: 0,
+            vbXmax: 1000,       // ViewBox scaled x maximum
+            vbXmin: -1000,      // ViewBox scaled x minimum
+            vbYmax: 1000,       // ViewBox scaled y maximum
+            vbYmin: -1000,      // ViewBox scaled y minimum
         }
+        this._setViewBox()
         this._setGeometry()
         this._setAnodePositions()
     }
@@ -36,6 +43,7 @@ export class AnnularDisc {
     dataYearMax() { return this._data.dataYearMax }
     dataYearMin() { return this._data.dataYearMin }
     dataYearSpan() { return this._data.dataYearSpan }
+    factor() { return this._data.factor }
     ringCount() { return this._data.ringCount }
     yearCenter() { return this._data.yearCenter }
     yearOuter() { return this._data.yearOuter }
@@ -43,22 +51,16 @@ export class AnnularDisc {
     yearsPerRing() { return this._data.yearsPerRing }
     unitsPerRing() { return this._data.unitsPerRing }
     unitsPerYear() { return this._data.unitsPerYear }
-    viewBoxWidth() { return this._data.viewBoxWidth }
+    vbHeight() { return this._data.vbHeight }
+    vbWidth() { return this._data.vbWidth }
+    vbXmax() { return this._data.vbXmax }
+    vbXmin() { return this._data.vbXmin }
+    vbYmax() { return this._data.vbYmax }
+    vbYmin() { return this._data.vbYmin }
 
     //--------------------------------------------------------------------------
     // Private m ethods
     //--------------------------------------------------------------------------
-    
-    // Adjusts the disc range for the data range (i.e., birth) years
-    _setGeometry() {
-        const ypr = this.yearsPerRing()
-        this._data.yearCenter = ypr * Math.trunc(this.dataYearMin() / ypr)
-        this._data.yearOuter = ypr * Math.trunc(this.dataYearMax() / ypr) + ypr
-        this._data.yearSpan = this.yearOuter() - this.yearCenter()
-        this._data.ringCount = this.yearSpan() / ypr
-        this._data.unitsPerYear = this.viewBoxWidth() / (2 * this.yearSpan())
-        this._data.unitsPerRing = ypr * this.unitsPerYear()
-    }
 
     _setAnodePositions() {
         for (let i=0; i<this.anodes().length; i++) {
@@ -67,6 +69,27 @@ export class AnnularDisc {
             anode.x = this.seqX(anode.seq, anode.prop.year)
             anode.y = this.seqY(anode.seq, anode.prop.year)
         }
+    }
+
+    // Adjusts the disc range for the data range (i.e., birth) years
+    _setGeometry() {
+        const ypr = this.yearsPerRing()
+        this._data.yearCenter = ypr * Math.trunc(this.dataYearMin() / ypr)
+        this._data.yearOuter = ypr * Math.trunc(this.dataYearMax() / ypr) // + ypr
+        this._data.yearSpan = this.yearOuter() - this.yearCenter()
+        this._data.ringCount = this.yearSpan() / ypr
+        this._data.unitsPerYear = this.vbWidth() / (2 * this.yearSpan())
+        this._data.unitsPerRing = ypr * this.unitsPerYear()
+        console.log('YEAR CENTER', this.yearCenter(), 'YEAR OUTER', this.yearOuter())
+    }
+
+    _setViewBox() {
+        this._data.vbXmax = this.factor() * 1000
+        this._data.vbXmin = -this.vbXmax()
+        this._data.vbYmax = this.factor() * 1000
+        this._data.vbYmin = -this.vbYmax()
+        this._data.vbWidth = this.vbXmax() - this.vbXmin()
+        this._data.vbHeight = this.vbYmax() - this.vbYmin()
     }
 
     //--------------------------------------------------------------------------

@@ -16,6 +16,8 @@ export class GenerationalDisc {
             factor: factor,     // scaling factor
             markerRadius: markerRadius,     // Marker/circle radius (to test for overlapping)
             maxGen: 0,          // Anode.gen maximum
+            vbHeight: 0,
+            vbWidth: 0,
             vbXmax: 1000,       // ViewBox scaled x maximum
             vbXmin: -1000,      // ViewBox scaled x minimum
             vbYmax: 1000,       // ViewBox scaled y maximum
@@ -23,20 +25,6 @@ export class GenerationalDisc {
         }
         this._setViewBox()
         this._setAnodePositions()
-    }
-
-    _setViewBox() {
-        for(let i=0; i<this.anodes().length; i++) {
-            this._data.maxGen = Math.max(this._data.maxGen, this.anode(i).gen )
-        }
-        this._data.aDelta = this.factor() * this.aUnits()    // ellipse alpha axis step size
-        this._data.bDelta = this.factor() * this.bUnits()    // ellipse alpha axis step size
-        this._data.vbXmax = this.aDelta() * this.maxGen()
-        this._data.vbXmin = -this.vbXmax()
-        this._data.vbYmax = this.bDelta() * this.maxGen()
-        this._data.vbYmin = -this.vbYmax()
-        this._data.vbWidth = this.vbXmax() - this.vbXmin()
-        this._data.vbHeight = this.vbYmax() - this.vbYmin()
     }
 
     //--------------------------------------------------------------------------
@@ -84,6 +72,20 @@ export class GenerationalDisc {
         }
         this._data.anodes[0].x = 0
         this._data.anodes[0].y = 0
+    }
+
+    _setViewBox() {
+        for(let i=0; i<this.anodes().length; i++) {
+            this._data.maxGen = Math.max(this._data.maxGen, this.anode(i).gen )
+        }
+        this._data.aDelta = this.factor() * this.aUnits()    // ellipse alpha axis step size
+        this._data.bDelta = this.factor() * this.bUnits()    // ellipse alpha axis step size
+        this._data.vbXmax = this.aDelta() * this.maxGen()
+        this._data.vbXmin = -this.vbXmax()
+        this._data.vbYmax = this.bDelta() * this.maxGen()
+        this._data.vbYmin = -this.vbYmax()
+        this._data.vbWidth = this.vbXmax() - this.vbXmin()
+        this._data.vbHeight = this.vbYmax() - this.vbYmin()
     }
 
     //--------------------------------------------------------------------------
