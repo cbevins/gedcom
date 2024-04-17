@@ -2,7 +2,7 @@
     import { onMount } from 'svelte'
     import SylvanSvgBirthYearChart from '$lib/Sylvan/svelte/SylvanSvgBirthYearChart.svelte'
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
-    // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
+    // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
     $: label = getSylvan().people().find($subjectNameKey).label()
