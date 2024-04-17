@@ -1,10 +1,10 @@
 /**
- * Class for constructing ancestral annual discs
+ * Class for constructing ancestral annual disc diagrams
  */
 import { idGenCount, idGenSlot } from '$lib/Sylvan/class/Generations.js'
 
 export class AnnularDisc {
-    constructor(anodes, dataYearMin, dataYearMax, viewBoxWidth, yearsPerRing=50) {
+    constructor(anodes, dataYearMin, dataYearMax, viewBoxWidth, yearsPerRing=50, centerX=0, centerY=0) {
         this._data = {
             anodes: anodes,
             centerX: 0,
@@ -25,6 +25,10 @@ export class AnnularDisc {
         this._setAnodePositions()
     }
 
+    //--------------------------------------------------------------------------
+    // Property accessors
+    //--------------------------------------------------------------------------
+
     anode(idx) { return this._data.anodes[idx] }
     anodes() { return this._data.anodes }
     centerX() { return this._data.centerX }
@@ -41,6 +45,10 @@ export class AnnularDisc {
     unitsPerYear() { return this._data.unitsPerYear }
     viewBoxWidth() { return this._data.viewBoxWidth }
 
+    //--------------------------------------------------------------------------
+    // Private m ethods
+    //--------------------------------------------------------------------------
+    
     // Adjusts the disc range for the data range (i.e., birth) years
     _setGeometry() {
         const ypr = this.yearsPerRing()
@@ -60,6 +68,10 @@ export class AnnularDisc {
             anode.y = this.seqY(anode.seq, anode.prop.year)
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Public methods
+    //--------------------------------------------------------------------------
 
     // Returns the disc angle in degrees given the Ancestor's Anode.seq
     seqDegrees(seq) {
