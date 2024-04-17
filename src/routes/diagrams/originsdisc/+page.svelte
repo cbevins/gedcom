@@ -2,23 +2,37 @@
     import { Anodes } from '$lib/Sylvan/class/Anodes.js'
     import { idGenCount, idGenIdx, idGenSlot } from '$lib/Sylvan/class/Generations.js'
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
-    // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
+    // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
     
     const drawAllPolygons = false
-    const drawAncestorPolygons = false
+    const drawAncestorPolygons = true
     const drawAncesterDots = true
     const drawLinks = true
 
+    const country = new Map([
+        ['unknown',     ['brown', 'UNK']],
+        ['Canada',      ['pink', 'CAN']],
+        ['England',     ['magenta', 'ENG']],
+        ['France',      ['cyan', 'FRA']],
+        ['Germany',     ['gold', 'GER']],
+        ['Ireland',     ['lightgreen', 'IRE']],
+        ['Netherlands', ['orange', 'NET']],
+        ['Norway',      ['red', 'NOR']],
+        ['Scotland',    ['lightblue', 'SCO']],
+        ['USA',         ['white', 'USA']],
+        ['Wales',       ['darkgreen', 'WAL']],
+    ])
+
     // Set the diagram scale, disc ellipse axis, and birth year dot radius
-    $: factor = .5              // scaling factor
+    $: factor = 1              // scaling factor
     $: adelta = factor * 100    // ellipse alpha axis step size
     $: bdelta = factor * 100    // ellipse beta axis step size
     $: radius = 5               // dot radius and half spacer distance
     // The following are reset by createAnodes()
     $: anodes = []
     $: maxGen = 16
-    // The following are reset by setGeometry()
+    // The following are reset by setViewBox()
     $: xmin = -adelta * maxGen
     $: xmax = adelta * maxGen
     $: ymin = -bdelta * maxGen
@@ -26,13 +40,13 @@
     $: width = xmax - xmin
     $: height = ymax - ymin
 
-    // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
+    // BE SURE TO DE-REFERENCE subjectNameKey STORE VALUE USING '$subjectNameKey'
     $: subject = getSylvan().people().find($subjectNameKey)
     $: init(subject)
 
     function init(subject) {
         createAnodes(subject)
-        setGeometry()
+        setViewBox()
         setAnodePositions()
     }
 
@@ -42,14 +56,14 @@
         const a = new Anodes(subject)
         anodes = a.anodesBySeq()
         maxGen = 0
-        // Add Anode properties required by this diagram
+        // Add Anode properties required by this diagram and determine max generation
         for (let i=0; i<anodes.length; i++) {
             const anode = anodes[i]
+            maxGen = Math.max(maxGen, anode.gen)
             anode.prop.label = anode.person.fullName()
             anode.prop.country = anode.person.birthCountry()
             if (anode.prop.country === '') anode.prop.country = 'unknown'
             country.add(anode.prop.country)
-            maxGen = Math.max(maxGen, anode.gen)
         }
         // console.log('Countries', country)
         console.log('maxGen', maxGen, 'persons', 2**maxGen)
@@ -75,7 +89,7 @@
         anodes[0].y = 0
     }
 
-    function setGeometry() {
+    function setViewBox() {
         xmin = -adelta * maxGen
         xmax = adelta * maxGen
         ymin = -bdelta * maxGen
@@ -117,6 +131,16 @@
         const segDeg = 360 / segs       // generational arc degrees per disc segment
         const fromDeg = slot * segDeg   // 
         const centerDeg = fromDeg + segDeg / 2
+        return point((gen-0.5)*adelta, (gen-0.5)*bdelta, centerDeg)
+    }
+
+    function shiftCenter(seq) {
+        const gen = idGenIdx(seq)        // subject gen === 0
+        const segs = idGenCount(seq)
+        const slot = idGenSlot(seq)
+        const segDeg = 2 * 360 / segs       // generational arc degrees per disc segment
+        const fromDeg = slot * segDeg   // 
+        const centerDeg = fromDeg + segDeg / 2
         return point((gen+0.5)*adelta, (gen+0.5)*bdelta, centerDeg)
     }
 
@@ -128,7 +152,7 @@
     }
 </script>
 
-<h3>Ancestral Generational Disc for {subject.label()}</h3>
+<h3>Ancestral Origins Disc for {subject.label()}</h3>
 
 <svg width={width} height={height} viewBox="{xmin} {ymin} {width} {height}">
     <!-- Segments -->
@@ -141,7 +165,8 @@
     <!-- If filling polygons, draw them first so they don't cover up previous polygons -->
     {#if drawAncestorPolygons }
         {#each anodes as anode}
-            <path class='poly' d={polygonPath(anode.seq)} />
+            <!-- <path class='poly' d={polygonPath(anode.seq)} /> -->
+            <path class={anode.prop.country} d={polygonPath(anode.seq)} />
         {/each}
     {/if}
     
@@ -155,6 +180,12 @@
         {#if drawLinks && anode.childAnode}
             <line class='link' x1={anode.x} y1={anode.y} x2={anode.childAnode.x} y2={anode.childAnode.y} />
         {/if}
+    {/each}
+
+    <!-- Country of Origin Legend -->
+    {#each Array.from(country) as [name, info], i}
+        <rect class={name} x={xmin+100} y={ymin+i*30} width="20" height="20" stroke="black" stroke-width="1" />
+        <text class='dot'  x={xmin+125} y={ymin+i*30+15}>{name}</text>
     {/each}
 </svg>
 
@@ -192,4 +223,16 @@
         stroke: grey;
         stroke-width: 1;
     }
+    .unknown    { fill: brown; }
+    .Canada     { fill: pink; }
+    .England    { fill: magenta; }
+    .France     { fill: cyan; }
+    .Germany    { fill: gold; }
+    .Ireland    { fill: lightgreen; }
+    .Netherlands{ fill: orange; }
+    .Norway     { fill: red; }
+    .Scotland   { fill: lightblue; }
+    .USA        { fill: silver; }
+    .Wales      { fill: darkgreen;}
+
 </style>
