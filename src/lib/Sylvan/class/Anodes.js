@@ -7,17 +7,22 @@ export class Anodes {
     constructor(rootPerson) {
         this._data = {
             anodes: [],             // array of Anodes (in rootPerson father-descent-first order)
+            map: new Map(),         // Map of Person => Anode
             rootAnode: null,        // root Anode instance
             rootPerson: rootPerson, // root Person instance
         }
         this._recurse(rootPerson, 0, 1, null)
     }
 
-    // Returns array of Anodes in father-descxent-first traversal order
+    // Returns array of Anodes in father-descent-first traversal order
     anodes() { return this._data.anodes }
     
     // Returns array of Anodes in ancestral sequence order (root===1, father===2, mother===3, etc)
     anodesBySeq() { return this.anodes().sort((a, b) => { return a.seq - b.seq }) }
+    
+    findPerson(person) { return this.map().get(person) }
+
+    map() { return this._data.map }
 
     rootAnode() { return this._data.rootAnode }
 
@@ -37,6 +42,7 @@ export class Anodes {
         this._data.anodes.push(node)
         if (person.father()) node.fatherAnode = this._recurse(person.father(), gen+1, seq*2, node)
         if (person.mother()) node.motherAnode = this._recurse(person.mother(), gen+1, seq*2+1, node)
+        this._data.map.set(person, node)
         return node
     }
 }

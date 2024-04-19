@@ -1,6 +1,8 @@
 <script>
+    import { Anodes } from '$lib/Sylvan/class/Anodes.js'
     import { Vines } from '$lib/Sylvan/class/Vines.js'
     import { VinesGeom } from '$lib/Sylvan/class/VinesGeom.js'
+    import SylvanSvgNuclear from '$lib/Sylvan/svelte/SylvanSvgNuclear.svelte'
     export let sylvan
     export let subjectNameKey
 
@@ -8,7 +10,9 @@
     $: subject = sylvan.people().find(subjectNameKey)
     $: vines = new Vines(subject)
     $: nodes = vines.nodesBySeq()    // Array of [Person, VineNode] pairs by sequence number
-    
+
+    $: anodes = new Anodes(subject).anodesBySeq()
+
     // Geometry of the Vines grid
     $: geom = new VinesGeom(vines)
     $: scale = 1
@@ -104,6 +108,8 @@
         <!-- Mother's label -->
         <text x={geom.textPosX(node)}, y={geom.textPosYMother(node)}>{node.xLabel()}</text>
     {/each}
+
+    <SylvanSvgNuclear anode={anodes[0]} x={100} y={100} />
 </svg>
 
 <style>

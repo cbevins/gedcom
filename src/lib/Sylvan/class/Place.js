@@ -1,12 +1,16 @@
 export class Place {
     constructor(text, parts, messages) {
+        const standard = parts.join(',')
+        const country = parts.length > 0 ? parts.pop() : ''
+        const state = parts.length > 0 ? parts.pop() : ''
+        const locale = parts.length > 0 ? parts.join(', ') : ''
         this._data = {
             count: 0,
-            country: parts.length > 0 ? parts.pop() : '',
-            locale: parts.length > 0 ? parts.join(', ') : '',
+            country: country,
+            locale: locale,
             messages: messages,
-            standard: parts.join(','),
-            state: parts.length > 0 ? parts.pop() : '',
+            standard: standard,
+            state: state,
             text: text
         }
     }
