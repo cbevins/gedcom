@@ -1,5 +1,5 @@
 <script>
-    import Chart from '$lib/Sylvan/svelte/GenChartV1/Chart.svelte'
+    import Chart from '$lib/Sylvan/svelte/GenChartV2/Chart.svelte'
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
     // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
