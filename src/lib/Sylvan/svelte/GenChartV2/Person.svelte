@@ -9,7 +9,7 @@
     export let height
 
     const bottom = 5 * geom.factor  // padding between bottom of tag rect and the text baseline
-    const left = 10 * geom.factor   // padding between tag left edge and start of text
+    const left = 40 * geom.factor   // padding between tag left edge and start of text
 
     function content() {
         let text = anode ? `${idGenAbbr(anode.seq)}: ${anode.prop.label}` : 'unknown'
