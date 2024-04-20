@@ -8,7 +8,6 @@
     $: genData = init(subject)
     
     function init(person) { return genChartAnodes(person) }
-
 </script>
 <h3>Generational Chart V2 (L2R) for {subject.label()}</h3>
 <Chart sylvan={getSylvan()} {subject} {genData} />

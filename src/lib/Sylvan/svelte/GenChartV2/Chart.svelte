@@ -1,10 +1,11 @@
 <script>
+    import { onMount } from 'svelte'
     import Union from '$lib/Sylvan/svelte/GenChartV2/Union.svelte'
     export let subject
     export let genData
 
     const drawGrid = false
-    $: factor = .25
+    $: factor = 1
     $: node = {width: factor * 500, height: factor * 320,
         // The following are padding between the cell and the node
         left: factor * 100, right: factor * 100, top: factor * 20, bottom: factor * 20}
@@ -46,6 +47,11 @@
         console.log(`${grid.cols} cols, ${grid.rows} rows that are ${cell.width} x by ${cell.height} y (vb ${vb.width} by ${vb.height}).`)
         return {cell: cell, factor: factor, grid: grid, node: node, vb: vb}
     }
+    
+    onMount(() => {
+        window.scrollTo(anodes[0].x, anodes[0].y + 10)
+    })
+
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg"
