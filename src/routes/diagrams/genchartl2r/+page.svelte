@@ -1,9 +1,14 @@
 <script>
     import Chart from '$lib/Sylvan/svelte/GenChartV2/Chart.svelte'
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
-    // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
+    import { genChartAnodes } from './genChartAnodes.js'
+    // BE SURE TO DE-REFERENCE THE STORE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
-    $: label = getSylvan().people().find($subjectNameKey).label()
+    $: subject = getSylvan().people().find($subjectNameKey)
+    $: genData = init(subject)
+    
+    function init(person) { return genChartAnodes(person) }
+
 </script>
-<h3>Generational Chart (L2R) for {label}</h3>
-<Chart sylvan={getSylvan()} subjectNameKey={$subjectNameKey} />
+<h3>Generational Chart V2 (L2R) for {subject.label()}</h3>
+<Chart sylvan={getSylvan()} {subject} {genData} />

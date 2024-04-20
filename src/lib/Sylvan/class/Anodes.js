@@ -11,6 +11,7 @@ export class Anodes {
             rootAnode: null,        // root Anode instance
             rootPerson: rootPerson, // root Person instance
         }
+        this.prop = {}              // for client use
         this._recurse(rootPerson, 0, 1, null)
     }
 
@@ -23,6 +24,8 @@ export class Anodes {
     findPerson(person) { return this.map().get(person) }
 
     map() { return this._data.map }
+    
+    prop() { return this.prop }
 
     rootAnode() { return this._data.rootAnode }
 

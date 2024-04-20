@@ -1,25 +1,23 @@
 <script>
     // Displays the *parents* of the Anode subject
-    import Person from '$lib/Sylvan/svelte/GenChartV2/Person.svelte'
     import Line from '$lib/Sylvan/svelte/GenChartV2/Line.svelte'
-    import { idGenAbbr } from '$lib/Sylvan/class/Generations.js'
     export let anode        // Anode of the child subject
     export let geom
 
-    const drawBorder = true
-    const drawMeta = true
+    const drawBorder = false
     $: factor = geom.factor
 
     // Padding for connectors; 2 on the left and 1 on the right
     const padLeft = 0.08 * geom.node.width          // 0.08 x 500 = 40
     const padRight = 0.04 * geom.node.width         // 0.04 x 500 = 20
+    const round = 10
 
     // Each card has 16 lines
     const lines = 16                                // meta, father, subject, mother, extra
     const lineHt = geom.node.height / lines
     const line = {
-        father: {name: 2, born: 3, died: 4, tags: 5},
-        mother: {name: 10, born: 11, died: 12, tags: 13},
+        father: {name: 2, tags: 3, born: 4, died: 5},
+        mother: {name: 10, tags: 11, born: 12, died: 13},
         union: {date: 7, children: 8},
     }
 
@@ -34,9 +32,9 @@
 
     const x1 = anode.x                  // left edge of node box
     const x2 = x1 + padLeft             // start of tag box
-    const x3 = x2 + 50 * geom.factor    // start of tag text
+    // const x3 = x2 + 50 * geom.factor    // start of tag text
     const x4 = x2 + tagWidth            // end of tag box
-    const x5 = x4 + padRight            // right edge of node box
+    // const x5 = x4 + padRight            // right edge of node box
     const cx = (x1 + x2) / 2            // Curved Bezier control point x
     const xmid = anode.x + geom.node.width / 2
     const ymid = anode.y + geom.node.height / 2
@@ -52,80 +50,48 @@
 
     function childPath() {
         const child = anode.childAnode
-        const dy = anode.person.isFemale() ? line.mother.died : line.father.died
+        const dy = anode.person.isFemale() ? line.mother.born : line.father.born
         const y = child.y + dy * lineHt
         const x = child.x + geom.node.width
         const cpx = (x1 + x)/2 
         return `M ${x1} ${ymid} C ${cpx} ${ymid} ${cpx} ${y} ${x} ${y} L ${x-20} ${y}`
     }
     function fatherPath() {
-        const y = lineTop(line.father.died)
+        const y = lineTop(line.father.born)
         return `M ${x1} ${ymid} C ${cx} ${ymid} ${cx} ${y} ${x2} ${y} L ${xmid} ${y}`
     }
     function motherPath() {
-        const y = lineTop(line.mother.died)
+        const y = lineTop(line.mother.born)
         return `M ${x1} ${ymid} C ${cx} ${ymid} ${cx} ${y} ${x2} ${y} L ${xmid} ${y}`
-    }
-
-    function born(a) {
-        if (a) {
-            const p = a.person
-            return `Born ${p.birthYear()} in ${p.birthState()}, ${p.birthCountry()}`
-        }
-        return ''
-    }
-
-    function died(a) {
-        if (a) {
-            const p = a.person
-            if (p.isLiving()) return 'Not Dead Yet'
-            return `Died ${p.deathYear()} in ${p.deathState()}, ${p.deathCountry()}`
-        }
-        return ''
-    }
-    
-    function name(a) { return a ? `${a.prop.label}` : 'unknown' }
-    
-    function tags(a) { return a ? `${idGenAbbr(a.seq)}` : '' }
-    
-    function union() {
-        if (anode) {
-            const fam = anode.person.familyParent(0)
-            return `m: ${fam.unionDate().year()} ${fam.unionPlace().text()}`
-        }
-        return ''
     }
 </script>
 
-<!-- Tag -->
+<!-- Union card border -->
 {#if drawBorder}
     <rect x={anode.x} y={anode.y} width={geom.node.width} height={geom.node.height} fill="none" stroke="red" />
 {/if}
 
 <!-- Connectors -->
-<path class="linkage" d={fatherPath()} />
-<path class="linkage" d={motherPath()}/>
+<path class="linkage" d={fatherPath()} stroke-width={10 * factor} />
+<path class="linkage" d={motherPath()} stroke-width={10 * factor}/>
 {#if anode.childAnode}
-    <path class="linkage" d={childPath()} />
+    <path class="linkage" d={childPath()}  stroke-width={10 * factor}/>
 {/if}
 
-<!-- Father -->
-<rect class='father' x={x2} y={lineTop(line.father.name)} width={tagWidth} height={tagHeight} /> 
-<Line x={tmid} y={lineBase(line.father.name)} {factor} content={name(anode.fatherAnode)} />
-<Line x={tmid} y={lineBase(line.father.born)} {factor} content={born(anode.fatherAnode)} />
-<Line x={tmid} y={lineBase(line.father.died)} {factor} content={died(anode.fatherAnode)} />
-<Line x={tmid} y={lineBase(line.father.tags)} {factor} content={tags(anode.fatherAnode)} />
+<!-- Father, Union, and Mother -->
+<rect class='father' x={x2} y={lineTop(line.father.name)} rx={round} ry={round}
+    width={tagWidth} height={tagHeight} /> 
+<rect class='mother' x={x2} y={lineTop(line.mother.name)} rx={round} ry={round}
+    width={tagWidth} height={tagHeight} /> 
+<rect class='union' x={x2+unionPad} y={lineTop(line.union.date)} rx={round} ry={round}
+    width={unionWidth} height={unionHeight} />
 
-<!-- Mother -->
-<rect class='mother' x={x2} y={lineTop(line.mother.name)} width={tagWidth} height={tagHeight} /> 
-<Line x={tmid} y={lineBase(line.mother.name)} {factor} content={name(anode.motherAnode)} />
-<Line x={tmid} y={lineBase(line.mother.born)} {factor} content={born(anode.motherAnode)} />
-<Line x={tmid} y={lineBase(line.mother.died)} {factor} content={died(anode.motherAnode)} />
-<Line x={tmid} y={lineBase(line.mother.tags)} {factor} content={tags(anode.motherAnode)} />
-
-<!-- Union -->
-<rect class='union' x={x2+unionPad} y={lineTop(line.union.date)} width={unionWidth} height={unionHeight} /> 
-<Line x={tmid} y={lineBase(line.union.date)} {factor} content={union()} />
+<line class='union' x1={tmid} y1={lineTop(6)} x2={tmid} y2={lineTop(7)} />
+<line class='union' x1={tmid} y1={lineTop(9)} x2={tmid} y2={lineTop(10)} />
+<!-- Content -->
+{#each anode.prop.lines as content, i}
+    <Line x={tmid} y={lineBase(i)} {factor} content={content} />
+{/each}
 
 <style>
     .linkage {
@@ -136,22 +102,17 @@
     }
     .father {
         fill: cyan;
-        stroke: cyan;
+        stroke: blue;
         stroke-width: 1;
     }
     .mother {
         fill: pink;
-        stroke: pink;
+        stroke: red;
         stroke-width: 1;
     }
     .union {
         fill: white;
-        stroke: white;
-        stroke-width: 1;
-    }
-    .subject {
-        fill: none;
-        stroke: black;
-        stroke-width: 0;
+        stroke: silver;
+        stroke-width: 4;
     }
 </style>
