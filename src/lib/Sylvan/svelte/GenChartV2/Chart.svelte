@@ -4,7 +4,7 @@
     export let genData
 
     const drawGrid = false
-    $: factor = 1
+    $: factor = .25
     $: node = {width: factor * 500, height: factor * 320,
         // The following are padding between the cell and the node
         left: factor * 100, right: factor * 100, top: factor * 20, bottom: factor * 20}

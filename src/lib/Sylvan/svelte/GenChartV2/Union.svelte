@@ -1,6 +1,5 @@
 <script>
     // Displays the *parents* of the Anode subject
-    import Line from '$lib/Sylvan/svelte/GenChartV2/Line.svelte'
     export let anode        // Anode of the child subject
     export let geom
 
@@ -80,24 +79,30 @@
 
 <!-- Father, Union, and Mother -->
 <rect class='father' x={x2} y={lineTop(line.father.name)} rx={round} ry={round}
-    width={tagWidth} height={tagHeight} /> 
+    width={tagWidth} height={tagHeight} />
+
 <rect class='mother' x={x2} y={lineTop(line.mother.name)} rx={round} ry={round}
-    width={tagWidth} height={tagHeight} /> 
+    width={tagWidth} height={tagHeight} />
+
 <rect class='union' x={x2+unionPad} y={lineTop(line.union.date)} rx={round} ry={round}
     width={unionWidth} height={unionHeight} />
 
+<!-- Union bonds -->
 <line class='union' x1={tmid} y1={lineTop(6)} x2={tmid} y2={lineTop(7)} />
 <line class='union' x1={tmid} y1={lineTop(9)} x2={tmid} y2={lineTop(10)} />
-<!-- Content -->
+
+<!-- Union Content -->
 {#each anode.prop.lines as content, i}
-    <Line x={tmid} y={lineBase(i)} {factor} content={content} />
+    <text x={tmid} y={lineBase(i)}
+        text-anchor="middle" font-family="sans-serif" font-weight="lighter" font-size={16 * factor}>
+        {content}
+    </text>
 {/each}
 
 <style>
     .linkage {
         fill: none;
         stroke: grey;
-        stroke-width: 10;
         stroke-linecap: flat;
     }
     .father {
