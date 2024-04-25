@@ -79,6 +79,11 @@ export class Families {
         // Add this Family to each of the children's parental Family array
         for(let i=0; i<family.children().length; i++) {
             const child = family.child(i)
+            if (! child) {
+                console.log(`*** Family ${family.gedKey()} has unknown child ${ar[i]}`)
+                if (family.xParent()) console.log('  - xParent', family.xParent().label())
+                if (family.yParent()) console.log('  - yParent', family.xParent().label())
+            } else {
             child.addParentFamily(family)
             if (family.xParent()) {
                 child.addMother(family.xParent())
@@ -88,6 +93,7 @@ export class Families {
                 child.addFather(family.yParent())
                 family.yParent().addChild(child)
             }
+        }
         }
 
         family._data.union = {

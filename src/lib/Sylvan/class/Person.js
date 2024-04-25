@@ -29,6 +29,7 @@ export class Person {
     //---------------------------------------------------------------------------------
     birthCountry() { return this.birthPlace().country() }
     birthDate() { return this._data.birth.date }
+    birthDateDecimal() { return this.birthDate().yearDecimal() }
     birthLine() { return `on ${this.birthDate().str()} at ${this.birthPlace().text()}`}
     birthNotes() { return this._data.birth.notes }
     birthPlace() { return this._data.birth.place }

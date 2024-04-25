@@ -54,6 +54,7 @@ export class EvDate {
     time() { return this._data.time }
     year() { return this._data.year }
     year2() { return this._data.year2 }
+    yearDecimal() { return this.year() + this.month()/12 + this.day()/365 }
 
     // Parses the text to attempt to create a valid, standardized date JSON object
     // Returns {text: 'abt 04 Sep 1952, year: 1952, month: 9, day: 4, qual: 'about', time: null, year2: 0, str: 'about 4 Sep 1952', msg: null}

@@ -17,6 +17,7 @@
             ['/diagrams/originsdisc', 'Ancestral Origins Disc'],
             ['/diagrams/yearchartl2r', 'Birth Year Chart(L2R)'],
             ['/diagrams/yeardisc', 'Birth Year Disc'],
+            ['/diagrams/river', 'River Chart'],
             ['/diagrams/scale', 'SVG Scale Demo'],
         ]],
         ['/people', 'People', [
