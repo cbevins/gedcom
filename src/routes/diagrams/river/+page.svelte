@@ -1,11 +1,11 @@
 <script>
     import { onMount } from 'svelte'
-    import { ChannelNodes } from './ChannelNodes.js'
+    import { Channels } from './Channels.js'
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
     // BE SURE TO DE-REFERENCE THE STORE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
-    $: factor = 0.25
+    $: factor = 0.5
     $: yearWidth = factor * 24       // apply factor just once, right here
     $: chanHeight = factor * 72      // apply factor just once, right here
     $: lineWidth = factor * 10
@@ -19,10 +19,10 @@
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     $: subject = getSylvan().people().find($subjectNameKey)
     $: channels = init(subject)
-    $: cnodes = channels.cnodesBySeq()
+    $: nodes = channels.nodesBySeq()
 
     function init(sub) {
-        channels = new ChannelNodes(sub)
+        channels = new Channels(sub)
         setGeometry()
         return channels
     }
@@ -54,14 +54,14 @@
     }
 
     // data path from subject to child
-    function pathData(cnode, method=2) {
-        if (cnode.child) {
-            const x1 = yearX(cnode.birth)
-            const y1 = chanY(cnode.channel)
-            // const y1 = cnodeY(cnode)
-            const x2 = yearX(cnode.child.birth)
-            // const y2 = cnodeY(cnode.child)
-            const y2 = chanY(cnode.child.channel)
+    function pathData(node, method=2) {
+        if (node.child) {
+            const x1 = yearX(node.birthYear)
+            const y1 = chanY(node.channel)
+            // const y1 = nodeY(node)
+            const x2 = yearX(node.child.birthYear)
+            // const y2 = nodeY(node.child)
+            const y2 = chanY(node.child.channel)
             const move =  `M ${x1} ${y1} `
             // Right angle lines
             if (method === 0) return move + `L ${x2} ${y1} L ${x2} ${y2}`
@@ -69,30 +69,29 @@
             if (method === 1)  move + `M ${x1} ${y1} L ${x2} ${y2}`
             // Cubic Bezier
             if (method === 2) return move + `C ${x2} ${y1} ${x1} ${y2} ${x2} ${y2}`
-            return method ? straightLine : rightAngle
         }
         return ''
     }
 
     function chanY(chan) { return (chan+1) * grid.chanHeight + grid.chanHeight / 2 }
-    function cnodeY(cnode) { return (cnode.y) * vb.height }
+    function nodeY(node) { return (node.y) * vb.height }
 
-    function gender(cnode) { return cnode.person.isFemale() ? 'female' : 'male' }
+    function gender(node) { return node.person.isFemale() ? 'female' : 'male' }
     
-    function nameText(cnode) { return cnode ? cnode.person.label() : '' }
+    function nameText(node) { return node ? node.person.label() : '' }
 
-    function nameX(cnode) {
-        return (cnode && cnode.child) ? yearX((cnode.birth + cnode.child.birth) / 2) : 0
+    function nameX(node) {
+        return (node && node.child) ? yearX((node.birthYear + node.child.birthYear) / 2) : 0
     }
 
-    function nameY(cnode) { return cnode ? chanY(cnode.channel) - lineWidth : 0 }
+    function nameY(node) { return node ? chanY(node.channel) - lineWidth : 0 }
     
     function yearX(year) { return (year - grid.yearMin) * grid.yearWidth }
 </script>
 
 <h3>River Channel Chart for {subject.label()}</h3>
 <ul>
-    <li>There are {cnodes.length} Ancestors born from {channels.yearMin()} through {channels.yearMax()}
+    <li>There are {nodes.length} Ancestors born from {channels.yearMin()} through {channels.yearMax()}
         ({channels.yearMax() - channels.yearMin() + 1} years).</li>
     <li>The displayed years are from {grid.yearMin} through {grid.yearMax} ({grid.yearSpan} years).</li>
     <li>There are {channels.channelMaxCount()} channels.</li>
@@ -112,19 +111,19 @@
     {/each}
     <line class="grid" x1={0} y1={vb.height/2} x2={vb.width} y2={vb.height/2} />
     
-    {#each cnodes as cnode, i}
-        <path class={gender(cnode)} d={pathData(cnode)} stroke-width={lineWidth} />
+    {#each nodes as node, i}
+        <path class={gender(node)} d={pathData(node)} stroke-width={lineWidth} />
     {/each}
     
-    {#each cnodes as cnode, i}
-        <circle class={gender(cnode)+'Dot'} cx={yearX(cnode.birth)} cy={chanY(cnode.channel)} r={radius} />
-    <!-- <circle class={gender(cnode)+'Dot'} cx={yearX(cnode.birth)} cy={cnodeY(cnode)} r={radius} /> -->
+    {#each nodes as node, i}
+        <circle class={gender(node)+'Dot'} cx={yearX(node.birthYear)} cy={chanY(node.channel)} r={radius} />
+    <!-- <circle class={gender(node)+'Dot'} cx={yearX(node.birthYear)} cy={nodeY(node)} r={radius} /> -->
     {/each}
     
-    {#each cnodes as cnode, i}
-        <text x={nameX(cnode)} y={nameY(cnode)}
+    {#each nodes as node, i}
+        <text x={nameX(node)} y={nameY(node)}
             text-anchor="middle" font-family="sans-serif" font-weight="lighter" font-size={fontSize}>
-            {nameText(cnode)}
+            {nameText(node)}
         </text>
     {/each}
 </svg>
