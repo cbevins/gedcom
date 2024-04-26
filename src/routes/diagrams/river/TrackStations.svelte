@@ -17,14 +17,15 @@
         ['Wales', 'WAL'],
     ])
     function color(node) { return node.person.isFemale() ? "red" : "blue" }
-    function country(node) { return Country.get(node.birthCountry)}
+    function country(node) { return Country.get(node.birthCountry) }
+    function href(node) { return '#' + Country.get(node.birthCountry)}
     function x(node) { return geom.grid.yearX(node.birthYear) - geom.grid.radius }
     function y(node) { return geom.grid.chanY(node.channel) - geom.grid.radius }
 </script>
 
 {#each channels.nodesBySeq() as node}
 {console.log(node.birthCountry, node.birthState)}
-    <use x={x(node)} y={y(node)} href="#usa" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+    <use x={x(node)} y={y(node)} href={href(node)} filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
     <circle
         cx={geom.grid.yearX(node.birthYear)}
         cy={geom.grid.chanY(node.channel)}

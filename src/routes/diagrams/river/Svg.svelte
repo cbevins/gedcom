@@ -5,7 +5,18 @@
     import Tracks from './Tracks.svelte'
     import TrackNames from './TrackNames.svelte'
     import TrackStations from './TrackStations.svelte'
+
+    import CAN from './CAN.svelte'
+    import ENG from './ENG.svelte'
+    import FRA from './FRA.svelte'
+    import GER from './GER.svelte'
+    import IRE from './IRE.svelte'
+    import NET from './NET.svelte'
+    import SCO from './SCO.svelte'
+    import SWE from './SWE.svelte'
+    import UNK from './UNK.svelte'
     import USA from './USA.svelte'
+    import WAL from './WAL.svelte'
 
     export let channels
     export let factor
@@ -64,14 +75,6 @@
     }
     function diam() { return 2 * geom.grid.radius }
     function rad() { return geom.grid.radius }
-    function starX(col) {
-        const slot = diam() / 2 / 13    // canton / (6 stars + 7 spaces)
-        return col * 2 * slot + slot + slot/2
-    }
-    function starY(row) {
-        const slot = diam() / 2 / 21     // canton / (9 stars rows + 10 spaces) 
-        return (4*row+1) * slot + slot/2
-    }
 </script>
 <Header channels={channels} {geom} />
 
@@ -83,7 +86,17 @@
         <!-- MUST BE DEFINED HERE, AS ITS USED BY SUVCOMPONENTS!! -->
         <clipPath id="flag-clipper"><circle cx={rad()} cy={rad()} r={rad()} /></clipPath>
         <!-- FLAGS -->
-        <g id="usa"><USA d={diam()} /></g>
+        <g id="CAN"><CAN d={diam()} /></g>
+        <g id="ENG"><ENG d={diam()} /></g>
+        <g id="FRA"><FRA d={diam()} /></g>
+        <g id="GER"><GER d={diam()} /></g>
+        <g id="IRE"><IRE d={diam()} /></g>
+        <g id="NET"><NET d={diam()} /></g>
+        <g id="SCO"><SCO d={diam()} /></g>
+        <g id="SWE"><SWE d={diam()} /></g>
+        <g id="UNK"><UNK d={diam()} /></g>
+        <g id="USA"><USA d={diam()} /></g>
+        <g id="WAL"><WAL d={diam()} /></g>
     </defs>
 
     <filter id = "flag-lighting">
@@ -100,10 +113,31 @@
     <TrackNames {channels} {geom} />
 
     <!-- USA Flag tests -->
-    {#if false}
-        <use x={0} y={0} href="#usa" transform="scale(5)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <use x={200} y={200} href="#usa" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-    {/if}
+    {#if true}
+        <use x={0} y={0} href="#SCO" transform="scale(5)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <use x={100} y={200} href="#CAN" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={225}>CAN</text>
+        <use x={100} y={250} href="#ENG" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={275}>ENG</text>
+        <use x={100} y={300} href="#FRA" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={325}>FRA</text>
+        <use x={100} y={350} href="#GER" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={375}>GER</text>
+        <use x={100} y={400} href="#IRE" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={425}>IRE</text>
+        <use x={100} y={450} href="#NET" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={475}>NET</text>
+        <use x={100} y={500} href="#SCO" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={525}>SCO</text>
+        <use x={100} y={550} href="#SWE" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={575}>SWE</text>
+        <use x={100} y={600} href="#USA" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={625}>USA</text>
+        <use x={100} y={650} href="#WAL" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={675}>WAL</text>
+        <use x={100} y={700} href="#UNK" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <text x={150} y={755}>UNK</text>
+        {/if}
 
     <!-- Nest SVG examples -->
     {#if false}
