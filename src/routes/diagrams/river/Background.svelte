@@ -27,5 +27,4 @@
         stroke: gray;
         stroke-width: 1;
     }
-
 </style>

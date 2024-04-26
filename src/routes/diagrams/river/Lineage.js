@@ -35,6 +35,17 @@ export class Lineage {
     // Returns reference to the {node} instance given a Person instance
     findPerson(person) { return this.personsMap().get(person) }
 
+    // Returns max number of cohorts for the node's generation (including the node itself)
+    genSize(node) { return 2**node.gen }
+
+    // Node's tree horiz offset from tree midline, like [-4, -3, -2, -1, 1, 2, 3, 4]
+    // NOTE that there is NO ZERO OFFSET
+    midlineOffset(node) {
+        const n = node.genSize() / 2
+        const sym = node.seq - n
+        return (sym < 0) ? sym : sym + 1
+    }
+
     // Returns the {node} instance in father-descent-first traversal order
     node(idx) { return this.nodes()[idx] }
     
@@ -44,7 +55,14 @@ export class Lineage {
     // Returns array of {node} instances in lineage sequence order
     // (root===1, father===2, mother===3, paternal grand father===4, etc)
     nodesBySeq() { return this.nodes().sort((a, b) => { return a.seq - b.seq }) }
-    
+
+    // Returns an array of all Person references
+    persons() {
+        const persons = []
+        for (const [person, ancestor] of this.map().entries()) persons.push(person)
+        return persons
+    }
+
     // Returns a reference to the Person => {node} Map()
     personsMap() { return this.data().persons }
     
@@ -56,6 +74,9 @@ export class Lineage {
 
     // Returns a reference to the root's Person instance
     rootPerson() { return this.data().rootPerson }
+
+    // Returns number of nodes in this Lineage
+    size() { return this.personsMap().size }
 
     //--------------------------------------------------------------------------
     // Methods for derived class useage
