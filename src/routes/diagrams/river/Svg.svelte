@@ -5,6 +5,7 @@
     import Tracks from './Tracks.svelte'
     import TrackNames from './TrackNames.svelte'
     import TrackStations from './TrackStations.svelte'
+    import USA from './USA.svelte'
 
     export let channels
     export let factor
@@ -63,9 +64,14 @@
     }
     function diam() { return 2 * geom.grid.radius }
     function rad() { return geom.grid.radius }
-    function scale() { return geom.grid.radius / 100 }
-    function starX(col) { return col * (diam()/2/6) + (diam()/2/6/2)}
-    function starY(row) { return row * 6*diam()/13/5 + 6*diam()/13/5/2}
+    function starX(col) {
+        const slot = diam() / 2 / 13    // canton / (6 stars + 7 spaces)
+        return col * 2 * slot + slot + slot/2
+    }
+    function starY(row) {
+        const slot = diam() / 2 / 21     // canton / (9 stars rows + 10 spaces) 
+        return (4*row+1) * slot + slot/2
+    }
 </script>
 <Header channels={channels} {geom} />
 
@@ -74,31 +80,33 @@
     viewBox="0, 0, {geom.vb.width}, {geom.vb.height}" transform="scale(1)">
 
     <defs>
-        <clipPath id="flag">
-            <circle cx={rad()} cy={rad()} r={rad()} />
-        </clipPath>
-        <g id="usa">
-            <rect x="0" y="0" width={diam()} height={diam()} fill="red" stroke="black" stroke-width="1"/>
-            {#each Array(6) as unused, i}
-                <rect x="0" width={diam()} height={diam()/13} y={2 * i * diam()/13 + diam()/13}
-                    fill="white" stroke-width="0"></rect>
-            {/each}
-            <rect x="0" y="0" width={diam()/2} height={6*diam()/13} fill="blue" stroke-width="0"></rect>
-            {#each Array(5) as unused, row}
-                {#each Array(6) as unused, col}
-                    <circle cx={starX(col)} cy={starY(row)} r={factor} fill="white" />
-                {/each}
-            {/each}
-        </g>
+        <!-- MUST BE DEFINED HERE, AS ITS USED BY SUVCOMPONENTS!! -->
+        <clipPath id="flag-clipper"><circle cx={rad()} cy={rad()} r={rad()} /></clipPath>
+        <!-- FLAGS -->
+        <g id="usa"><USA d={diam()} /></g>
     </defs>
+
+    <filter id = "flag-lighting">
+        <feGaussianBlur in = "SourceAlpha" stdDeviation = "4" result = "blur1"/>
+        <feSpecularLighting result = "specOut" in = "blur1" specularExponent = "100" lighting-color = "#aaaaaa">
+            <fePointLight x = "10" y = "10" z = "20"/>
+        </feSpecularLighting>
+        <feComposite in = "SourceGraphic" in2 = "specOut" operator = "arithmetic" k1 = "0" k2 = "1" k3 = "1" k4 = "0"/>
+    </filter>
 
     <Background {geom} />
     <Tracks {channels} {geom} />
     <TrackStations {channels} {geom} />
     <TrackNames {channels} {geom} />
- 
+
+    <!-- USA Flag tests -->
+    {#if false}
+        <use x={0} y={0} href="#usa" transform="scale(5)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        <use x={200} y={200} href="#usa" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+    {/if}
+
     <!-- Nest SVG examples -->
-    {#if true}
+    {#if false}
     <svg x="250" y="250" width="750" height="500" style="background: gray">
         <svg x="200" y="200">
             <circle cx="50" cy="50" r="50" style="fill: red" />
