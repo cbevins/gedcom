@@ -24,7 +24,6 @@
 </script>
 
 {#each channels.nodesBySeq() as node}
-{console.log(node.birthCountry, node.birthState)}
     <use x={x(node)} y={y(node)} href={href(node)} filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
     <circle
         cx={geom.grid.yearX(node.birthYear)}

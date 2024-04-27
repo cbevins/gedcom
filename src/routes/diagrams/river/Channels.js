@@ -67,7 +67,7 @@ export class Channels extends Lineage {
     }
 
     _flipFathersChannels() {
-        const chan = this.rootNode().mother.channel - 1
+        const chan = this.rootNode().mother.channel
         for (let i=0; i<this.nodes().length; i++) {
             const cnode = this.node(i)
             if (cnode.channel < chan)  cnode.channel = Math.abs(cnode.channel - chan)

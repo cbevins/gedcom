@@ -6,17 +6,19 @@
     import TrackNames from './TrackNames.svelte'
     import TrackStations from './TrackStations.svelte'
 
-    import CAN from './CAN.svelte'
-    import ENG from './ENG.svelte'
-    import FRA from './FRA.svelte'
-    import GER from './GER.svelte'
-    import IRE from './IRE.svelte'
-    import NET from './NET.svelte'
-    import SCO from './SCO.svelte'
-    import SWE from './SWE.svelte'
-    import UNK from './UNK.svelte'
-    import USA from './USA.svelte'
-    import WAL from './WAL.svelte'
+    import CAN from '$lib/images/svg/CAN.svelte'
+    import ENG from '$lib/images/svg/ENG.svelte'
+    import FRA from '$lib/images/svg/FRA.svelte'
+    import GER from '$lib/images/svg/GER.svelte'
+    import IRE from '$lib/images/svg/IRE.svelte'
+    import NET from '$lib/images/svg/NET.svelte'
+    import NOR from '$lib/images/svg/NOR.svelte'
+    import SCO from '$lib/images/svg/SCO.svelte'
+    import SWE from '$lib/images/svg/SWE.svelte'
+    import UNK from '$lib/images/svg/UNK.svelte'
+    import USA from '$lib/images/svg/USA.svelte'
+    import WAL from '$lib/images/svg/WAL.svelte'
+    import WAL2 from '$lib/images/svg/WAL2.svelte'
 
     export let channels
     export let factor
@@ -28,13 +30,21 @@
     $: xPerYear = factor * 24       // x units per year in the ViewBox
     $: yPerChan = factor * 72       // y units per channel/track in the ViewBox
 
-    $: geom = setGeometry(channels)
+    $: geom = setVariableDiagramSizeGeometry(channels)
     
     onMount(() => {
         window.scrollTo(geom.grid.yearX(1700), geom.grid.chanY(50))
     })
 
-    function setGeometry() {
+    // TODO - Uses a fixed diagram width and height to determine
+    // x units per year and y units per channel
+    // based upon the Channels year span and number of channels.
+    function setFixedDiagramSizeGeometry() {}
+
+    // Uses a fixed x units per year and y units per channel
+    // to determine the final diagram width and height
+    // based upon the Channels year span and number of channels.
+    function setVariableDiagramSizeGeometry() {
         const grid = {
             factor: factor,
             xPerYear: xPerYear,
@@ -92,17 +102,19 @@
         <g id="GER"><GER d={diam()} /></g>
         <g id="IRE"><IRE d={diam()} /></g>
         <g id="NET"><NET d={diam()} /></g>
+        <g id="NOR"><NOR d={diam()} /></g>
         <g id="SCO"><SCO d={diam()} /></g>
         <g id="SWE"><SWE d={diam()} /></g>
         <g id="UNK"><UNK d={diam()} /></g>
         <g id="USA"><USA d={diam()} /></g>
         <g id="WAL"><WAL d={diam()} /></g>
+        <g id="WAL2"><WAL2 d={diam()} /></g>
     </defs>
 
     <filter id = "flag-lighting">
         <feGaussianBlur in = "SourceAlpha" stdDeviation = "4" result = "blur1"/>
         <feSpecularLighting result = "specOut" in = "blur1" specularExponent = "100" lighting-color = "#aaaaaa">
-            <fePointLight x = "10" y = "10" z = "20"/>
+            <fePointLight x = "15" y = "10" z = "20"/>
         </feSpecularLighting>
         <feComposite in = "SourceGraphic" in2 = "specOut" operator = "arithmetic" k1 = "0" k2 = "1" k3 = "1" k4 = "0"/>
     </filter>
@@ -114,30 +126,13 @@
 
     <!-- USA Flag tests -->
     {#if true}
-        <use x={0} y={0} href="#SCO" transform="scale(5)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <use x={100} y={200} href="#CAN" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={225}>CAN</text>
-        <use x={100} y={250} href="#ENG" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={275}>ENG</text>
-        <use x={100} y={300} href="#FRA" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={325}>FRA</text>
-        <use x={100} y={350} href="#GER" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={375}>GER</text>
-        <use x={100} y={400} href="#IRE" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={425}>IRE</text>
-        <use x={100} y={450} href="#NET" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={475}>NET</text>
-        <use x={100} y={500} href="#SCO" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={525}>SCO</text>
-        <use x={100} y={550} href="#SWE" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={575}>SWE</text>
-        <use x={100} y={600} href="#USA" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={625}>USA</text>
-        <use x={100} y={650} href="#WAL" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={675}>WAL</text>
-        <use x={100} y={700} href="#UNK" transform="scale(1)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
-        <text x={150} y={755}>UNK</text>
-        {/if}
+        <use x={50} y={5} href="#WAL2" transform="scale(5)" filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+        {#each ['CAN','ENG','FRA','GER','IRE','NET','NOR','SCO','SWE','USA','WAL','UNK'] as country, i}
+            <use x={50} y={25+i*50} href="#{country}"
+                filter="url(#flag-lighting)" clip-path="url(#flag-clipper)" /> 
+            <text x={100} y={50+i*50}>{country}</text>
+        {/each}
+    {/if}
 
     <!-- Nest SVG examples -->
     {#if false}
@@ -154,11 +149,3 @@
     {/if}
 
 </svg>
-
-<style>
-    .dot {
-        fill: red;
-        stroke: black;
-        stroke-width: 1;
-    }
-</style>
