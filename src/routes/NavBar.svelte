@@ -12,7 +12,8 @@
             ['/dev/diagnostics', 'Diagnostics'],
         ]],
         ['/diagrams', 'Diagrams', [
-            ['/diagrams/river', 'River Chart'],
+            ['/diagrams/trainroutes', 'Lineage Train Routes'],
+            ['/diagrams/river', 'Lineage River Chart'],
             ['/diagrams/genchartl2r', 'Generation Chart (L2R)'],
             ['/diagrams/gendisc', 'Generation Disc'],
             ['/diagrams/originsdisc', 'Ancestral Origins Disc'],
