@@ -10,9 +10,10 @@
         ['France', 'FRA'],
         ['Germany', 'GER'],
         ['Ireland', 'IRE'],
+        ['Netherlands', 'NET'],
+        ['Norway', 'NOR'],
         ['Scotland', 'SCO'],
         ['Sweden', 'SWE'],
-        ['Netherlands', 'NET'],
         ['USA', 'USA'],
         ['Wales', 'WAL'],
     ])
