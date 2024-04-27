@@ -2,80 +2,58 @@
     export let channels
     export let geom
 
-    function across(node) {
-        const path = []
-        if(node.child) {
-            const xoffset = 0.4*geom.grid.lineWidth
-            const y = geom.grid.chanY(node.channel) - 0.3 * geom.grid.lineWidth
-            const h = 0.6 * geom.grid.lineWidth
-            const w = 0.8 * geom.grid.xPerYear
-            for (let year=node.birthYear; year<node.child.birthYear; year++) {
-                const x = geom.grid.yearX(year) + 0.1 * geom.grid.xPerYear
-                path.push([x + xoffset, y, w, h])
-            }
-        }
-        return path
-    }
-
-    function down(node) {
-        const path = []
-        if(node.child) {
-            const x = geom.grid.yearX(node.child.birthYear) - 0.25 * geom.grid.xPerYear
-            const w = 0.6 * geom.grid.lineWidth
-            const h = 0.8 * geom.grid.xPerYear
-            const y0 = geom.grid.chanY(node.channel) + 0.5 * geom.grid.lineWidth
-            const y1 = geom.grid.chanY(node.child.channel)
-            for (let y=y0; y<y1-1; y+=geom.grid.xPerYear) {
-                path.push([x, y, w, h])
-            }
-        }
-        return path
-    }
+    // Track section dimensions
+    const secLength = geom.grid.xPerYear
+    const secWidth = 0.6 * geom.grid.lineWidth
     
     // Returns a gender-based class name
     function gender(node) { return node.person.isFemale() ? 'female' : 'male' }
 
-    // Return <path d=> data path from subject to child
-        function pathData(node, method=0) {
-        if (node.child) {
-            const x1 = geom.grid.yearX(node.birthYear)
-            const y1 = geom.grid.chanY(node.channel)
-            const x2 = geom.grid.yearX(node.child.birthYear)
-            const y2 = geom.grid.chanY(node.child.channel)
-            const move =  `M ${x1} ${y1} `
-            // Right angle lines
-            if (method === 0) return move + `L ${x2} ${y1} L ${x2} ${y2}`
-            // Straight line 
-            if (method === 1)  move + `M ${x1} ${y1} L ${x2} ${y2}`
-            // Cubic Bezier
-            if (method === 2) return move + `C ${x2} ${y1} ${x1} ${y2} ${x2} ${y2}`
+    // Returns an array of coordinates for placing horizontal track sections
+    function horizontal(node) {
+        const ar = []
+        if(node.child) {
+            const y = geom.grid.chanY(node.channel)
+            for(let year=node.birthYear; year<node.child.birthYear; year++) {
+                const x = geom.grid.yearX(year)
+                ar.push([x, y])
+            }
         }
-        return ''
+        return ar
+    }
+
+    // Returns an array of coordinates for placing vertical track sections
+    function vertical(node) {
+        const ar = []
+        if(node.child) {
+            const begChan = Math.max(node.channel, node.child.channel)
+            const x = geom.grid.yearX(node.child.birthYear)
+            const sections = 4 * Math.abs(node.channel - node.child.channel)
+            const y = geom.grid.chanY(begChan) - 0.65 * secLength
+            for(let i=0; i<sections; i++) ar.push([x, y-i*secLength])
+        }
+        return ar
     }
 </script>
 
-{#each channels.nodesBySeq() as node}
-    <!-- Channel/track lines -->
-    <path class={gender(node)} d={pathData(node)} stroke-width={geom.grid.lineWidth} />
-
-    <!-- Horizontal track pattern -->
-    {#each across(node) as [x, y, w, h] }
-        <rect x={x} y={y} width={w} height={h} fill="white" stroke-width={0}/>
+{#each channels.nodesBySeq() as node, i}
+    {#each horizontal(node) as [x, y]}
+        <rect class={gender(node)} x={x} y={y-secWidth/2}
+            width={0.9*secLength} height={secWidth} />
     {/each}
-    
-    <!-- Vertical track pattern -->
-    {#each down(node) as [x, y, w, h] }
-        <rect x={x} y={y} width={w} height={h} fill="white" stroke-width={0}/>
+    {#each vertical(node) as [x, y], i}
+        <rect class={gender(node)} x={x-secWidth/2} y={y}
+            width={secWidth} height={0.9*secLength} />
     {/each}
 {/each}
 
 <style>
     .female {
-        fill: none;
+        fill: red;
         stroke: red;
     }
     .male {
-        fill: none;
+        fill: blue;
         stroke: blue;
     }
 </style>

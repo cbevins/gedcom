@@ -21,7 +21,7 @@
 
 <defs>
     <!-- Clips rectangular flags into round buttons -->
-    <clipPath id="flag-clipper"><circle cx={radius} cy={radius} r={radius} /></clipPath>
+    <clipPath id="flag-clipperDEP"><circle cx={radius} cy={radius} r={radius} /></clipPath>
     <!-- FLAGS -->
     <g id="CAN"><CAN d={diam} /></g>
     <g id="ENG"><ENG d={diam} /></g>
@@ -38,7 +38,7 @@
     <g id="WAL2"><WAL2 d={diam} /></g>
 </defs>
 
-<filter id = "flag-lighting">
+<filter id = "flag-lightingDEP">
     <feGaussianBlur in = "SourceAlpha" stdDeviation = "4" result = "blur1"/>
     <feSpecularLighting result = "specOut" in = "blur1" specularExponent = "100" lighting-color = "#aaaaaa">
         <fePointLight x = "15" y = "10" z = "20"/>

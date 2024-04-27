@@ -15,7 +15,7 @@ export class Channels extends Lineage {
         this._addAncestorCounts(this.rootNode()) // Lineage class method
         this._decorateNodes()
         this._data.channels = this._traverse(this.rootNode(), 0)
-        this._flipFathersChannels()
+        // this._flipFathersChannels()
         this.summary()
     }
 
