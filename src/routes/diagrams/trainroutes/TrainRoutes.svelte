@@ -61,7 +61,7 @@
     
     <FlagLegend x="50" y="50" diam={diam} scale="1" />
     
-    {#if true}
+    {#if false}
         <LargeFlag x="50" y="10" country='USA' scale="5" />
     {/if}
 
