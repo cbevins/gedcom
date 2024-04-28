@@ -48,7 +48,7 @@ export function geometry1(channels, factor, xPerYear, yPerChan,
 
     // Function that returns y-coordinate for the channel/track label
     grid.nameY = function (node) {
-        return node ? this.chanY(node.channel) - this.lineWidth : 0
+        return node ? this.chanY(node.channel) - 0.6 * this.lineWidth : 0
     }
 
     // Calculate the ViewBox dimensions

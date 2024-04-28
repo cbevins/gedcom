@@ -1,47 +1,68 @@
 <script>
-    // This component must be included right after the top-level <svg> tag,
-    // as its used by manu Svelte subcomponents
-    import CAN from '$lib/images/svg/CAN.svelte'
-    import ENG from '$lib/images/svg/ENG.svelte'
-    import FRA from '$lib/images/svg/FRA.svelte'
-    import GER from '$lib/images/svg/GER.svelte'
-    import IRE from '$lib/images/svg/IRE.svelte'
-    import NET from '$lib/images/svg/NET.svelte'
-    import NOR from '$lib/images/svg/NOR.svelte'
-    import SCO from '$lib/images/svg/SCO.svelte'
-    import SWE from '$lib/images/svg/SWE.svelte'
-    import UNK from '$lib/images/svg/UNK.svelte'
-    import USA from '$lib/images/svg/USA.svelte'
-    import WAL from '$lib/images/svg/WAL.svelte'
-    import WAL2 from '$lib/images/svg/WAL2.svelte'
 
-    export let radius = 20
-    const diam = 2 * radius
 </script>
 
-<defs>
-    <!-- Clips rectangular flags into round buttons -->
-    <clipPath id="flag-clipperDEP"><circle cx={radius} cy={radius} r={radius} /></clipPath>
-    <!-- FLAGS -->
-    <g id="CAN"><CAN d={diam} /></g>
-    <g id="ENG"><ENG d={diam} /></g>
-    <g id="FRA"><FRA d={diam} /></g>
-    <g id="GER"><GER d={diam} /></g>
-    <g id="IRE"><IRE d={diam} /></g>
-    <g id="NET"><NET d={diam} /></g>
-    <g id="NOR"><NOR d={diam} /></g>
-    <g id="SCO"><SCO d={diam} /></g>
-    <g id="SWE"><SWE d={diam} /></g>
-    <g id="UNK"><UNK d={diam} /></g>
-    <g id="USA"><USA d={diam} /></g>
-    <g id="WAL"><WAL d={diam} /></g>
-    <g id="WAL2"><WAL2 d={diam} /></g>
-</defs>
-
-<filter id = "flag-lightingDEP">
-    <feGaussianBlur in = "SourceAlpha" stdDeviation = "4" result = "blur1"/>
-    <feSpecularLighting result = "specOut" in = "blur1" specularExponent = "100" lighting-color = "#aaaaaa">
-        <fePointLight x = "15" y = "10" z = "20"/>
-    </feSpecularLighting>
-    <feComposite in = "SourceGraphic" in2 = "specOut" operator = "arithmetic" k1 = "0" k2 = "1" k3 = "1" k4 = "0"/>
-</filter>
+<g id="CAN">
+    <rect x="0" y="0" width="100" height="100" fill="white" stroke="black" stroke-width="0"/>
+    <rect x="0" y="0" width="25" height="100" fill="red" />
+    <rect x="75" y="0" width="25" height="100" fill="red" />
+</g>
+<g id="ENG">
+    <rect x="0" y="0" width="100" height="100" fill="white" stroke="black" stroke-width="0"/>
+    <line x1="50" y1="0" x2="50" y2="100" stroke="red" stroke-width="20" />
+    <line x1="0" y1="50" x2="100" y2="50" stroke="red" stroke-width="20" />
+</g>
+<g id="FRA">
+    <rect x="0" y="0" width="100" height="100" fill="white" stroke="black" stroke-width="0"/>
+    <rect x="0" y="0" width="33" height="100" fill="#0055a4" />
+    <rect x="67" y="0" width="33" height="100" fill="#ef4135" />
+</g>
+<g id="GER">
+    <rect x="0" y="0" width="100" height="100" fill="red" stroke="black" stroke-width="0"/>
+    <rect x="0" y="0" width="100" height="33" fill="black" />
+    <rect x="0" y="67" width="100" height="33" fill="#ffcc00" />
+</g>
+<g id="IRE">
+    <rect x="0" y="0" width="100" height="100" fill="white" stroke="black" stroke-width="0"/>
+    <rect x="0" y="0" width="33" height="100" fill="#009A49" />
+    <rect x="67" y="0" width="33" height="100" fill="#ff7900" />
+</g>
+<g id="NET">
+    <rect x="0" y="0" width="100" height="100" fill="white" stroke="black" stroke-width="0"/>
+    <rect x="0" y="0" width="100" height="33" fill="#ad1d25" />
+    <rect x="0" y="67" width="100" height="33" fill="#1e4785" />
+</g>
+<g id="NOR">
+    <rect x="0" y="0" width="100" height="100" fill="#ba0c2f" stroke="black" stroke-width="0"/>
+    <line x1="50" y1="0" x2="50" y2="100" stroke="white" stroke-width="{400/22}" />
+    <line x1="0" y1="50" x2="100" y2="50" stroke="white" stroke-width="{400/22}" />
+    <line x1="50" y1="0" x2="50" y2="100" stroke="#00205b" stroke-width="{200/22}" />
+    <line x1="0" y1="50" x2="100" y2="50" stroke="#00205b" stroke-width="{200/22}" />
+</g>
+<g id="SCO">
+    <rect x="0" y="0" width="100" height="100" fill="#005eb8" stroke="black" stroke-width="0"/>
+    <line x1="0" y1="0" x2="100" y2="100" stroke="white" stroke-width="20" />
+    <line x1="0" y1="100" x2="100" y2="0" stroke="white" stroke-width="20" />
+</g>
+<g id="SWE">
+    <rect x="0" y="0" width="100" height="100" fill="#006aa7" stroke="black" stroke-width="0"/>
+    <line x1="50" y1="0" x2="50" y2="100" stroke="#ffcd00" stroke-width="20" />
+    <line x1="0" y1="50" x2="100" y2="50" stroke="#ffcd00" stroke-width="20" />
+</g>
+<g id="UNK">
+    <rect x="0" y="0" width="100" height="100" fill="gray" stroke="black" stroke-width="0"/>
+</g>
+<g id="USA">
+    <rect x="0" y="0" width="100" height="100" fill="red" stroke="black" stroke-width="0"/>
+    <rect x="0" y={2*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={4*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={6*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={8*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={10*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={12*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y="0" width="50" height="{6*100/13}" fill="blue" stroke="none" />
+</g>
+<g id="WAL">
+    <rect x="0" y="0" width="100" height="100" fill="green" stroke="black" stroke-width="0"/>
+    <rect x="0" y="0" width="100" height="50" fill="white" />
+</g>

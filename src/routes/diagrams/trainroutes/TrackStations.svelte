@@ -42,8 +42,17 @@
         stroke={color(node)}
         stroke-width={4 * geom.grid.factor} />
 
-    <text x={x(node)+1.5*rad}
-        y={y(node)+1.5*rad}
+    <text x={x(node)+rad}
+        y={y(node)+1.3*rad}
+        text-anchor="middle"
+        font-family="sans-serif"
+        font-weight="lighter"
+        font-size={0.75*geom.grid.fontSize}>
+        {node.birthYear}
+    </text>
+
+    <text x={x(node)+rad}
+        y={y(node)-0.2*rad}
         text-anchor="middle"
         font-family="sans-serif"
         font-weight="lighter"

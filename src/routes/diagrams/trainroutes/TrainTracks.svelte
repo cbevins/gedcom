@@ -13,7 +13,7 @@
     function horizontal(node) {
         const ar = []
         const y = geom.grid.chanY(node.channel)
-        const endYear = node.child ? node.child.birthYear : node.birthYear + 30
+        const endYear = node.child ? node.child.birthYear : node.birthYear + 25
         for(let year=node.birthYear; year<endYear; year++) {
             const x = geom.grid.yearX(year)
             ar.push([x, y])
