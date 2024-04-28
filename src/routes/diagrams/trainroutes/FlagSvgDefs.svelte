@@ -52,23 +52,29 @@
 <g id="UNK">
     <rect x="0" y="0" width="100" height="100" fill="gray" stroke="black" stroke-width="0"/>
 </g>
+<g id="USAstar" transform="scale({16/100})">
+    <path d="M 16 0 L 20 12 L 32 12 L 22 19.5 L 26 31.5 L 16 24 L 6 31.5 L 9.75 19.25 L 0 12 L 12.25 12 L 16 0"
+        fill="white" stroke="none"/>
+</g>
 <g id="USA">
     <rect x="0" y="0" width="100" height="100" fill="red" stroke="black" stroke-width="0"/>
-    <rect x="0" y={2*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
-    <rect x="0" y={4*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
-    <rect x="0" y={6*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
-    <rect x="0" y={8*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
-    <rect x="0" y={10*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
-    <rect x="0" y={12*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={1*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={3*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={5*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={7*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={9*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
+    <rect x="0" y={11*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
     <rect x="0" y="0" width="50" height="{6*100/13}" fill="blue" stroke="none" />
     {#each Array(6) as unused, col}
         {#each Array(5) as unused, row}
-            <circle cx={(2*col+1)*50/12} cy={(2*row+1)*60/13} r="1" fill="white" />
+            <use xlink:href="#USAstar" x={(2*col+0.5)*50/12} y={(2*row+0.5)*60/13} />
         {/each}
     {/each}
     {#each Array(5) as unused, col}
         {#each Array(4) as unused, row}
-            <circle cx={(2*(col+1))*50/12} cy={(2*(row+1))*60/13} r="1" fill="white" />
+            <use xlink:href="#USAstar"
+                x={((2*(col+1))-0.5)*50/12}
+                y={((2*(row+1))-0.5)*60/13} />
         {/each}
     {/each}
 </g>

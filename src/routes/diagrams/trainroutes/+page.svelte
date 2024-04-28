@@ -16,4 +16,6 @@
     $: channels = new Channels(subject)
 </script>
 
+Scale Factor:  {factor} <input type="range" bind:value={factor} min="0.25" max="5" step="0.25"/>
+
 <TrainRoutes {channels} {factor} />
