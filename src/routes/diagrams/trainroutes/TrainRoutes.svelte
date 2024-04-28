@@ -7,12 +7,14 @@
     import Header from './Header.svelte'
     import LargeFlag from './LargeFlag.svelte'
     import NestedSvgExample from './NestedSvgExample.svelte'
+    import TimeLine from './TimeLine.svelte'
     import TrainTracks from './TrainTracks.svelte'
     import TrackNames from './TrackNames.svelte'
     import TrackStations from './TrackStations.svelte'
 
     export let channels
     export let factor
+    export let timeline
 
     // Apply the scaling factor just once, right here
     $: lineWidth = factor * 20      // channel/track/line width in ViewBox units
@@ -50,17 +52,18 @@
         <feComposite in = "SourceGraphic" in2 = "specOut" operator = "arithmetic" k1 = "0" k2 = "1" k3 = "1" k4 = "0"/>
     </filter>
 
-    <!-- Draw the background grid -->
-    <Background {geom} />
+    <svg x="0" y={factor*60} width={geom.vb.width} height={geom.vb.height}>
+        <Background {geom} />
+        <TrainTracks {channels} {geom} />
+        <TrackStations {channels} {geom} />
+        <TrackNames {channels} {geom} />
+        <FlagLegend x={factor*50} y={factor*50} diam={diam} scale="1" />
+    </svg>
 
-    <TrainTracks {channels} {geom} />
-    
-    <TrackStations {channels} {geom} />
-    
-    <TrackNames {channels} {geom} />
-    
-    <FlagLegend x="50" y="50" diam={diam} scale="1" />
-    
+    <svg x="0" y="0" width={geom.vb.width} height={factor*100}>
+        <TimeLine {geom} {timeline} height={factor*100} />
+    </svg>
+
     {#if false}
         <LargeFlag x="50" y="10" country='USA' scale="5" />
     {/if}

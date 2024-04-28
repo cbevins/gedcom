@@ -11,14 +11,9 @@
 
 <!-- Year column lines -->
 {#each Array(grid.cols) as unused, col}
-    <line class="grid"
-        x1={col * colWd}
-        y1={0}
-        x2={col * colWd}
-        y2={vb.height} />
+    <line class="grid" x1={col * colWd} y1={0} x2={col * colWd} y2={vb.height} />
     {#each [geom.grid.fontSize, vb.height-geom.grid.fontSize] as y}
-        <text x={col * colWd}
-                y={y}
+        <text x={col * colWd} y={y}
                 text-anchor="middle"
                 font-family="sans-serif"
                 font-weight="lighter"
@@ -29,8 +24,7 @@
 {/each}
 
 <!-- y midline -->
-<line class="grid" x1={0} y1={vb.height/2}
-    x2={vb.width} y2={vb.height/2} />
+<line class="grid" x1={0} y1={vb.height/2} x2={vb.width} y2={vb.height/2} />
 
 <style>
     .grid {
