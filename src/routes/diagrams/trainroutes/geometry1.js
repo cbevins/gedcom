@@ -5,6 +5,7 @@
  * to determine the final diagram width and height
  * based upon the Channels year span and number of channels.
 */
+const addYears = 30
 export function geometry1(channels, factor, xPerYear, yPerChan,
         lineWidth, radius, fontSize) {
     const grid = {
@@ -23,7 +24,7 @@ export function geometry1(channels, factor, xPerYear, yPerChan,
         fontSize: fontSize,     
     }
     // Calculate grid first and last column values (in years)
-    grid.yearMax = Math.trunc((channels.yearMax()+10) / grid.yearsPerCol) * grid.yearsPerCol
+    grid.yearMax = Math.trunc((channels.yearMax()+addYears) / grid.yearsPerCol) * grid.yearsPerCol
     grid.yearMin = Math.trunc((channels.yearMin()-1) / grid.yearsPerCol) * grid.yearsPerCol
     grid.yearSpan = grid.yearMax - grid.yearMin
     // Calculate grid number and width of year columns
@@ -37,7 +38,12 @@ export function geometry1(channels, factor, xPerYear, yPerChan,
     grid.chanY = function (chan) { return (chan+1) * this.yPerChan + this.yPerChan / 2 }
     // Function that returns x-coordinate of center point for name label
     grid.nameX = function (node) {
-        return (node && node.child) ? this.yearX((node.birthYear + node.child.birthYear) / 2) : 0
+        // return (node && node.child) ? this.yearX((node.birthYear + node.child.birthYear) / 2) : 0
+        if (node ) {
+            const childYear = node.child ? node.child.birthYear : node.birthYear + addYears
+            return this.yearX((node.birthYear + childYear) / 2)
+        }
+        return 0
     }
 
     // Function that returns y-coordinate for the channel/track label

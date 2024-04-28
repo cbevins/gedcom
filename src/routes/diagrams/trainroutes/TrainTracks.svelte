@@ -12,12 +12,11 @@
     // Returns an array of coordinates for placing horizontal track sections
     function horizontal(node) {
         const ar = []
-        if(node.child) {
-            const y = geom.grid.chanY(node.channel)
-            for(let year=node.birthYear; year<node.child.birthYear; year++) {
-                const x = geom.grid.yearX(year)
-                ar.push([x, y])
-            }
+        const y = geom.grid.chanY(node.channel)
+        const endYear = node.child ? node.child.birthYear : node.birthYear + 30
+        for(let year=node.birthYear; year<endYear; year++) {
+            const x = geom.grid.yearX(year)
+            ar.push([x, y])
         }
         return ar
     }
@@ -38,8 +37,13 @@
 
 {#each channels.nodesBySeq() as node, i}
     {#each horizontal(node) as [x, y]}
-        <rect class={gender(node)} x={x} y={y-secWidth/2}
-            width={0.9*secLength} height={secWidth} />
+        {#if node === channels.rootNode() }
+            <rect class={gender(node)} x={x} y={y-secWidth/2}
+                width={0.9*secLength} height={secWidth} />
+        {:else}
+            <rect class={gender(node)} x={x} y={y-secWidth/2}
+                width={0.9*secLength} height={secWidth} />
+        {/if}
     {/each}
     {#each vertical(node) as [x, y], i}
         <rect class={gender(node)} x={x-secWidth/2} y={y}
