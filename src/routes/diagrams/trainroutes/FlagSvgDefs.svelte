@@ -61,6 +61,16 @@
     <rect x="0" y={10*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
     <rect x="0" y={12*100/13} width="100" height="{100/13}" fill="white" stroke="none" />
     <rect x="0" y="0" width="50" height="{6*100/13}" fill="blue" stroke="none" />
+    {#each Array(6) as unused, col}
+        {#each Array(5) as unused, row}
+            <circle cx={(2*col+1)*50/12} cy={(2*row+1)*60/13} r="1" fill="white" />
+        {/each}
+    {/each}
+    {#each Array(5) as unused, col}
+        {#each Array(4) as unused, row}
+            <circle cx={(2*(col+1))*50/12} cy={(2*(row+1))*60/13} r="1" fill="white" />
+        {/each}
+    {/each}
 </g>
 <g id="WAL">
     <rect x="0" y="0" width="100" height="100" fill="green" stroke="black" stroke-width="0"/>
