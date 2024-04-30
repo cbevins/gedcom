@@ -3,18 +3,20 @@
     // Poster is 36" wide with variable height
     import GuideBox from './GuideBox.svelte'
     import GuideLines from './GuideLines.svelte'
+    import Header from './Header.svelte'
 
     // Dimensions passed as props
-    export let upi = 100                 // 100 svg units per inch
-    export let sheetHt = 12              // sheet height (inches)
-    export let sheetWd = 36              // sheet width (inches)
-    export let sheetMargin = 0.25        // sheet margin (inches)
-    export let borderThickness = 0.25    // border thickness (inches)
-    export let headerHt = 2              // header hight (inches)
-    export let footerHt = 2              // footer height (inches)
-    export let leftWd = 2                // left box width (inches)
-    export let rightWd = 2               // right box width (inches)
-    export let guides = true             // display borders and guides
+    export let upi = 100                // 100 svg units per inch
+    export let sheetHt = 12             // sheet height (inches)
+    export let sheetWd = 36             // sheet width (inches)
+    export let sheetMargin = 0.25       // sheet margin (inches)
+    export let borderThickness = 0.25   // border thickness (inches)
+    export let headerHt = 2             // header hight (inches)
+    export let footerHt = 2             // footer height (inches)
+    export let leftWd = 2               // left box width (inches)
+    export let rightWd = 2              // right box width (inches)
+    export let guides                   // display borders and guides
+    // $: display = guides                 // force guide drawing to be reactive
 
     // 'sheet' represents the printable surface
     $: sheet = {
@@ -81,7 +83,7 @@
         ht: border.ht - 2 * border.thickness - header.ht - footer.ht,
     }
 </script>
-
+{console.log('Sheets.svelte guides is', guides)}
 <svg id="sheet"
         width={sheet.wd} height={sheet.ht}
         transform="translate({sheet.x}, {sheet.y}) scale({sheet.scale}) rotate({sheet.rotate})">
@@ -93,32 +95,28 @@
 
         <!-- 'header' nested inside 'border'-->
         <svg id="header" x={header.x} y={header.y} width={header.wd} height={header.ht}>
+            <Header width={header.wd} height={header.ht} />
             <GuideBox {guides} geom={header} />
-            <slot name="header"></slot>
         </svg>
 
         <!-- 'footer' nested inside 'border'-->
         <svg id="footer" x={footer.x} y={footer.y} width={footer.wd} height={footer.ht}>
             <GuideBox {guides} geom={footer} />
-            <slot name="footer"></slot>
         </svg>
 
         <!-- 'left' nested inside 'border'-->
         <svg id="left" x={left.x} y={left.y} width={left.wd} height={left.ht}>
             <GuideBox {guides} geom={left} />
-            <slot name="left"></slot>
         </svg>
 
         <!-- 'right' nested inside 'border'-->
         <svg id="right" x={right.x} y={right.y} width={right.wd} height={right.ht}>
             <GuideBox {guides} geom={right} />
-            <slot name="right"></slot>
         </svg>
 
         <!-- 'right' nested inside 'border'-->
         <svg id="grid" x={grid.x} y={grid.y} width={grid.wd} height={grid.ht}>
             <GuideBox {guides} geom={grid} />
-            <slot name="grid"></slot>
         </svg>
     </svg>
         

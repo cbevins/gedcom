@@ -3,6 +3,7 @@
     export let geom     // {wd: <n>, ht: <n>, label: <str>}
     const textHt = 16
 </script>
+{console.log('GuideBox.svelte guides is', guides)}
 
 {#if guides}
     <rect class="guide" x="0" y="0" width={geom.wd} height={geom.ht} />
