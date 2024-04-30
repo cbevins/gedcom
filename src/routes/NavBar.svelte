@@ -10,16 +10,17 @@
         ]],
         ['/dev', 'Dev Tools', [
             ['/dev/diagnostics', 'Diagnostics'],
+            ['/diagrams/poster', 'Poster Framework'],
+            ['/diagrams/scale', 'Nested SVG Example'],
+            ['/diagrams/river', 'Lineage River Chart'],
         ]],
         ['/diagrams', 'Diagrams', [
             ['/diagrams/trainroutes', 'Lineage Train Routes'],
-            ['/diagrams/river', 'Lineage River Chart'],
             ['/diagrams/genchartl2r', 'Generation Chart (L2R)'],
-            ['/diagrams/gendisc', 'Generation Disc'],
-            ['/diagrams/originsdisc', 'Ancestral Origins Disc'],
             ['/diagrams/yearchartl2r', 'Birth Year Chart(L2R)'],
+            ['/diagrams/originsdisc', 'Ancestral Origins Disc'],
             ['/diagrams/yeardisc', 'Birth Year Disc'],
-            ['/diagrams/scale', 'SVG Scale Demo'],
+            ['/diagrams/gendisc', 'Generation Disc'],
         ]],
         ['/people', 'People', [
             ['/people/explorer', 'Explorer'],

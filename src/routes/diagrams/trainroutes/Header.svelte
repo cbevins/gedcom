@@ -20,5 +20,6 @@
         ({channels.yearMax() - channels.yearMin() + 1} years).</li>
     <li>The grid displays years {grid.yearMin} through {grid.yearMax} ({grid.yearSpan} years).</li>
     <li>The grid is {width} ({grid.yearSpan} years x {xPerYear} units/year) wide 
-        and {height} ({channels.channelMaxCount()} channels x {yPerChan} units/channel) high ({ratio}:1).</li>
+        and {height} ({channels.channelMaxCount()} channels x {yPerChan} units/channel) high
+        ({ratio} w x 1 h).</li>
 </ul>

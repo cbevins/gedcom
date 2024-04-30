@@ -62,13 +62,15 @@ export class Locations {
     _init() {
         this._data.map = new Map()
         const recsMap = this.gedcom().topLevelRecordsFor(this.type())
-        for(const locKey of recsMap.keys()) {
-            const std = this._std(locKey)
-            const location = new Location(locKey, std,
-                this._lat(locKey),
-                this._lon(locKey)
-            )
-            this.map().set(locKey, location)
+        if (recsMap) {
+            for(const locKey of recsMap.keys()) {
+                const std = this._std(locKey)
+                const location = new Location(locKey, std,
+                    this._lat(locKey),
+                    this._lon(locKey)
+                )
+                this.map().set(locKey, location)
+            }
         }
     }
 

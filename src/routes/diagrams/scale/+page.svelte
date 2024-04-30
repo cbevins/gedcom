@@ -1,8 +1,20 @@
 <script>
-    const sheet = {
+    // 36" high by variable width
+    const landscape = {
         x: 100, y: 100,     // upper left on the browser or sheet
         wd: 1000, ht: 1000, scale: 1,
+        rotate: 90,
         fill: "#aaaaaa", stroke: "red", strokeWd: 2 }
+
+    // 36" wide with variable height
+    const portrait = {
+        x: 100, y: 100,     // upper left on the browser or sheet
+        wd: 1000, ht: 1000, scale: 1,
+        rotate: 0,
+        fill: "#aaaaaa", stroke: "red", strokeWd: 2 }
+
+    // const sheet = portrait
+    const sheet = landscape
 
     const border = {x: 20, y: 20, wd: 960, ht: 960,
         fill: "#999999", stroke: "red", strokeWd: 1}
@@ -32,7 +44,7 @@
 
 <svg id="sheet"
         width={sheet.wd} height={sheet.ht}
-        transform="translate({sheet.x}, {sheet.y}) scale(1) rotate(0)">
+        transform="translate({sheet.x}, {sheet.y}) scale(1) rotate({sheet.rotate})">
     <rect x="0" y="0" width={sheet.wd} height={sheet.ht}
             fill={sheet.fill} stroke={sheet.stroke} />
     <text x="20" y="20">SHEET</text>

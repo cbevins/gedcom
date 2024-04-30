@@ -16,7 +16,7 @@
     ]
 
     // Factor may be set by some browser element, so capture it here
-    $: factor = 2
+    $: factor = 1
 
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     $: subject = getSylvan().people().find($subjectNameKey)
