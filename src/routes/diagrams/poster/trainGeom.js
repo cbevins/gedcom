@@ -71,5 +71,10 @@ export function trainGeom(channels, width, upi, scale, addYears=30) {
     // channel/track label font size in scaled SVG font units
     geom.fontSize = 10 / geom.scale
 
+    geom.femaleTrack = "magenta"
+    geom.maleTrack =  "blue"
+    geom.color = function (node) {
+        return node.person.isFemale() ? geom.femaleTrack : geom.maleTrack
+    }
     return geom
 }

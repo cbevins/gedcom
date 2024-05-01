@@ -8,6 +8,9 @@
     import Content from './Content.svelte'
     import Header from './Header.svelte'
 
+    // Must import any SVG <defs>
+	import FlagSvgDefs from './FlagSvgDefs.svelte';
+
     export let layout
     $: sheet = layout.sheet
     $: border = layout.border
@@ -22,6 +25,21 @@
 <svg id="sheet" xmlns="http://www.w3.org/2000/svg"
         width={sheet.wd} height={sheet.ht}
         transform="translate({sheet.x}, {sheet.y}) scale({sheet.scale}) rotate({sheet.rotate})">
+
+    <defs>
+        <!-- Clips rectangular flags into round buttons -->
+        <clipPath id="flag-clipper"><circle cx="50" cy="50" r="50" /></clipPath>
+        <FlagSvgDefs />
+    </defs>
+    
+    <filter id = "flag-lighting">
+        <feGaussianBlur in = "SourceAlpha" stdDeviation = "4" result = "blur1"/>
+        <feSpecularLighting result = "specOut" in = "blur1" specularExponent = "100" lighting-color = "#aaaaaa">
+            <fePointLight x = "40" y = "40" z = "40"/>
+        </feSpecularLighting>
+        <feComposite in = "SourceGraphic" in2 = "specOut" operator = "arithmetic" k1 = "0" k2 = "1" k3 = "1" k4 = "0"/>
+    </filter>
+    
     <GuideBox {guides} geom={sheet} />
 
     <!-- 'border' nested inside 'sheet'-->

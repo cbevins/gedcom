@@ -8,7 +8,17 @@
     
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     $: subject = getSylvan().people().find($subjectNameKey)
-    $: channels = new Channels(subject)
+    $: channels = getChannels(subject)
+
+    function getChannels(subj) {
+        const c = new Channels(subj)
+        // Move subject to a channel midway between father and mother
+        const r = c.rootNode()
+        const f = c.father ? c.father.channel : 1
+        const m = c.mother ? c.mother.channel : c.channelMaxCount()
+        r.channel = Math.trunc((f + m) / 2)
+        return c
+    }
 
     // All layout dimensions are INCHES
     let scale = 4.25 // Scale down from 36" wide to 8.47"
@@ -53,9 +63,9 @@
             ht: geom.height / upi / scale,
         },
         guides: {
-            borders: true,
-            labels: true,
-            lines: true,
+            borders: false,
+            labels: false,
+            lines: false,
         }
     }
     $: sheet = posterLayout(layout)
