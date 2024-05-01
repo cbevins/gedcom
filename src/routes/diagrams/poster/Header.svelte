@@ -1,15 +1,21 @@
 <script>
-    export let width
-    export let height
+    export let header
+    $: titleHt = 3 * header.fontSize
+    $: subTitleHt = 2 * header.fontSize
 </script>
 
-<svg width={width} height={height}>
-<text x={width/2} y={height/2}
-    text-anchor="middle"
-    font-family="sans-serif"
-    font-weight="lighter"
-    font-size="16">
-Bevins-Heddens Lineage Routes
+<text x={header.wd/2} y={0.5*header.ht}
+        text-anchor="middle"
+        font-family="sans-serif"
+        font-weight="lighter"
+        font-size={titleHt}>
+    Bevins-Heddens Lineage Routes
 </text>
 
-</svg>
+<text x={header.wd/2} y={0.9*header.ht}
+        text-anchor="middle"
+        font-family="sans-serif"
+        font-weight="lighter"
+        font-size={subTitleHt}>
+    Running Since 1500
+</text>
