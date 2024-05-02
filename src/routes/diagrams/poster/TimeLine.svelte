@@ -27,7 +27,7 @@
     function thruX(event) { return geom.yearX(event.thru[0]) }
 
     function labelY(i, tl) {
-        const offset = (1 + i % geom.timeline.lines) * lineHt
+        const offset = (1 + i % (geom.timeline.lines-1)) * lineHt
         return (tl === 0) ? yUpper.top + offset : yLower.top + offset + 0.8*lineHt
     }
 </script>

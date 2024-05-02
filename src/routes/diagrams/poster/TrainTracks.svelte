@@ -3,19 +3,20 @@
     export let content
     $: channels = content.channels
     $: geom = content.geom
-    $: dashes = `${18/geom.scale} ${2/geom.scale}`
+    $: dashes = `${0.3 * geom.trackWidth / geom.scale} ${0.3 * geom.trackWidth /geom.scale}`
+    $: offset = 0.2 * geom.trackWidth
 
     // Return <path d=> data path from subject to child
-    function pathData(node, method=0) {
-        const x1 = geom.yearX(node.birthYear)
-        const y1 = geom.chanY(node.channel)
+    function pathData(node, offset, method=0) {
+        const x1 = geom.yearX(node.birthYear) + offset
+        const y1 = geom.chanY(node.channel) + offset
         let x2, y2
         if (node.child) {
-            x2 = geom.yearX(node.child.birthYear)
-            y2 = geom.chanY(node.child.channel)
+            x2 = geom.yearX(node.child.birthYear) + offset
+            y2 = geom.chanY(node.child.channel) + offset
         } else if (node === channels.rootNode()) {
-            x2 = geom.yearX(geom.yearMax)
-            y2 = y1
+            x2 = geom.yearX(geom.yearMax) + offset
+            y2 = y1 + offset
         } else {
             return ''
         }
@@ -31,10 +32,22 @@
 </script>
 
 {#each channels.nodesBySeq() as node, i}
-    <path d={pathData(node)}
+    <path d={pathData(node, 0)}
         fill="none"
         stroke={geom.color(node)}
         stroke-linejoin="round"
         stroke-dasharray={dashes}
         stroke-width={geom.trackWidth} />
+
+    <path d={pathData(node, offset)}
+        fill="none"
+        stroke={geom.color(node)}
+        stroke-linejoin="round"
+        stroke-width="1" />
+
+    <path d={pathData(node, -offset)}
+        fill="none"
+        stroke={geom.color(node)}
+        stroke-linejoin="round"
+        stroke-width="1" />
 {/each}
