@@ -2,6 +2,7 @@
     // All units are hundreths of an inch
     // Poster is 36" wide with variable height
     import Border from './Border.svelte'
+    import BorderTracks from './BorderTracks.svelte'
     import Footer from './Footer.svelte'
     import GuideBox from './GuideBox.svelte'
     import GuideLines from './GuideLines.svelte'
@@ -44,7 +45,7 @@
 
     <!-- 'border' nested inside 'sheet'-->
     <svg id="border" x={border.x} y={border.y} width={border.wd} height={border.ht}>
-        <Border {border} />
+        <BorderTracks {border} />
         <GuideBox {guides} geom={border} />
 
         <!-- 'header' nested inside 'border'-->

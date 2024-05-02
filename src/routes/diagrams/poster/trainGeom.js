@@ -13,6 +13,7 @@ export function trainGeom(channels, width, upi, scale, addYears=30) {
         upi: upi
     }
     const trackWidth = 10
+
     //--------------------------------------------------------------------------
     // HORIZONTAL X
     //--------------------------------------------------------------------------
@@ -47,7 +48,7 @@ export function trainGeom(channels, width, upi, scale, addYears=30) {
     //--------------------------------------------------------------------------
 
     // Content rows/channels
-    geom.rows = channels.channelMaxCount()+3
+    geom.rows = channels.channelMaxCount() + 3 // padding at top and bottom
     // Vertical unscaled SVG units per channel/track
     geom.yPerChan = 6 * geom.xPerYear
     // Content height in unscaled SVG units
@@ -76,5 +77,13 @@ export function trainGeom(channels, width, upi, scale, addYears=30) {
     geom.color = function (node) {
         return node.person.isFemale() ? geom.femaleTrack : geom.maleTrack
     }
+
+    // TimeLines go at the top and bottom
+    geom.timeline = {
+        ht: 1 * upi / scale,
+        lines: 4,
+    }
+
+    geom.totalHt = geom.height + 2 * geom.timeline.ht
     return geom
 }

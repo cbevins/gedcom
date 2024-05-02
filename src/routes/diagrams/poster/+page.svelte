@@ -60,7 +60,7 @@
         },
         content: {
             geom: geom,
-            ht: geom.height / upi / scale,
+            ht: geom.totalHt / upi / scale,
         },
         guides: {
             borders: false,
