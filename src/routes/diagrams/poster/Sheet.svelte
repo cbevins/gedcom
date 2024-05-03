@@ -77,6 +77,5 @@
         </svg>
         
     </svg>
-
     <GuideLines {guides} {sheet} />
 </svg>
