@@ -1,4 +1,5 @@
 <script>
+    import FlagLegend from './FlagLegend.svelte'
     import TimeLine from './TimeLine.svelte'
     import TrackNames from './TrackNames.svelte'
     import TrainStations from './TrainStations.svelte'
@@ -15,5 +16,5 @@
     <TrainTracks {content} />
     <TrainStations {content} />
     <TrackNames {content} />
+    <FlagLegend x={50/geom.scale} y={50/geom.scale} diam={2*geom.radius} scale="1" />
 </svg>
-
