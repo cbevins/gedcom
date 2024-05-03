@@ -1,5 +1,4 @@
 <script>
-    import TrainStation1 from './TrainStation1.svelte'
     import TrainStation from './TrainStation.svelte'
     export let content
 
@@ -12,7 +11,5 @@
 </script>
 
 {#each channels.nodesBySeq() as node}
-    <!-- <TrainStation1 {geom} {node} /> -->
-
     <TrainStation cx={x(node)} cy={y(node)} {geom} {node} />
 {/each}
