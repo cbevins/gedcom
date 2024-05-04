@@ -65,7 +65,7 @@
         guides: {
             borders: false,
             labels: false,
-            lines: false,
+            lines: true,
         }
     }
     $: sheet = posterLayout(layout)

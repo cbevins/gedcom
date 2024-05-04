@@ -1,7 +1,6 @@
 <script>
     // All units are hundreths of an inch
     // Poster is 36" wide with variable height
-    import Border from './Border.svelte'
     import BorderTracks from './BorderTracks.svelte'
     import Footer from './Footer.svelte'
     import GuideBox from './GuideBox.svelte'
@@ -13,6 +12,7 @@
 	import FlagSvgDefs from './FlagSvgDefs.svelte';
 
     export let layout
+
     $: sheet = layout.sheet
     $: border = layout.border
     $: header = layout.header
@@ -50,7 +50,7 @@
 
         <!-- 'header' nested inside 'border'-->
         <svg id="header" x={header.x} y={header.y} width={header.wd} height={header.ht}>
-            <Header {header} />
+            <Header {layout} />
             <GuideBox {guides} geom={header} />
         </svg>
 

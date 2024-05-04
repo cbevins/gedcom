@@ -14,6 +14,10 @@
     const shortList = [
         {key: 'CollinDouglasBevins1952', label: 'Collin'},
         {key: 'BarbaraJeanneRiley1953', label: 'Barbie'},
+        {key: 'WilliamCollinsBevins1931', label: 'William'},
+        {key: 'MeartiaMargaretHeddens1933', label: 'Meartia'},
+        {key: 'SheldonJuniorRiley1926', label: 'Sheldon'},
+        {key: 'DorothyMayTrombley1927', label: 'Dotty'},
         {key: 'DrewallynBevinsRiley1982', label: 'Drewallyn'},
         {key: 'WilliamLongfordBevins1815', label: 'William Longford Bevins'},
         {key: 'HannahHunter1753', label: 'Hannah Hunter'}
