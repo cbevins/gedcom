@@ -1,8 +1,8 @@
 /**
- * 
- * @param {*} layout Layout dimensions in *INCHES*
+ * Fully hydrates a Layout specification into the return JSON object.
+ * @param {*} layout Layout specification (like PosterLayout36.js)
  */
-export function posterLayout(layout, guideLines=false, guideBorders=false, guideLabels=false) {
+export function sheetLayout(layout) {
     const upi = layout.upi
 
     // 'sheet' represents the printable surface
@@ -86,15 +86,9 @@ export function posterLayout(layout, guideLines=false, guideBorders=false, guide
         fontSize: layout.fontSize,                  // 'standard' font size
     }
 
-    const guides = {
-        borders: guideBorders,
-        lables: guideLabels,
-        lines: guideLines,
-        fontSize: layout.fontSize,
-    }
-    
+    layout.guides.fontSize = layout.fontSize
     return {sheet: sheet, border: border,
         header: header, footer: footer, left: left, right: right,
-        content: content, guides: guides
+        content: content, guides: layout.guides
     }
 }

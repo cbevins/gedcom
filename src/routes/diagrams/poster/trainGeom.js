@@ -84,6 +84,7 @@ export function trainGeom(channels, width, upi, scale, addYears=30) {
         lines: 4,
     }
 
-    geom.totalHt = geom.height + 2 * geom.timeline.ht
+    geom.totalHt = geom.height + 2 * geom.timeline.ht   // SVG units
+    geom.ht = geom.totalHt / upi / scale    // inches
     return geom
 }

@@ -2,12 +2,10 @@
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
     import { Channels } from '$lib/Sylvan/class/Channels.js'
-    import { posterLayout } from './posterLayout.js'
-    import { PosterLayout36 } from './PosterLayout36.js'
-    import { PosterLayout36BAK } from './PosterLayout36BAK.js'
     import { sheetLayout } from './sheetLayout.js'
     import { trainGeom } from './trainGeom.js'
     import Sheet from './Sheet.svelte'
+    import { PosterLayout36 } from './PosterLayout36.js'
 
     // All layout dimensions are INCHES
     const upi = 100         // 100 SVG units per inch
@@ -18,12 +16,12 @@
     //--------------------------------------------------------------------
     // Step 1: Determine content and its dimensions
     //--------------------------------------------------------------------
-    
+
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     $: subject = getSylvan().people().find($subjectNameKey)
     $: channels = getChannels(subject)
     $: geom = trainGeom(channels, 3500, upi, scale)
-    $: console.log('geom.totalHt', geom.totalHt)   
+    $: console.log(`geom.totalHt=${geom.totalHt} geom.ht=${geom.ht}`)
 
     function getChannels(subj) {
         const c = new Channels(subj)
@@ -40,30 +38,15 @@
     //--------------------------------------------------------------------
 
     // First use the desired layout specification prototype
-    // $: layout = PosterLayout36()
-    $: layout = PosterLayout36(geom.totalHt/upi/scale)
+    $: layout = PosterLayout36()
 
     // Then calculate the fully hydrated Sheet layout dimensions
-    // $: sheet = sheetLayout(layout, upi, geom.totalHt, scale, true, true, true)
-    // $: console.log(`sheet.content.ht=${sheet.content.ht}`)
-    // // Add required client data to the Sheet
-    // $: sheet.content.channels = channels
-    // $: sheet.content.geom = geom
-
-    // Poster is 36" wide with variable height
-    $: layout1 = PosterLayout36BAK(upi, scale, geom.totalHt, false, false, false)
-    $: sheet1 = posterLayout(layout1, true, true, true)
-    $: sheet1.content.channels = channels
-    $: sheet1.content.geom = geom
-    $: console.log('sheet1.ht', sheet1.sheet.ht)
-    $: console.log('sheet1.content.ht', sheet1.content.ht)
-
-    // $: layout2 = PosterLayout36(geom.totalHt/upi/scale)
-    // $: sheet2 = sheetLayout(layout2, upi, geom.totalHt, scale, true, true, true)
-    // $: sheet2.content.channels = channels
-    // $: sheet2.content.geom = geom
-    // $: console.log('sheet2.ht', sheet2.sheet.ht)
-    // $: console.log('sheet2.content.ht', sheet2.content.ht)
+    $: sheet = sheetLayout(layout, upi, geom.totalHt, scale, true, true, true)
+    $: console.log(`sheet.content.ht=${sheet.content.ht}`)
+    // Add required client data to the Sheet
+    $: sheet.content.channels = channels
+    $: sheet.content.geom = geom
+    // $: console.log(sheet)
 </script>
 
-<Sheet layout={sheet1} />
+<Sheet layout={sheet} />
