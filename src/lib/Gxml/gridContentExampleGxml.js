@@ -22,11 +22,19 @@ export function gridContentExampleGxml(width=1000, height=2000) {
             x1: 0, y1: row*rowHt, x2: width, y2: row*rowHt,
             stroke: 'black', 'stroke-width': 1, els: []})
     }
+
     for(let col=0; col<cols-1; col++) {
         for(let row=0; row<rows-1; row++) {
-            els.push({el: 'text',
+            els.push({el: 'text', 
                 x: col*colWd + colWd/2,
-                y: row*rowHt + rowHt/2,
+                y: row*rowHt + rowHt/2 + 12,
+                'text-anchor': 'middle',
+                'font-family': 'sans-serif',
+                'font-size': 36,
+                'font-weight':"lighter",
+                stroke: 'none',
+                'stroke-width': 0,
+                fill: 'black',
                 els: [{el: 'inner', content: `${col},${row}`, els: []}]
             })
         }

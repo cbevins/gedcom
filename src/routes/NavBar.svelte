@@ -10,6 +10,7 @@
         ]],
         ['/dev', 'Dev Tools', [
             ['/dev/diagnostics', 'Diagnostics'],
+            ['/diagrams/gxml', 'GXML'],
             ['/diagrams/poster', 'Poster Framework'],
             ['/diagrams/scale', 'Nested SVG Example'],
             ['/diagrams/river', 'Lineage River Chart'],
