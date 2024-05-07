@@ -1,5 +1,12 @@
 <script>
-    import Poster from '$lib/Poster/Poster.svelte'
+    // import PosterSvg from '$lib/PosterSvg/PosterSvg.svelte'
+    import LineageTrainPosterSvg from '$lib/LineageTrainPosterSvg/LineageTrainPosterSvg.svelte'
+    import { subjectNameKey } from '$lib/Sylvan/js/store.js'
+
+    $: scale = 1
+    $: guides = true
 </script>
 
-<Poster />
+<LineageTrainPosterSvg {scale} {guides} subjectNameKey={$subjectNameKey} />
+
+<!-- <PosterSvg /> -->

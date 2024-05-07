@@ -14,7 +14,6 @@ export function portraitLayout(spec, contentSvgWidth, contentSvgHeight, scale=1)
         scale: scale    // when used, is applied against the entire toplevel SVG
     }
     layout.factor = layout.supi / layout.scale
-
     const factor = layout.factor
     const {t, b, l, r} = spec.sheetPad
     const sheet = {
@@ -68,7 +67,9 @@ export function portraitLayout(spec, contentSvgWidth, contentSvgHeight, scale=1)
         y: header.y + header.height,
         height: 0,  // TBD = content.scale * contentSvgHeight
         scale: 1,   // TBD = content.width / contentSvgWidth
-        width: header.width - left.width - right.width
+        width: header.width - left.width - right.width,
+        nativeHt: contentSvgHeight,
+        nativeWd: contentSvgWidth
     }
 
     // Scale content so its SVG width fits the portrait's available content width
