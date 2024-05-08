@@ -16,7 +16,7 @@
  * @returns An array with 1 gxml object top-level SVG with nested gxml region objects.
  */
 
-export function posterGxml(layout, contentEls, borderEls=[], headerEls=[], footerEls=[], guideEls=[]) {
+export function posterGxml(layout, contentEls, preambleEls=[], borderEls=[], headerEls=[], footerEls=[], guideEls=[]) {
     const {sheet, border, header, footer, left, right, content} = layout
 
     const sheetSvg = {el: 'svg', id: 'sheet-svg',
@@ -88,7 +88,7 @@ export function posterGxml(layout, contentEls, borderEls=[], headerEls=[], foote
     const topSvg = {el: 'svg',  xmlns: "http://www.w3.org/2000/svg",
         width: sheet.width,
         height: sheet.height,
-        els: [sheetSvg, borderSvg, headerSvg, footerSvg, leftSvg, rightSvg, contentSvg, guidesSvg]}
+        els: [...preambleEls, sheetSvg, borderSvg, headerSvg, footerSvg, leftSvg, rightSvg, contentSvg, guidesSvg]}
 
-    return [topSvg]
+    return topSvg
 }

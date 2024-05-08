@@ -10,14 +10,22 @@
  * 
  * See the runGxml.js example for ways to compose the specification data structure.
  * 
- * @param {gxml} gxml  Reference to the toplevel gxml spec
+ * @param {gxml|[]} gxml  Either a single or array of gxml object references
  * @param {*} indent The number of spaces to indent each nesting level (change to 0 for no indents)
  * @param {*} eol  The end-of-line character (change to '' for no line breaks)
- * @param {*} level The current nesting level (only used when recursing)
  * @returns An XML string suitable for writing to an SVG or HTML file or using within a Svelte componewnt.
  */
 
 export function gxmlStr(gxml, indent=2, eol='\n', level=0) {
+    let xml = ''
+    const ar = Array.isArray(gxml) ? gxml : [gxml]
+    for(let i=0; i<ar.length; i++) {
+        xml += _gxmlStr(ar[i], indent, eol)
+    }
+    return xml
+}
+    
+export function _gxmlStr(gxml, indent, eol, level=0) {
     if (gxml.el === 'inner') {
         return (gxml.content).padStart(level*indent) + eol
     }
@@ -28,7 +36,7 @@ export function gxmlStr(gxml, indent=2, eol='\n', level=0) {
     let str = ''
     if (gxml.els) {
         for(let i=0; i<gxml.els.length; i++) {
-            str += gxmlStr(gxml.els[i], indent, eol, level+1)
+            str += _gxmlStr(gxml.els[i], indent, eol, level+1)
         }
     }
     // Compose opening tag

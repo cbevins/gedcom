@@ -2,8 +2,8 @@
  * Lineage data structure used to construct lineage diagrams
  * based on birth date.
  */
-import { Lineage } from '$lib/Sylvan/class/Lineage.js'
-import { idGenCount } from '$lib/Sylvan/class/Generations.js'
+import { Lineage } from './Lineage.js'
+import { idGenCount } from './Generations.js'
 
 export class Channels extends Lineage {
     constructor(rootPerson) {
@@ -16,7 +16,7 @@ export class Channels extends Lineage {
         this._decorateNodes()
         this._data.channels = this._traverse(this.rootNode(), 0)
         // this._flipFathersChannels()
-        this.summary()
+        // this.summary()
     }
 
     //--------------------------------------------------------------------------
