@@ -3,17 +3,21 @@
  */
 import { gxmlStr } from '../Gxml/index.js'
 import { layoutSpecPortraitPoster, portraitLayout } from '../PosterSvg/index.js'
-import { borderGxml, footerGxml, guidesGxml } from '../PosterSvg/index.js'
+import { borderGxml, footerGxml, guidesGxml, posterGxml } from '../PosterSvg/index.js'
 
 // Sylvan content
 import { Channels } from '../Sylvan/class/Channels.js'
 import { flagDefsGxml } from './flagDefsGxml.js'
+import { gridGxml } from './gridGxml.js'
 import { headerGxml } from './headerGxml.js'
-import { posterGxml } from './posterGxml.js'
+// import { posterGxml } from './posterGxml.js'
 import { trackNamesGxml } from './tracknamesGxml.js'
 import { trainGeometry } from './trainGeometry.js'
 import { trainStationsGxml } from './trainStationsGxml.js'
 import { trainTracksGxml } from './trainTracksGxml.js'
+
+// temp
+import { posterSvg } from '$lib/PosterSvg/posterSvg.js'
 
 function getChannels(subj) {
     const chan = new Channels(subj)
@@ -33,11 +37,13 @@ function getChannels(subj) {
  * @returns SVG lineage diagram in the style of a railroad route map.
  */
 export function lineageTrainPosterSvg(subject, scale=1, guides=false) {
+    return posterSvg(1000, 2000, scale, guides)
+
     // Step 1 - create some Gxml content to embed in the portrait layout
     const channels = getChannels(subject)
     const geom = trainGeometry(channels)
 
-    // const gridEls = gridGxml(geom)
+    const gridEls = gridGxml(geom)
     const preambleEls = flagDefsGxml()
     const trainStationsEls = trainStationsGxml(geom)
     const trainTracksEls = trainTracksGxml(geom)
@@ -57,7 +63,7 @@ export function lineageTrainPosterSvg(subject, scale=1, guides=false) {
     const headerEls = headerGxml(layout, 'Bevins-Heddens Line Route', 'Running Since 1500')
     const footerEls = footerGxml(layout)
     const guidesEls = guides ? guidesGxml(layout) : []
-    const gxml = posterGxml(layout, contentEls, preambleEls, borderEls, headerEls, footerEls, guidesEls)
+    const gxml = posterGxml(layout, [], borderEls, headerEls, footerEls, guidesEls)
 
     // Step 5 - convert the gxml elements into SVG
     const svg = gxmlStr(gxml)

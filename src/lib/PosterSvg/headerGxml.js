@@ -1,3 +1,10 @@
+/**
+ * Returns an array of Gxml JSON objects defining content for the poster's 'header' region.
+ * @param {layout} layout The layout rturned by portraitLayout()
+ * @param {str} title The main title text
+ * @param {str} subtitle The subtitle text
+ * @returns An array of Gxml JSON objects
+ */
 export function headerGxml(layout, title, subtitle='') {
     const els = []
     els.push({el: 'text', id: 'header-title',

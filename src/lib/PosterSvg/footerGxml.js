@@ -1,3 +1,8 @@
+/**
+ * Returns an array of Gxml JSON objects defining content for the poster's 'footer' region.
+ * @param {layout} layout The layout rturned by portraitLayout()
+ * @returns An array of Gxml JSON objects
+ */
 export function footerGxml(layout) {
     const d8 = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) 
     const els = []

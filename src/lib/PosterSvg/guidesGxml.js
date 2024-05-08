@@ -1,3 +1,9 @@
+/**
+ * Returns an array of Gxml JSON objects defining a ruled overlay for the poster.
+ * @param {layout} layout The layout rturned by portraitLayout()
+ * @returns An array of Gxml JSON objects
+ */
+
 // Returns an array of y-coordinates for 0.25" vertical guide lines
 function pos(units, supi=100, lpi=4) {
     const lines = (lpi * Math.trunc(units / supi))
@@ -13,7 +19,8 @@ export function guidesGxml(layout) {
     const w = layout.sheet.width
     const h = layout.sheet.height
     const x = pos(w, layout.sheet.supi, lpi)
-    for(let i=0; i<x.length; i++) {
+    const fontSize = 16
+    for(let i=1; i<x.length; i++) {
         if (i%lpi) {
             els.push({el: 'line', x1: x[i], y1: 0, x2: x[i], y2: h,
                 fill: 'none',
@@ -29,14 +36,17 @@ export function guidesGxml(layout) {
                 'stroke-opacity': 0.5,
                 'stroke-width': 1
             })
-            els.push({el: 'text', x: x[i], y: 16,
+            els.push({el: 'text', x: x[i], y: 1.5*fontSize,
                 'text-anchor': "middle",
+                'font-family': "sans-serif",
+                'font-weight': "lighter",
+                'font-size': fontSize,
                 els: [{el: 'inner', content: Math.trunc(i/lpi).toString()}]
             })
         }
     }
     const y = pos(h, layout.sheet.supi, lpi)
-    for(let i=0; i<y.length; i++) {
+    for(let i=1; i<y.length; i++) {
         if (i%lpi) {
             els.push({el: 'line', x1: 0, y1: y[i], x2: w, y2: y[i],
                 fill: 'none',
@@ -52,8 +62,11 @@ export function guidesGxml(layout) {
                 'stroke-opacity': 0.5,
                 'stroke-width': 1
             })
-            els.push({el: 'text', x: 10, y: y[i]+6,
+            els.push({el: 'text', x: fontSize, y: y[i]+6,
                 'text-anchor': "middle",
+                'font-family': "sans-serif",
+                'font-weight': "lighter",
+                'font-size': fontSize,
                 els: [{el: 'inner', content: Math.trunc(i/lpi).toString()}]
             })
         }

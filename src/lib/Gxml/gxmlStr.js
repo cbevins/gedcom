@@ -26,6 +26,8 @@ export function gxmlStr(gxml, indent=2, eol='\n', level=0) {
 }
     
 export function _gxmlStr(gxml, indent, eol, level=0) {
+    // Check for nested arrays of gxml
+    if (Array.isArray(gxml)) return gxmlStr(gxml, indent, eol, level)
     if (gxml.el === 'inner') {
         return (gxml.content).padStart(level*indent) + eol
     }

@@ -1,10 +1,12 @@
 /**
- * Returns a layout object whose dimensions are SVG units at 100 units per inch
+ * Returns a layout object whose component sizes and locations have been adjusted
+ * to accommodate the content, and whose dimensions are SVG units at 100 units per inch.
  * 
  * @param {*} spec Layout speficiation whose dimensions are inches
  * @param {*} contentSvgWidth Portrait content SVG width
  * @param {*} contentSvgHeight Portrait content SVG height
- * @returns 
+ * @param {number} scale Portrait content scale
+ * @returns A 'layout' JSON object
  */
 
 export function portraitLayout(spec, contentSvgWidth, contentSvgHeight, scale=1) {

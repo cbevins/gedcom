@@ -1,7 +1,8 @@
 /**
- * Returns an array of Gxml elements that draw a train track border
- * @param {*} layout The layout rturned by portratLayout()
- * @returns Array of Gxml elements
+ * Returns an array of Gxml JSON objects defining content for the poster's 'border' region.
+ * In this case, it draws a border in the style of train tracks.
+ * @param {layout} layout The layout rturned by portraitLayout()
+ * @returns An array of Gxml JSON objects
  */
 export function borderGxml(layout) {
     const border = layout.border
