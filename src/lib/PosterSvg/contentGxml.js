@@ -6,30 +6,13 @@
  * @param {*} height Grid height in SVG units
  * @returns An array of Gxml JSON objects
  */
-import { countryAbbr, countryFlagHref } from './Countries.js'
-/**
- * 
- * @param {} id id assigned to the flag svg
- * @param {*} x upper left corner x-coordinate
- * @param {*} y upper left corner y-coordinate
- * @param {*} scale 
- * @param {*} width 
- * @param {*} height 
- * @returns 
- */
-export function flagGxml(id, x, y, scale=1, width=100, height=100) {
-    return {el: 'svg', x: x, y: y, width: scale*width, height: scale*height, els: [
-    {el: 'g', transform: `scale(${scale}, ${scale})`, els: [
-        {el: 'use', x: 0, y: 0,
-            'xlink:href': id,
-            filter: "url(#flag-lighting)",
-            'clip-path':"url(#flag-clipper)"
-        }]
-    }]}
-}
+import { flagGxml } from './flagGxml.js'
+import { trainStationGxml } from './trainStationGxml.js'
 
 export function contentGxml(width=1000, height=2000) {
     const els = []
+
+    // First create a 10 by 20 grid with col,row markers and an outer border
     const colWd = 100
     const rowHt = 100
     const cols = Math.trunc(width/colWd) + 1
@@ -44,7 +27,6 @@ export function contentGxml(width=1000, height=2000) {
             x1: 0, y1: row*rowHt, x2: width, y2: row*rowHt,
             stroke: 'black', 'stroke-width': 1, els: []})
     }
-
     for(let col=0; col<cols-1; col++) {
         for(let row=0; row<rows-1; row++) {
             els.push({el: 'text', id: `grid-cell-${col}-${row}`, 
@@ -61,10 +43,10 @@ export function contentGxml(width=1000, height=2000) {
             })
         }
     }
-
     els.push({el: 'rect', id: 'grid-border-rect', x: 0, y: 0, width: width, height: height,
         stroke: 'black', 'stroke-width': 1, fill: 'none', els: []})
 
+    // Then stick some flags inside some of the cells
     els.push(flagGxml('#FRA', 0, 0))
     els.push(flagGxml('#NOR', 100, 100))
     els.push(flagGxml('#ENG', 200, 200))
@@ -78,5 +60,7 @@ export function contentGxml(width=1000, height=2000) {
 
     els.push(flagGxml('#USA', 400, 0, 4))
 
+    // Try a TrainStation!
+    els.push(trainStationGxml(200, 700, '#USA', '13th GGP', '1952', 'magenta'))
     return els
 }

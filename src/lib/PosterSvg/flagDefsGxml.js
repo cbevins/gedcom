@@ -107,17 +107,14 @@ export function flagDefsGxml() {
         {...rect, x: 0, y: 9*h/13, width: w, height: h/13, fill: "white"},
         {...rect, x: 0, y: 11*h/13, width: w, height: h/13, fill: "white"},
         {...rect, x: 0, y: 0, width: w/2, height: h*6/13, fill: "blue"},
-        // {el: 'use', href: '#USA-star', x: w, y: h, transform: `scale(${s}, ${s})`},
-        // {el: 'use', href: '#USA-star', x: 2.25*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
-        // {el: 'use', href: '#USA-star', x: 1.75*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
-        // {el: 'use', href: '#USA-star', x: 1.25*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
-        // {el: 'use', href: '#USA-star', x: 0.75*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
-        // {el: 'use', href: '#USA-star', x: 0.25*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
         [...els]
     ]}
 
+    const tpath1 = {el: 'path', id: 'text-path-lower', d: 'M 5 45 A 45 45 0 1 0 95 45'}
+    const tpath2 = {el: 'path', id: 'text-path-upper', d: 'M 5 70 A 45 45 0 1 1 95 70'}
+
     const defs = {el: 'defs', els: [
-        clip, usaStar, can, eng, fra, ger, ire, net, nor, sco, swe, unk, usa, wal
+        clip, tpath1, tpath2, usaStar, can, eng, fra, ger, ire, net, nor, sco, swe, unk, usa, wal
     ]}
 
     const filter = {el: 'filter', id: 'flag-lighting', els: [
