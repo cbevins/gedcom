@@ -18,7 +18,7 @@ import { countryAbbr, countryFlagHref } from './Countries.js'
  * @returns 
  */
 export function flagGxml(id, x, y, scale=1, width=100, height=100) {
-    return {el: 'svg', x: x, y: y, width: width, height: height, els: [
+    return {el: 'svg', x: x, y: y, width: scale*width, height: scale*height, els: [
     {el: 'g', transform: `scale(${scale}, ${scale})`, els: [
         {el: 'use', x: 0, y: 0,
             'xlink:href': id,
@@ -68,13 +68,13 @@ export function contentGxml(width=1000, height=2000) {
     els.push(flagGxml('#FRA', 0, 0))
     els.push(flagGxml('#NOR', 100, 100))
     els.push(flagGxml('#ENG', 200, 200))
+    els.push(flagGxml('#WAL', 300, 300))
     els.push(flagGxml('#SCO', 400, 400))
     els.push(flagGxml('#IRE', 500, 500))
     els.push(flagGxml('#SWE', 600, 600))
     els.push(flagGxml('#CAN', 700, 700))
     els.push(flagGxml('#GER', 800, 800))
     els.push(flagGxml('#NET', 900, 900))
-    els.push(flagGxml('#WAL', 300, 300))
 
     els.push(flagGxml('#USA', 400, 0, 4))
 

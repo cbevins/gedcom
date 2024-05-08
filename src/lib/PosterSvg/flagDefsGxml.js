@@ -74,28 +74,30 @@ export function flagDefsGxml() {
         {...rect, x: 0, y: 0, width: w, height: h/2, fill: "white"},
     ]}
 
-    const usaStar ={el: 'svg', id: 'USA-star', width: 100, height: 100, els: [
-        {el: 'g', transform: `scale(1/${h}`, els: [
-            {el: 'path', fill: 'white', stroke: 'none',
-            d:"M 16 0 L 20 12 L 32 12 L 22 19.5 L 26 31.5 L 16 24 L 6 31.5 L 9.75 19.25 L 0 12 L 12.25 12 L 16 0"},
-        ]}
-    ]}
-    // for (let col=0; col<6; col++) {
-    //     for(let row=0; row<5; row++) {
-    //         els.push({el: 'use', 'xlink:href': "#USA-star",
-    //             x: (2*col+0.5)*50/12,
-    //             y: (2*row+0.5)*60/13
-    //         })
-    //     }
-    // }
-    // for (let col=0; col<5; col++) {
-    //     for(let row=0; row<4; row++) {
-    //         els.push({el: 'use', 'xlink:href': "#USA-star",
-    //             x: ((2*(col+1))-0.5)*50/12,
-    //             y: ((2*(row+1))-0.5)*60/13
-    //         })
-    //     }
-    // }
+    const usaStar ={el: 'svg', id: 'USA-star', width: 100, height: 100 ,els: [
+        {el: 'path', fill: 'white', stroke: 'none',
+            d:"M 16 0 L 20 12 L 32 12 L 22 19.5 L 26 31.5 L 16 24 L 6 31.5 L 9.75 19.25 L 0 12 L 12.25 12 L 16 0"
+        }]
+    }
+
+    const s = 0.2
+    const els = []
+    for (let col=0; col<6; col++) {
+        for(let row=0; row<5; row++) {
+            els.push({el: 'use', href: '#USA-star', transform: `scale(${s}, ${s})`,
+                x:  col * (6/14) * w,
+                y:  row * 0.5 * h,
+            })
+        }
+    }
+    for (let col=0; col<5; col++) {
+        for(let row=0; row<4; row++) {
+            els.push({el: 'use', href: '#USA-star', transform: `scale(${s}, ${s})`,
+                x:  col * (6/14) * w + 0.25 * w,
+                y:  row * 0.5 * h + 0.25 * h,
+            })
+        }
+    }
     const usa ={el: 'svg', id: 'USA', els: [
         {...flag, fill: 'red'},
         {...rect, x: 0, y: h/13, width: w, height: h/13, fill: "white"},
@@ -105,7 +107,13 @@ export function flagDefsGxml() {
         {...rect, x: 0, y: 9*h/13, width: w, height: h/13, fill: "white"},
         {...rect, x: 0, y: 11*h/13, width: w, height: h/13, fill: "white"},
         {...rect, x: 0, y: 0, width: w/2, height: h*6/13, fill: "blue"},
-        {el: 'use', 'xlink:href': "#USA-star", x: 0, h: 0, transform: 'scale(1/10)'},
+        // {el: 'use', href: '#USA-star', x: w, y: h, transform: `scale(${s}, ${s})`},
+        // {el: 'use', href: '#USA-star', x: 2.25*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
+        // {el: 'use', href: '#USA-star', x: 1.75*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
+        // {el: 'use', href: '#USA-star', x: 1.25*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
+        // {el: 'use', href: '#USA-star', x: 0.75*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
+        // {el: 'use', href: '#USA-star', x: 0.25*w, y: 1.75*h, transform: `scale(${s}, ${s})`},
+        [...els]
     ]}
 
     const defs = {el: 'defs', els: [

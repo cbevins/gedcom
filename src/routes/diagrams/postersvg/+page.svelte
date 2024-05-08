@@ -3,6 +3,6 @@
     $: width = 1000
     $: height = 2000
     $: scale = 4.25
-    $: guides = true
+    $: guides = false
 </script>
 <PosterSvg {width} {height} {scale} {guides}/>
