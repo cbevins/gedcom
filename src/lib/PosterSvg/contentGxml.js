@@ -8,6 +8,7 @@
  */
 import { flagGxml } from './flagGxml.js'
 import { trainStationGxml } from './trainStationGxml.js'
+import { trainTracksGxml } from './trainTracksGxml.js'
 
 export function contentGxml(width=1000, height=2000) {
     const els = []
@@ -62,5 +63,11 @@ export function contentGxml(width=1000, height=2000) {
 
     // Try a TrainStation!
     els.push(trainStationGxml(200, 700, '#USA', '13th GGP', '1952', 'magenta'))
+    els.push(trainStationGxml(200, 800, '#USA', '13th GGP', '1952', 'blue', 4))
+
+    // Try some train tracks
+    const trackWidth = 30
+    const path = 'M 50 350 L 250 350 L 250 650 L 750 650 L 750 250 L 350 250 L 350 1050'
+    els.push(trainTracksGxml(path, trackWidth, 'blue'))
     return els
 }
