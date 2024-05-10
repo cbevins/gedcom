@@ -31,8 +31,13 @@ export function posterSvg(svgWidth=1000, svgHeight=2000, scale=1, guides=false) 
     const footerEls = footerGxml(layout)
     const guidesEls = guides ? guidesGxml(layout) : []
     const flagDefsEls = flagDefsGxml()
-    const gxml = posterGxml(layout, contentEls, flagDefsEls,
-        borderEls, headerEls, footerEls, guidesEls)
+    const gxml = posterGxml(layout,
+        contentEls,
+        flagDefsEls,
+        borderEls,
+        headerEls,
+        footerEls,
+        guidesEls)
 
     // Step 5 - convert the gxml elements into SVG
     const svg = gxmlStr(gxml)
