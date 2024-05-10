@@ -39,7 +39,7 @@ export function lineageTrainPosterSvg(subject, scale=1, guides=false) {
     // Step 2 - create some Gxml content to embed in the portrait layout
     const channels = getChannels(subject)
     const geom = trainGeometry(channels)
-    const contentEls = contentGxml(geom, channels)
+    const contentEls = contentGxml(geom)
 
     // Step 3 - get a completed portrait layout (in SVG units)
     const layout = portraitLayout(layoutSpec, geom.width, geom.height, scale)
