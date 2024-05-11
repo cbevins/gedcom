@@ -1,6 +1,7 @@
 import { trainStationGxml } from './trainStationGxml.js'
 import { trainTracksGxml } from '../PosterSvg/index.js'
 // import { gridGxml } from './gridGxml.js'
+import SamuelBevins from '$lib/LineageTrainPosterSvg/Samuel Bevins.jpg'
 
 const Country = new Map([
     ['', 'UNK'],
@@ -42,7 +43,10 @@ function genLabel(node) {
 
 export function contentGxml(geom) {
     // const els = gridGxml(geom)
-    const els = []
+    // Start with a white backdrop
+    const els = [{el: 'rect', x: 0, y: 0, width: geom.width, height: geom.height,
+        stroke: 0, fill: 'none'}]
+
     // Determine which branch is to be diagrammed
     const nodes = geom.channelsObj.nodesBySeq()
 
@@ -74,6 +78,9 @@ export function contentGxml(geom) {
     }
 
     // Add signage third
-    
+    els.push({el: 'image', x: 100, y: 100, width: 500, height: 500,
+        href: SamuelBevins,
+        preserveAspectRation: 'xMidYMid',   // 'xMidYMid', 'meet' or 'slice'
+    })
     return els
 }
