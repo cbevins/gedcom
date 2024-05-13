@@ -16,8 +16,10 @@ export function trainGeometry(channelsObj) { // width=1000, height=2000) {
     geom.width = geom.cols * geom.colWd
 
     geom.rows = channelsObj.channelMaxCount() + 2 // padding at top and bottom
-    geom.height = geom.rows * geom.rowHt
     geom.chanHt = geom.rowHt
+    geom.timelineHt = 2 * geom.rowHt
+    geom.contentHt = geom.rows * geom.rowHt
+    geom.height = geom.rows * geom.rowHt + 2 * geom.timelineHt
 
     geom.trackWidth =  0.2 * geom.rowHt
     geom.radius = 0.4 * geom.rowHt
@@ -28,7 +30,9 @@ export function trainGeometry(channelsObj) { // width=1000, height=2000) {
     // Function that returns x-coordinate given the calendar year
     geom.yearX = function (year) { return (year - this.yearMin) * this.yearWd }
     // Function that returns y-coordinate of channel index
-    geom.chanY = function (chanIdx) { return (chanIdx+1) * this.chanHt }
+    geom.chanY = function (chanIdx) {
+        return (chanIdx+1) * this.chanHt + geom.timelineHt
+    }
     geom.color = function (node) { return node.person.isFemale() ? geom.femaleColor : geom.maleColor }
     // Function that returns an x-coordinate for the channel/track label
     geom.nameX = function (node) {
@@ -39,7 +43,9 @@ export function trainGeometry(channelsObj) { // width=1000, height=2000) {
         return 0
     }
     // Function that returns a y-coordinate for the channel/track label
-    geom.nameY = function (node) { return node ? this.chanY(node.channel) - 0.6 * geom.trackWidth : 0 }
+    geom.nameY = function (node) {
+        return node ? this.chanY(node.channel) - 0.6 * geom.trackWidth : 0
+    }
 
     return geom
 }

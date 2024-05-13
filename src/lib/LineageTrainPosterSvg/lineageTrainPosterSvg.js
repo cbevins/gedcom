@@ -13,6 +13,7 @@ import { contentGxml } from './contentGxml.js'
 import { headerGxml } from './headerGxml.js'
 import { trainGeometry } from './trainGeometry.js'
 
+// TO DO - Update this to select specific and/or shortened branches
 function getChannels(subj) {
     const chan = new Channels(subj)
     // Move subject to a channel midway between father and mother

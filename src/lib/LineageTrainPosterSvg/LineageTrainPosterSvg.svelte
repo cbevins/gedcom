@@ -6,7 +6,7 @@
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
     import { lineageTrainPosterSvg } from '$lib/LineageTrainPosterSvg/lineageTrainPosterSvg.js'
 
-    function html (subjectNameKey, guides) {
+    function html (subjectNameKey, scale=1, guides=false) {
         const subject = getSylvan().people().find(subjectNameKey)
         const svg = lineageTrainPosterSvg(subject, scale, guides)
         return svg

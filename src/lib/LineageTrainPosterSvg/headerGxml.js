@@ -21,18 +21,12 @@ export function headerGxml(layout, title, subtitle='') {
 
     const els = []
     els.push({el: 'path',
-        d: plaquePath(x1+thickness, y1+thickness, x2+thickness, y2+thickness, r),
-        stroke: 'gray',
-        'stroke-width': 2*thickness,
-        'stroke-linecap': 'square',   // butt, round, square 
-        fill: 'none'})
-    
-    els.push({el: 'path',
         d: plaquePath(x1, y1, x2, y2, r),
         stroke: 'black',
         'stroke-width': thickness,
         'stroke-linecap': 'square',   // butt, round, square 
-        fill: 'white'})
+        fill: 'white',
+        filter: "url(#shadow)" })
 
     els.push({el: 'text', id: 'header-title',
         x: layout.header.width/2,

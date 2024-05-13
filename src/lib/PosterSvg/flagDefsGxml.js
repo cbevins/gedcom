@@ -113,8 +113,14 @@ export function flagDefsGxml() {
     const tpath1 = {el: 'path', id: 'text-path-lower', d: 'M 5 45 A 45 45 0 1 0 95 45'}
     const tpath2 = {el: 'path', id: 'text-path-upper', d: 'M 5 70 A 45 45 0 1 1 95 70'}
 
+    const shadow =
+        {el: 'filter', id: "shadow", els: [
+            {el: 'feDropShadow', dx: 5, dy: 8, stdDeviation: 2, 'flood-color': 'gray'}]
+        }
+
     const defs = {el: 'defs', els: [
-        clip, tpath1, tpath2, usaStar, can, eng, fra, ger, ire, net, nor, sco, swe, unk, usa, wal
+        clip, tpath1, tpath2, shadow,
+        usaStar, can, eng, fra, ger, ire, net, nor, sco, swe, unk, usa, wal
     ]}
 
     const filter = {el: 'filter', id: 'flag-lighting', els: [

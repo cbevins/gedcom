@@ -1,3 +1,5 @@
+import { timelineGxml } from './timelineGxml.js'
+import { trackNameGxml } from './trackNameGxml.js'
 import { trainStationGxml } from './trainStationGxml.js'
 import { trainTracksGxml } from '../PosterSvg/index.js'
 // import { gridGxml } from './gridGxml.js'
@@ -43,12 +45,25 @@ function genLabel(node) {
 
 export function contentGxml(geom) {
     // const els = gridGxml(geom)
-    // Start with a white backdrop
-    const els = [{el: 'rect', x: 0, y: 0, width: geom.width, height: geom.height,
-        stroke: 0, fill: 'none'}]
+
+    const main = timelineGxml(geom)
+    // // Top timeline
+    // main.push({el: 'rect', x: 0, y: 0, width: geom.width, height: geom.timelineHt,
+    //     stroke: 'red', 'stroke-width': 5, fill: 'gray'})
+
+    // // Main map
+    // main.push({el: 'rect', x: 0, y: geom.timelineHt,
+    //     width: geom.width, height: geom.contentHt,
+    //     stroke: 'blue', 'stroke-width': 5, fill: 'blue'})
+
+    // // Bottom timeline
+    // main.push({el: 'rect', x: 0, y: geom.height - geom.timelineHt,
+    //     width: geom.width, height: geom.timelineHt,
+    //     stroke: 'red', 'stroke-width': 5, fill: 'gray'})
 
     // Determine which branch is to be diagrammed
     const nodes = geom.channelsObj.nodesBySeq()
+    console.log('Ancestors', nodes.length, 'Channels:', geom.rows, 'Height:', geom.height, 'Width:', geom.width)
 
     // Lay the TrainTracks first
     const trackWidth = 16
@@ -61,7 +76,7 @@ export function contentGxml(geom) {
             const chan2 = node.child.channel
             const color = geom.color(node)
             const path = trackPath(geom, year1, chan1, year2, chan2)
-            els.push(trainTracksGxml(path, trackWidth, color))
+            main.push(trainTracksGxml(path, trackWidth, color))
         }
     }
 
@@ -74,13 +89,25 @@ export function contentGxml(geom) {
         const gen = genLabel(node)
         const color = geom.color(node)
         let scale = 0.6
-        els.push(trainStationGxml(geom, year, chan, href, gen, color, scale))
+        main.push(trainStationGxml(geom, year, chan, href, gen, color, scale))
     }
 
-    // Add signage third
-    els.push({el: 'image', x: 100, y: 100, width: 500, height: 500,
+    // Add track names / signage third
+    for(let i=0; i<nodes.length; i++) {
+        const node = nodes[i]
+        main.push(trackNameGxml(geom, node))
+    }
+
+    // Example of adding an image
+    main.push({el: 'image', x: 500, y: 100, width: 1000, height: 1000,
         href: SamuelBevins,
+        opacity: 0.3,
         preserveAspectRation: 'xMidYMid',   // 'xMidYMid', 'meet' or 'slice'
     })
-    return els
+
+    // return [{el: 'svg', x: 0, y: 0, width: geom.width, height: geom.height, els: [
+    //     {el: 'rect', x: 0, y: 0, width: geom.width, height: geom.timelineHt, fill: 'red'},
+    //     main,
+    // ]}
+    return main
 }

@@ -118,10 +118,14 @@ export class Person {
     namePrefix() { return this._data.name.prefix }
     nameGiven() { return this._data.name.given }
     nameNick() { return this._data.name.nick }
-    nameSuffix() { return this._data.name.suffix }
-    nameSurnames() { return this._data.name.surnames }
+    nameSuffix() { return this._data.name.suffix.trim() }
+    nameSurnames() { return this._data.name.surnames.trim() }
     nameSurnamePrefix() { return this._data.name.surnamePrefix }
-
+    nameSuffixNoSeq() {
+        let idx = this.nameSuffix().search("#")
+        return (idx >= 0) ? (this.nameSuffix().slice(0, idx-1)) : this.nameSuffix()
+    }
+    
     //---------------------------------------------------------------------------------
     // Person access and update methods
     //---------------------------------------------------------------------------------
