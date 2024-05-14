@@ -45,22 +45,8 @@ function genLabel(node) {
 }
 
 export function contentGxml(geom) {
-    // const els = gridGxml(geom)
-
+    // const main = gridGxml(geom)
     const main = timelineGxml(geom)
-    // // Top timeline
-    // main.push({el: 'rect', x: 0, y: 0, width: geom.width, height: geom.timelineHt,
-    //     stroke: 'red', 'stroke-width': 5, fill: 'gray'})
-
-    // // Main map
-    // main.push({el: 'rect', x: 0, y: geom.timelineHt,
-    //     width: geom.width, height: geom.contentHt,
-    //     stroke: 'blue', 'stroke-width': 5, fill: 'blue'})
-
-    // // Bottom timeline
-    // main.push({el: 'rect', x: 0, y: geom.height - geom.timelineHt,
-    //     width: geom.width, height: geom.timelineHt,
-    //     stroke: 'red', 'stroke-width': 5, fill: 'gray'})
 
     // Determine which branch is to be diagrammed
     const nodes = geom.channelsObj.nodesBySeq()
