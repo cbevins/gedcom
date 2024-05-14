@@ -8,7 +8,7 @@
  * @param {*} scale scale
  * @param {string} gen Generation label, something like '13th GGP'
  * @param {string} born Year of birth AS A STRING
- * @param {string} color COlor specification for enclosing circle
+ * @param {string} color Color specification for enclosing circle
  * @param {*} width Not used
  * @param {*} height Not used
  * @returns A single Gxml JSON object with nested Gxml.

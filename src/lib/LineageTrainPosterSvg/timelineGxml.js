@@ -88,9 +88,4 @@ export function timelineGxml(geom) {
         }
     }
     return els
-    // Start with a white backdrop
-    return [{el: 'rect', x: 0, y: 0,
-        width: geom.width, height: geom.height,
-        stroke: 'green', 'stroke-width': 5, fill: 'none',
-        els: els}]
 }
