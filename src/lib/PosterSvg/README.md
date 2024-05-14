@@ -31,26 +31,26 @@ The main SVG generation function used by **runPosterSvg.js** and **PosterSvg.sve
 ## Gxml Files
 
 The following files contain example Gxml code:
-- borderGxml.js defines the border region and its content as Gxml
-- contentGxml.js defines the example content region (a simple grid) as GMxml
-- footerGxml.js defines the footer region and its content as Gxml
-- guidesGxml.js defines optional border and ruler guides as Gxml
-- headerGxml.js defines the header region and its content as Gxml
-- posterGxml.js incorporates all the other regions into a parent Gxml
+- `borderGxml.js` defines the border region and its content as Gxml
+- `contentGxml.js` defines the example content region (a simple grid) as GMxml
+- `footerGxml.js` defines the footer region and its content as Gxml
+- `guidesGxml.js` defines optional border and ruler guides as Gxml
+- `headerGxml.js` defines the header region and its content as Gxml
+- `posterGxml.js` incorporates all the other regions into a parent Gxml
 
 ## Layout Files
 
 The following files define alternate poster layouts and scale the embedded content:
-- portraitLayout.js
-- portraitLayoutSpecs.
+- `portraitLayout.js`
+- `portraitLayoutSpecs.js`
 
 ## Demonstration Gxml Files
 
 The following files were devloped to illustrate other aspects:
 
-- Countries.js is a JSON data structure of country names and flags
-- flagDefsGxml.js defines an SVG <defs> block with flag images, text paths, clip paths, etc.
-- flagGxml.js illustrates how to scale and display a single flag using Gxml
-- trainStationGxml.js shows how to perform clipping and lighting of the flags
+- `Countries.js` is a JSON data structure of country names and flags
+- `flagDefsGxml.js` defines an SVG <defs> block with flag images, text paths, clip paths, etc.
+- `flagGxml.js` illustrates how to scale and display a single flag using Gxml
+- `trainStationGxml.js` shows how to perform clipping and lighting of the flags
 into buttons
-- trainTracksGxml.js illustrates drawing train tracks using Gxml
+- `trainTracksGxml.js` illustrates drawing train tracks using Gxml

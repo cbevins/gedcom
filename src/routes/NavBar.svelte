@@ -12,9 +12,9 @@
             ['/dev/diagnostics', 'Diagnostics'],
             ['/diagrams/postersvg', 'PosterSvg'],
             ['/diagrams/gxml', 'Lineage Train Routes'],
-            ['/diagrams/poster', 'Poster Framework'],
-            ['/diagrams/scale', 'Nested SVG Example'],
-            ['/diagrams/river', 'Lineage River Chart'],
+            ['/diagrams/poster', 'Poster Framework DEP'],
+            ['/diagrams/scale', 'Nested SVG *Landscape* Example'],
+            ['/diagrams/river', 'Lineage River Chart BOMBS'],
         ]],
         ['/diagrams', 'Diagrams', [
             ['/diagrams/trainroutes', 'Lineage Train Routes'],
