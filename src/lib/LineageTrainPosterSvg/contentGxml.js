@@ -1,3 +1,4 @@
+import { flagLegendGxml } from './flagLegendGxml.js'
 import { timelineGxml } from './timelineGxml.js'
 import { trackNameGxml } from './trackNameGxml.js'
 import { trainStationGxml } from './trainStationGxml.js'
@@ -105,9 +106,7 @@ export function contentGxml(geom) {
         preserveAspectRation: 'xMidYMid',   // 'xMidYMid', 'meet' or 'slice'
     })
 
-    // return [{el: 'svg', x: 0, y: 0, width: geom.width, height: geom.height, els: [
-    //     {el: 'rect', x: 0, y: 0, width: geom.width, height: geom.timelineHt, fill: 'red'},
-    //     main,
-    // ]}
+    // Flag legend
+    main.push(flagLegendGxml(100, 200, 100, 0.5))
     return main
 }
