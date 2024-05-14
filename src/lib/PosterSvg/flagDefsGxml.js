@@ -110,19 +110,34 @@ export function flagDefsGxml() {
         [...els]
     ]}
 
+    // An arrowhead marker for timeline periods
+    const arrowhead = {el: 'marker',
+        id: "arrowhead",
+        viewBox: "0 0 10 10",
+        refX: 8, refY: 5,
+        markerWidth: 3,
+        markerHeight: 3,
+        fill: 'red',
+        // opacity: 0.5,
+        orient: "auto-start-reverse", els: [
+            {el: 'path', d: "M 0 0 L 10 5 L 0 10 z"}]}
+
+    // Text paths for flag buttons
     const tpath1 = {el: 'path', id: 'text-path-lower', d: 'M 5 45 A 45 45 0 1 0 95 45'}
     const tpath2 = {el: 'path', id: 'text-path-upper', d: 'M 5 70 A 45 45 0 1 1 95 70'}
 
+    // Drop shadow for title plaque
     const shadow =
         {el: 'filter', id: "shadow", els: [
             {el: 'feDropShadow', dx: 5, dy: 8, stdDeviation: 2, 'flood-color': 'gray'}]
         }
 
     const defs = {el: 'defs', els: [
-        clip, tpath1, tpath2, shadow,
+        arrowhead, clip, tpath1, tpath2, shadow,
         usaStar, can, eng, fra, ger, ire, net, nor, sco, swe, unk, usa, wal
     ]}
 
+    // Lighting filter for flag buttons
     const filter = {el: 'filter', id: 'flag-lighting', els: [
         {el: 'feGaussianBlur', in: "SourceAlpha", stdDeviation: 4, result: "blur1"},
         {el: 'feSpecularLighting', result: "specOut", in: "blur1", specularExponent: 100,
