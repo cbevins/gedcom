@@ -94,4 +94,47 @@ export class Channels extends Lineage {
         // console.log(`${channel}, next: ${chan}, ${node.person.label()}`)
         return chan
     }
+
+    // Returns a reference to the {node} with the nameKey, or NULL if not found.
+    findNodeByNameKey(nameKey) {
+        return this._findNodeByNameKey(this.rootNode(), nameKey)
+    }
+    _findNodeByNameKey(node, nameKey) {
+        // console.log('Checking', node.person.nameKey(), nameKey)
+        if (node.person.nameKey() === nameKey) return node
+        if (node.father) {
+            const found = this._findNodeByNameKey(node.father, nameKey)
+            if (found) {
+                // console.log('Found', found.person.nameKey(), nameKey)
+                return found
+            }
+        }
+        if (node.mother) {
+            const found = this._findNodeByNameKey(node.mother, nameKey)
+            if (found) {
+                // console.log('Found', found.person.nameKey(), nameKey)
+                return found
+            }
+        }
+        return null
+    }
+
+    // Returns an array of {node} references, sorted by birth date,
+    // extracted from the Channels node list, but starting with the {node}
+    // matching the nameKey.  Node generation, sequence, channel index, etc
+    // are all mainatined relative to the Channels rootNode()
+    findBranchByNameKey(nameKey) {
+        const node = this.findNodeByNameKey(nameKey)
+        if (! node) return null
+        const ar = []
+        this._getBranch(node, ar)
+        return ar.sort((a, b) => { return a.seq - b.seq })
+
+    }
+    _getBranch(node, ar) {
+        if (node.father) ar = this._getBranch(node.father, ar)
+        if (node.mother) ar = this._getBranch(node.mother, ar)
+        ar.push(node)
+        return ar
+    }
 }

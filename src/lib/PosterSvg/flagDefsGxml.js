@@ -114,7 +114,7 @@ export function flagDefsGxml() {
     const arrowhead = {el: 'marker',
         id: "arrowhead",
         viewBox: "0 0 10 10",
-        refX: 8, refY: 5,
+        refX: 2, refY: 5,
         markerWidth: 3,
         markerHeight: 3,
         fill: 'red',

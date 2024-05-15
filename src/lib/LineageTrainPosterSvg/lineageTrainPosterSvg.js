@@ -34,18 +34,67 @@ function getChannels(subj) {
  * @returns SVG lineage diagram in the style of a railroad route map.
  */
 export function lineageTrainPosterSvg(subject, scale=1, guides=false) {
+    //--------------------------------------------------------------------------
     // Step 1 - select desired portrait layout specification (inches)
+    //--------------------------------------------------------------------------
+    
     const layoutSpec = layoutSpecPortraitPoster()
 
+    //--------------------------------------------------------------------------
     // Step 2 - create some Gxml content to embed in the portrait layout
+    //--------------------------------------------------------------------------
+    
     const channels = getChannels(subject)
-    const geom = trainGeometry(channels)
-    const contentEls = contentGxml(geom)
+    // ENTIRE LINEAGE FROM ROOT NODE
+    // const nodes = channels.nodesBySeq()
+    // Set the geometry for the range of years and channels
+    // const geom = trainGeometry(channels.yearMin(), channels.yearMax(), 0, channels.channelMaxCount())
+    
+    // SELECTED BRANCH ABOVE ROOT NODE
+    const nodes = channels.findBranchByNameKey('JosephBevins1762')
+    let yearMin = 9999
+    let yearMax = 0
+    let chanMin = 9999
+    let chanMax = 0
+    let genMin = 9999
+    let genMax = 0
+    const genAllowMin = 0
+    const genAllowMax = 20
+    const displayNodes = []
+    for (let i=0; i<nodes.length; i++) {
+        const node = nodes[i]
+        if (node.gen >= genAllowMin && node.gen <= genAllowMax) {
+            chanMax = Math.max(chanMax, node.channel)
+            chanMin = Math.min(chanMin, node.channel)
+            genMax = Math.max(genMax, node.gen)
+            genMin = Math.min(genMin, node.gen)
+            yearMax = Math.max(yearMax, node.birthYear)
+            yearMin = Math.min(yearMin, node.birthYear)
+            displayNodes.push(node)
+        }
+    }
+    console.log('Branch from', displayNodes[0].person.fullName(),
+        `has ${displayNodes.length} Persons; ${yearMax-yearMin+1} Birth years (${yearMin}-${yearMax}); `
+        + `${chanMax-chanMin+1} Channels (${chanMin}-${chanMax}); `
+        + `${genMax-genMin+1} Generations (${genMin}-${genMax}).`)
+    // Set the geometry for the range of years and channels
+    const geom = trainGeometry(yearMin, yearMax, chanMin, chanMax)
+    console.log(`Display has ${displayNodes.length} Persons, `
+        + `${geom.yearSpan} Years (${geom.yearMin}-${geom.yearMax}), ${geom.rows} Rows, `
+        + `${geom.height} Height and ${geom.width} Width.`)
 
+    const contentEls = contentGxml(displayNodes, geom)
+
+    //--------------------------------------------------------------------------
     // Step 3 - get a completed portrait layout (in SVG units)
+    //--------------------------------------------------------------------------
+    
     const layout = portraitLayout(layoutSpec, geom.width, geom.height, scale)
 
+    //--------------------------------------------------------------------------
     // Step 4 - get the poster Gxml with embedded content Gxml
+    //--------------------------------------------------------------------------
+    
     const borderEls = borderGxml(layout)
     const headerEls = headerGxml(layout,
         'Bevins-Heddens Line Route',
@@ -61,9 +110,15 @@ export function lineageTrainPosterSvg(subject, scale=1, guides=false) {
         footerEls,
         guidesEls)
 
+    //--------------------------------------------------------------------------
     // Step 5 - convert the gxml elements into SVG
+    //--------------------------------------------------------------------------
+    
     const svg = gxmlStr(gxml)
 
+    //--------------------------------------------------------------------------
     // Step 6 - save or display the generated SVG
+    //--------------------------------------------------------------------------
+    
     return svg
 }

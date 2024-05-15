@@ -1,21 +1,22 @@
-export function trainGeometry(channelsObj) { // width=1000, height=2000) {
+export function trainGeometry(yearMin, yearMax, chanMin, chanMax) { // width=1000, height=2000) {
     const geom = {
         addYears: 30,
-        channelsObj: channelsObj,
+        chanMin: chanMin,
+        chanMax: chanMax,
         colWd: 100,
         rowHt: 50,
         yearsPerCol: 10,
     }
     
     // Grid first and last column values (in years)
-    geom.yearMax = Math.trunc((channelsObj.yearMax()+geom.addYears) / geom.yearsPerCol) * geom.yearsPerCol
-    geom.yearMin = Math.trunc((channelsObj.yearMin()-1) / geom.yearsPerCol) * geom.yearsPerCol
+    geom.yearMax = Math.trunc((yearMax+geom.addYears) / geom.yearsPerCol) * geom.yearsPerCol
+    geom.yearMin = Math.trunc((yearMin-1) / geom.yearsPerCol) * geom.yearsPerCol
     geom.yearSpan = geom.yearMax - geom.yearMin
     geom.cols = geom.yearSpan / geom.yearsPerCol
     geom.yearWd = geom.colWd / geom.yearsPerCol
     geom.width = geom.cols * geom.colWd
 
-    geom.rows = channelsObj.channelMaxCount() + 2 // padding at top and bottom
+    geom.rows = chanMax - chanMin + 2 // padding at top and bottom
     geom.chanHt = geom.rowHt
     geom.timelineHt = 2 * geom.rowHt
     geom.contentHt = geom.rows * geom.rowHt
@@ -31,7 +32,7 @@ export function trainGeometry(channelsObj) { // width=1000, height=2000) {
     geom.yearX = function (year) { return (year - this.yearMin) * this.yearWd }
     // Function that returns y-coordinate of channel index
     geom.chanY = function (chanIdx) {
-        return (chanIdx+1) * this.chanHt + geom.timelineHt
+        return (chanIdx+1-geom.chanMin) * this.chanHt + geom.timelineHt
     }
     geom.color = function (node) { return node.person.isFemale() ? geom.femaleColor : geom.maleColor }
     // Function that returns an x-coordinate for the channel/track label

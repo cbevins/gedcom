@@ -44,13 +44,9 @@ function genLabel(node) {
     return `${gen-2}th GG` + p
 }
 
-export function contentGxml(geom) {
+export function contentGxml(nodes, geom) {
     // const main = gridGxml(geom)
     const main = timelineGxml(geom)
-
-    // Determine which branch is to be diagrammed
-    const nodes = geom.channelsObj.nodesBySeq()
-    console.log('Ancestors', nodes.length, 'Channels:', geom.rows, 'Height:', geom.height, 'Width:', geom.width)
 
     // Lay the TrainTracks first
     const trackWidth = 16
