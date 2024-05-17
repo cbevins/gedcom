@@ -1,0 +1,52 @@
+export const BevinsSheetData = [
+    {root: 'CollinDouglasBevins', sheet: 0, links: []},
+    {root: 'WilliamCollinsBevins1931', sheet: 1, links: [
+        {from: 'HattieJaneCollins1889', to: 'FrancesMarieShofner1871', sheet: 3},
+        {from: 'GeorgeWashingtonCollins1870', to: 'ElizaAnnGobble1843', sheet: 3},
+        {from: 'SpencerPerryCollins1839', to: 'CynthiaSpears1815', sheet: 2}
+    ]},
+    {root: 'MeartiaMargaretHeddens1933', sheet: 4, links: [
+        {from: 'HarrySingNattrass1888', to: 'HarrietLucretiaSing1844', sheet: 5},
+        {from: 'SamuelSing1808', to: 'LucretiaBarnhard1808', sheet: 5},
+    ]}
+]
+
+const BevinsUpstreamLineageData = [
+    { key: '', persons: 0, years: 0, chans: 0, gens: 0, ht: 0},
+    {key: 'CollinDouglasBevins1952',
+        persons: 288, years: 393, chan: 142, gens: 15, ht: 7350},
+    {key: 'WilliamCollinsBevins1931',
+        persons: 166, years: 372, chan: 81, gens: 14, ht: 4300},
+    {key: 'MeartiaMargaretHedden1933',
+        persons: 121, years: 350, chans: 91, gens: 12, ht: 3300},
+    { key: 'RalphVernonHeddens1909',
+        persons: 39, years: 160, chans: 20, gens: 6, ht: 1250},
+    { key: 'MargaretEvaNattrass1914',
+        persons: 81, years: 331, chans: 41, gens: 11, ht: 2300},
+    { key: 'HarrietLucretiaSing1844',
+        persons: 29, years: 252, chans: 15, gens: 9, ht: 1000},
+    { key: 'RalphRoyHeddens1890',
+        persons: 17, years: 111, chans: 9, gens: 5, ht: 700},
+    { key: 'MeartiaMaeLemler1889',
+        persons: 21, years: 140, chans: 11, gens: 5, ht: 800},
+    { key: 'HarrySingNattrass1888',
+        persons: 63, years: 305, chans: 32, gens: 10, ht: 1850},
+    { key: 'GinaOliviaMyhre1890',
+        persons: 17, years: 132, chans: 9, gens: 5, ht: 700},
+    {key: 'SamuelBevins1878',
+        persons: 43, years: 183, chans: 22, gens: 7, ht: 1350},
+    {key: 'HattieJaneCollins1889',
+        persons: 122, years: 330, chans: 59, gens: 13, ht: 3200},
+    { key: 'GeorgeWashingtonCollins1870',
+        persons: 114, years: 311, chans: 55, gens: 12, ht: 3000},
+    { key: 'FrancesMarieShofner1871',
+        persons: 7, years: 100, chans: 4, gens: 4, ht: 450},
+    {key: 'WilliamAlfredBevins1843',
+        persons: 21, years: 148, chans: 11, gens: 6, ht: 800},
+    {key: 'MaryBolt1822',
+        persons: 9, years: 114, chans: 5, gens: 4, ht: 500},
+    {key: 'WilliamLongfordBevins1815',
+        persons: 11, years: 120, chans: 6, gens: 5, ht: 550},
+    {key: 'JosephBevins1762',
+        persons: 5, years: 67, chans: 3, gens: 3, ht: 400},
+]

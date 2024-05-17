@@ -16,9 +16,10 @@ async function mainFunction() {
     // Then parse the GEDCOM lines and create the Sylvan instance
     const sylvan = new Sylvan(lines, true)
     const subject = sylvan.people().find('CollinDouglasBevins1952')
+    const branchNameKey = null
     const scale = 1
     const guides = false
-    const svg = lineageTrainPosterSvg(subject, scale, guides)
+    const svg = lineageTrainPosterSvg(subject, branchNameKey, scale, guides)
     return svg
 
     // console.log(`\n${sylvan.source()} GEDCOM File: '${fileName}' has ${sylvan.readerMessages().length} GedcomReader messages:`)
