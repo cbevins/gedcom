@@ -1,0 +1,110 @@
+// Determines year and channel ranges for the array of Channels nodes
+export function nodeRanges(nodes) {
+    let chanMin = 9999
+    let chanMax = 0
+    let genMin = 9999
+    let genMax = 0
+    let yearMin = 9999
+    let yearMax = 0
+    for (let i=0; i<nodes.length; i++) {
+        const node = nodes[i]
+        chanMax = Math.max(chanMax, node.channel)
+        chanMin = Math.min(chanMin, node.channel)
+        genMax = Math.max(genMax, node.gen)
+        genMin = Math.min(genMin, node.gen)
+        yearMax = Math.max(yearMax, node.birthYear)
+        yearMin = Math.min(yearMin, node.birthYear)
+    }
+    return [yearMin, yearMax, chanMin, chanMax, genMin, genMax]
+}
+
+export function trainNodeGeom(nodes) { // width=1000, height=2000) {
+    // Predetermined constants
+    const addYears = 30         // number of years to add to max birth year
+    const colWd = 100           // SVG units per year 
+    const femaleColor = "magenta"
+    const maleColor = "blue"
+    const fontSize = 10
+    const rowHt = 50            // SVG units per channel (in this case, 1 row is 5 years high)
+    const yearsPerCol = 10      // years per column tic mark (in this case, a year is 10 SVG units wide)
+
+    // Determine range of years, channels, generations
+    const [birthMin, birthMax, chanMin, chanMax, genMin, genMax] = nodeRanges(nodes)
+    const geom = {
+        addYears: addYears,
+        birthMax: birthMax,
+        birthMin: birthMin,
+        chanHt: rowHt,
+        chanMax: chanMax,
+        chanMin: chanMin,
+        colWd: colWd,
+        femaleColor: femaleColor,
+        fontSize: fontSize,
+        genMax: genMax,
+        genMin: genMin,
+        maleColor: maleColor,
+        nodes: nodes,
+        radius: 0.4 * rowHt,
+        rows: chanMax - chanMin + 2,     // padding at top and bottom for links
+        rowHt: rowHt,
+        timelineHt: 2 * rowHt,
+        trackWidth:  0.2 * rowHt,
+        yearsPerCol: yearsPerCol,
+        yearMax: Math.trunc((birthMax+addYears) / yearsPerCol) * yearsPerCol,
+        yearMin: Math.trunc((birthMin-1) / yearsPerCol) * yearsPerCol,
+        yearWd: colWd / yearsPerCol
+    }
+    // Calculate final sizes based on year and channel ranges
+    geom.yearSpan = geom.yearMax - geom.yearMin
+    geom.cols = geom.yearSpan / geom.yearsPerCol
+    geom.width = geom.cols * geom.colWd
+    geom.channels = geom.chanMax - geom.chanMin + 1
+    geom.contentHt = geom.rows * geom.rowHt
+    geom.height = geom.rows * geom.rowHt + 2 * geom.timelineHt
+    geom.gens = geom.genMax - geom.genMin + 1
+
+    // Function that returns x-coordinate given the calendar year
+    geom.yearX = function (year) { return (year - this.yearMin) * this.yearWd }
+    // Function that returns y-coordinate of channel index
+    geom.chanY = function (chanIdx) {
+        return (chanIdx+1-geom.chanMin) * this.chanHt + geom.timelineHt
+    }
+    geom.color = function (node) { return node.person.isFemale() ? geom.femaleColor : geom.maleColor }
+    // Function that returns an x-coordinate for the channel/track label
+    geom.nameX = function (node) {
+        if (node ) {
+            const childYear = node.child ? node.child.birthYear : node.birthYear + this.addYears
+            return this.yearX((node.birthYear + childYear) / 2)
+        }
+        return 0
+    }
+    // Function that returns a y-coordinate for the channel/track label
+    geom.nameY = function (node) {
+        return node ? this.chanY(node.channel) - 0.6 * geom.trackWidth : 0
+    }
+
+    hydrateNodes(nodes, geom)
+    return geom
+}
+
+export function hydrateNodes(nodes, geom) {
+    // Make a copy of the nodes array that we can freely mutate
+    geom.nodes = [...nodes]
+    
+    for(let i=0; i<geom.nodes.length; i++) {
+
+    }
+    return nodes
+}
+
+export function logGeom(geom) {
+    const nodes = geom.nodes
+    console.log('Branch ZZZ from', nodes[0].person.fullName(),
+        `has ${nodes.length} Persons; ${geom.yearMax-geom.yearMin+1} Birth years (${geom.birthMin}-${geom.birthMax}); `
+        + `${geom.channels} Channels (${geom.chanMin}-${geom.chanMax}); `
+        + `${geom.gens} Generations (${geom.genMin}-${geom.genMax}).`)
+
+    console.log(`Display has ${nodes.length} Persons, `
+        + `${geom.yearSpan} Years (${geom.yearMin}-${geom.yearMax}), ${geom.rows} Rows, `
+        + `${geom.height} Height and ${geom.width} Width.`)
+}

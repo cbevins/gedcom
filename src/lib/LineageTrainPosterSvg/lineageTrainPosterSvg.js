@@ -8,10 +8,10 @@ import { layoutSpecPortraitPoster, portraitLayout } from '../PosterSvg/index.js'
 import { borderGxml, flagDefsGxml, footerGxml, guidesGxml, posterGxml } from '../PosterSvg/index.js'
 
 // Sylvan-specific packages for content
+import { Channels } from '../Sylvan/class/Channels.js'
 import { contentGxml } from './contentGxml.js'
-import { displaySheet1 } from './displaySheet1.js'
-import { displaySheetBranch } from './displaySheetBranch.js'
 import { headerGxml } from './headerGxml.js'
+import { trainNodeGeom, logGeom } from './trainNodeGeom.js'
 
 /**
  * Creates an SVG lineage diagram in the style of a railroad route map.
@@ -37,8 +37,16 @@ export function lineageTrainPosterSvg(subject, branchNameKey=null,
     // Step 2 - create some Gxml content to embed in the portrait layout
     //--------------------------------------------------------------------------
 
-    const [displayNodes, geom] = displaySheetBranch(subject, branchNameKey)
-    const contentEls = contentGxml(displayNodes, geom)
+    // Get Channels structure for this subject and select the display branch
+    const channels = new Channels(subject, true)
+    const channelNodes = branchNameKey
+        ? channels.findBranchByNameKey(branchNameKey)
+        : channels.nodesBySeq()
+    
+    // Set the content geometry for the node range of years and channels
+    const geom = trainNodeGeom(channelNodes)
+    logGeom(geom)
+    const contentEls = contentGxml(geom.nodes, geom)
 
     //--------------------------------------------------------------------------
     // Step 3 - get a completed portrait layout (in SVG units)

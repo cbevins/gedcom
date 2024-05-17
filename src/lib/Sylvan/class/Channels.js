@@ -6,7 +6,7 @@ import { Lineage } from './Lineage.js'
 import { idGenCount } from './Generations.js'
 
 export class Channels extends Lineage {
-    constructor(rootPerson) {
+    constructor(rootPerson, centerRoot=true) {
         super(rootPerson)
         this._data.channels = 0     // number of channels
         this._data.yearMax = 0      // earliest ancestral birth year
@@ -15,6 +15,7 @@ export class Channels extends Lineage {
         this._addAncestorCounts(this.rootNode()) // Lineage class method
         this._decorateNodes()
         this._data.channels = this._traverse(this.rootNode(), 0)
+        if (centerRoot) this.centerRootChannel()
         // this._flipFathersChannels()
         // this.summary()
     }
@@ -22,6 +23,14 @@ export class Channels extends Lineage {
     //--------------------------------------------------------------------------
     // Public property access methods
     //--------------------------------------------------------------------------
+
+    // Moves the subject to a channel midway between father and mother
+    centerRootChannel() {
+        const root = this.rootNode()
+        const f = this.father ? this.father.channel : 1
+        const m = this.mother ? this.mother.channel : this.channelMaxCount()
+        root.channel = Math.trunc((f + m) / 2)
+    }
 
     // Returns the number of channels in the Lineage
     channelMaxCount() { return this.data().channels }
