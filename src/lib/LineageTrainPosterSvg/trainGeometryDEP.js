@@ -18,7 +18,7 @@ export function trainGeometry(yearMin, yearMax, chanMin, chanMax) { // width=100
 
     geom.rows = chanMax - chanMin + 2 // padding at top and bottom
     geom.chanHt = geom.rowHt
-    geom.timelineHt = 2 * geom.rowHt
+    geom.timelineHt = geom.rowHt
     geom.contentHt = geom.rows * geom.rowHt
     geom.height = geom.rows * geom.rowHt + 2 * geom.timelineHt
 

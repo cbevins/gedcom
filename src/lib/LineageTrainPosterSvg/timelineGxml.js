@@ -1,6 +1,6 @@
 import { US_Migrations, US_Wars } from './timelineData.js'
 
-export function timelineGxml(geom) {
+export function timelineGxml(geom, scale) {
     const els = []
     const lines = 4
     const ht = geom.timelineHt
@@ -54,12 +54,12 @@ export function timelineGxml(geom) {
     // Upper  background
     els.push({el: 'rect', x: 0, y: 0,
         width: geom.width, height: geom.timelineHt,
-        stroke: 'black', 'stroke-width': 5, fill: 'gray'})
+        stroke: 'black', 'stroke-width': 2, fill: 'gray'})
 
     // Lower timeline background
     els.push({el: 'rect', x: 0, y: geom.timelineHt + geom.contentHt,
         width: geom.width, height: geom.timelineHt,
-        stroke: 'black', 'stroke-width': 5, fill: 'gray'})
+        stroke: 'black', 'stroke-width': 2, fill: 'gray'})
 
     // Upper and lower year labels and lines
     for (let col=0; col<geom.cols; col++) {

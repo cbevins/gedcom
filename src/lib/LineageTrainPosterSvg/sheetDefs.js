@@ -1,13 +1,27 @@
-export const BevinsSheetData = [
-    {root: 'CollinDouglasBevins', sheet: 0, links: []},
-    {root: 'WilliamCollinsBevins1931', sheet: 1, links: [
-        {from: 'HattieJaneCollins1889', to: 'FrancesMarieShofner1871', sheet: 3},
-        {from: 'GeorgeWashingtonCollins1870', to: 'ElizaAnnGobble1843', sheet: 3},
-        {from: 'SpencerPerryCollins1839', to: 'CynthiaSpears1815', sheet: 2}
+export const SheetDefs = [
+    {number: 0, name: 'Full Bevins-Heddens Lineage',
+        start: 'CollinDouglasBevins1952', stops: []},
+    {number: 1, name: 'Bevins English Migration',
+        start: 'CollinDouglasBevins1952', stops: [
+        {after: 'MeartiaMargaretHeddens1933', onto: 4},
+        {after: 'FrancesMarieShofner1871', onto: 3},
+        {after: 'ElizaAnnGobble1843', onto: 3},
+        {after: 'CynthiaSpears1815', onto: 2},
+        {after: 'HattieJaneCollins1889', onto: 2},
     ]},
-    {root: 'MeartiaMargaretHeddens1933', sheet: 4, links: [
-        {from: 'HarrySingNattrass1888', to: 'HarrietLucretiaSing1844', sheet: 5},
-        {from: 'SamuelSing1808', to: 'LucretiaBarnhard1808', sheet: 5},
+    {number: 2, name: 'Collins Eng-Ire-Sco', start: 'SpencerPerryCollins1839', stops: [
+        {after: 'ChristopherColumbusCollins1807', onto: 1},
+    ]},
+    {number: 3, name: 'Gobble-Shaffner', start: 'HattieJaneCollins1889', stops: [
+        // {after: 'SpencerPerryCollins1839', onto: 1},
+    ]},
+    {number: 4, name: 'Nattrass-Sing', start: 'CollinDouglasBevins1952', stops: [
+        {after: 'WilliamCollinsBevins1931', onto: 1},
+        {after: 'HarrietLucretiaSing1844', onto: 5},
+        {after: 'MaryDexter1805', onto: 5},
+    ]},
+    {number: 5, name: 'Heddens-Myhre', start: 'HarrySingNattrass1888', stops: [
+        {after: 'AlfredCalebNattrass1844', onto: 4}
     ]}
 ]
 

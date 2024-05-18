@@ -70,6 +70,7 @@ export class Channels extends Lineage {
             node.birthState = node.person.birthState()
             node.birthYear = node.person.birthYear()
             node.label = node.person.label()
+            node.sheets = new Array(10).fill(false)
             this._data.yearMin = Math.min(this._data.yearMin, node.birthYear)
             this._data.yearMax = Math.max(this._data.yearMax, node.birthYear)
         }
@@ -88,7 +89,7 @@ export class Channels extends Lineage {
     // Returns the next available channel index
     _traverse(node, channel) {
         let chan = channel
-        node.channel = channel // channel used to connect this {node} with its chuild {node}
+        node.channel = channel // channel used to connect this {node} with its child {node}
         const count = idGenCount(node.gen) // number of slots in this generation
         const slot = (node.seq - count)    // slot number (base 0) of this {node}
         node.y = (slot + 0.5) / count      // slot fraction of the way down the chart
@@ -145,5 +146,65 @@ export class Channels extends Lineage {
         if (node.mother) ar = this._getBranch(node.mother, ar)
         ar.push(node)
         return ar
+    }
+
+    // Clone's the sheetDef,
+    // adds a 'sheet.nodes' prop filled its with CLONED nodes with a node.sheets[] property,
+    // adds a 'sheet.startNode' property to reference the starting node,
+    // adds a 'sheet.channels' property indicating next available channel index
+    // Returns a reference to the newly CLONED sheet
+    getSheetNodes(sheetDef) {
+        const sheet = {...sheetDef}
+        sheet.nodes = []
+        const startNode = this.findNodeByNameKey(sheet.start)
+        if (!startNode) throw new Error(`Bad sheet.start nameKey ${sheet.start}`)
+        sheet.startNode = {...startNode}
+        this._getSheetNodes(sheet.startNode, sheet)
+        this._packChannels(sheet)
+        return sheet
+    }
+    // Adds CLONED nodes to the sheet
+    // Each cloned node has a sheets[] property with TRUE where present on a sheet
+    _getSheetNodes(node, sheet) {
+        let father = null
+        let mother = null
+        for(let i=0; i<sheet.stops.length; i++) {
+            if(node.father) {
+                if (node.father.person.nameKey() === sheet.stops[i].after) {
+                    father = {...node.father}
+                    father.father = null
+                    father.mother = null
+                    father.sheets[sheet.number] = true
+                    sheet.nodes.push(father)
+                }
+            }
+            if (node.mother) {
+                if (node.mother.person.nameKey() === sheet.stops[i].after) {
+                    mother = {...node.mother}
+                    mother.father = null
+                    mother.mother = null
+                    mother.sheets[sheet.number] = true
+                    sheet.nodes.push(mother)
+                }
+            }
+        }
+        if (node.father && ! father) this._getSheetNodes(node.father, sheet)
+        if (node.mother && ! mother) this._getSheetNodes(node.mother, sheet)
+        const self = {...node}
+        self.sheets[sheet.number] = true
+        sheet.nodes.push(self)
+        return sheet
+    }
+    _packChannels(sheet) {
+        sheet.nodes.sort((a, b) => { return a.channel - b.channel })
+        let previous = sheet.nodes[0].channel
+        let current = 0
+        sheet.nodes.forEach((node, idx, nodes) => {
+            if (node.channel !== previous) current++
+            previous = node.channel
+            node.channel = current
+        })
+        sheet.channels = current
+        return sheet
     }
 }

@@ -1,4 +1,3 @@
-
 function birthPlace(node) {
     const place = node.person.birthPlace()
     const text = place.text()
@@ -37,15 +36,20 @@ export function trackNameGxml(geom, node) {
     const els = []
     const x = geom.nameX(node)
     const y = geom.nameY(node)
-    els.push({el: 'text', x: x, y: y - 1.5 * geom.fontSize,
+
+    els.push({el: 'text',
+        x: x,
+        y: y - 1.6 * geom.fontSize,
         'text-anchor': "middle",
         'font-family': "sans-serif",
         'font-weight': "bold",
-        'font-size': 1.5*geom.fontSize,
+        'font-size': 1.5 * geom.fontSize,
         els: [{el: 'inner', content: firstNames(node)}]
     })
 
-    els.push({el: 'text', x: x, y: y - 0.3 * geom.fontSize,
+    els.push({el: 'text',
+        x: x,
+        y: y - 0.2 * geom.fontSize,
         'text-anchor': "middle",
         'font-family': "sans-serif",
         'font-weight': "bold",
@@ -53,15 +57,19 @@ export function trackNameGxml(geom, node) {
         els: [{el: 'inner', content: lastNames(node)}]
     })
 
-    els.push({el: 'text', x: x, y: y + 2.2 * geom.trackWidth,
+    els.push({el: 'text',
+        x: x,
+        y: y + 1.6 * geom.trackWidth,
         'text-anchor': "middle",
         'font-family': "sans-serif",
         'font-weight': "lighter",
-        'font-size': geom.fontSize,
+        'font-size': 1.2 * geom.fontSize,
         els: [{el: 'inner', content: birthPlace(node)}]
     })
 
-    els.push({el: 'text', x: x,  y: y + 3 * geom.fontSize,
+    els.push({el: 'text',
+        x: x,
+        y: y + 3 * geom.fontSize,
         'text-anchor': "middle",
         'font-family': "sans-serif",
         'font-weight': "lighter",

@@ -35,6 +35,13 @@ export class Lineage {
     // Returns reference to the {node} instance given a Person instance
     findPerson(person) { return this.personsMap().get(person) }
 
+    findPersonByNameKey(nameKey) {
+        for(let i=0; i<this.nodes.length; i++) {
+            if (nodes[i].person.nameKey() === nameKey) return nodes[i]
+        }
+        return null
+    }
+    
     // Returns max number of cohorts for the node's generation (including the node itself)
     genSize(node) { return 2**node.gen }
 

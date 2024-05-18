@@ -44,11 +44,11 @@ function genLabel(node) {
     return `${gen-2}th GG` + p
 }
 
-export function contentGxml(nodes, geom) {
+export function contentGxml(nodes, geom, pageScale) {
     // const main = gridGxml(geom)
-    const main = timelineGxml(geom)
+    const main = timelineGxml(geom, pageScale)
 
-    // Lay the TrainTracks first
+    // 1: Lay the TrainTracks
     const trackWidth = 16
     for(let i=0; i<nodes.length; i++) {
         const node = nodes[i]
@@ -63,19 +63,22 @@ export function contentGxml(nodes, geom) {
         }
     }
 
-    // Build the TrainStations second
+    // 2: build the TrainStations
     for(let i=0; i<nodes.length; i++) {
         const node = nodes[i]
         const year = node.birthYear
+        // [x,y] are for the upper-left corner of the TrainStation <svg> element,
         const chan = node.channel
-        const href = '#' + Country.get(node.birthCountry)
+        // NOT for the center, so translate it based on the station scale and rowHt
+        const x = geom.yearX(year) - geom.stationScale * geom.rowHt / 2
+        const y = geom.chanY(chan) - geom.stationScale * geom.rowHt / 2
+        const flagRef = '#' + Country.get(node.birthCountry)
         const gen = genLabel(node)
         const color = geom.color(node)
-        let scale = 0.6
-        main.push(trainStationGxml(geom, year, chan, href, gen, color, scale))
+        main.push(trainStationGxml(x, y, flagRef, year, gen, color, geom.stationScale))
     }
 
-    // Add track names / signage third
+    // 3: Add track names / signage
     for(let i=0; i<nodes.length; i++) {
         const node = nodes[i]
         main.push(trackNameGxml(geom, node))
