@@ -196,15 +196,18 @@ export class Channels extends Lineage {
         return sheet
     }
     _packChannels(sheet) {
-        sheet.nodes.sort((a, b) => { return a.channel - b.channel })
-        let previous = sheet.nodes[0].channel
-        let current = 0
-        sheet.nodes.forEach((node, idx, nodes) => {
-            if (node.channel !== previous) current++
-            previous = node.channel
-            node.channel = current
+        const oldChan = new Array(300).fill(0)
+        const newChan = new Array(300).fill(0)
+        sheet.nodes.forEach((node)=>{oldChan[node.channel]++})
+        let counter = 0
+        oldChan.forEach((n, idx) => { if (n) newChan[idx] = counter++ })
+        sheet.nodes.forEach((node)=>{
+            const was = node.channel
+            const now = newChan[was]
+            // console.log(`${sheet.number}: ${node.label}  ${was} => ${now}`)
+            node.channel = now
         })
-        sheet.channels = current
+        sheet.nodes.sort((a, b) => { return a.channel - b.channel })
         return sheet
     }
 }

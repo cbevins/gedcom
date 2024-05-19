@@ -1,8 +1,8 @@
-import { flagLegendGxml } from './flagLegendGxml.js'
+import { flagLegendGxml, flagTableGxml } from './flagLegendGxml.js'
 import { timelineGxml } from './timelineGxml.js'
 import { trackNameGxml } from './trackNameGxml.js'
 import { trainStationGxml } from './trainStationGxml.js'
-import { trainTracksGxml } from '../PosterSvg/index.js'
+import { trainTracksGxml } from './trainTracksGxml.js'
 // import { gridGxml } from './gridGxml.js'
 import SamuelBevins from '$lib/LineageTrainPosterSvg/Samuel Bevins.jpg'
 
@@ -44,6 +44,27 @@ function genLabel(node) {
     return `${gen-2}th GG` + p
 }
 
+function countries(nodes) {
+    const locs = new Map()
+    nodes.forEach((node) => {
+        const key = node.person.birthCountry()
+        if (key==='' || key===null) console.log(node.label, 'has no country')
+        if (!locs.has(key)) locs.set(key, 0)
+        locs.set(key, locs.get(key)+1)
+    })
+    return locs
+}
+
+function countryStates(nodes) {
+    const locs = new Map()
+    nodes.forEach((node) => {
+        const key = node.person.birthCountry()+','+node.person.birthState()
+        if (!locs.has(key)) locs.set(key, 0)
+        locs.set(key, locs.get(key)+1)
+    })
+    return locs
+}
+
 export function contentGxml(nodes, geom, pageScale) {
     // const main = gridGxml(geom)
     const main = timelineGxml(geom, pageScale)
@@ -58,6 +79,7 @@ export function contentGxml(nodes, geom, pageScale) {
             const year2 = node.child.birthYear
             const chan2 = node.child.channel
             const color = geom.color(node)
+            // console.log(`${node.label} [${year1}, ${chan1}] to ${node.child.label} [${year2}, ${chan2}]`)
             const path = trackPath(geom, year1, chan1, year2, chan2)
             main.push(trainTracksGxml(path, trackWidth, color))
         }
@@ -92,6 +114,9 @@ export function contentGxml(nodes, geom, pageScale) {
     })
 
     // Flag legend
-    main.push(flagLegendGxml(100, 200, 100, 0.5))
+    // main.push(flagLegendGxml(100, 200, 100, 0.5))
+    const cmap = countries(nodes)
+    const ar = Array.from(cmap).sort()
+    main.push(flagTableGxml(ar, 100, 200, 100, 0.5))
     return main
 }

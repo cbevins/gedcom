@@ -1,6 +1,6 @@
 export function logGeom(geom) {
     const nodes = geom.nodes
-    console.log('Branch from', nodes[0].person.fullName(),
+    console.log('Sheet starts from', nodes[0].person.fullName(),
         `has ${nodes.length} Persons; ${geom.yearMax-geom.yearMin+1} Birth years (${geom.birthMin}-${geom.birthMax}); `
         + `${geom.channels} Channels (${geom.chanMin}-${geom.chanMax}); `
         + `${geom.gens} Generations (${geom.genMin}-${geom.genMax}).`)
