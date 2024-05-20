@@ -24,19 +24,29 @@
     ]
 </script>
 
+<div class="offcanvas offcanvas-end text-bg-dark" id="subject-settings">
+    <div class="offcanvas-header">
+        <h3 class="offcanvas-title">Settings</h3>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <hr/>
+    <div class="offcanvas-body">
+        <div class="row">
+            <h5>Subject</h5>
+            <SylvanSubjectSelector sylvan={getSylvan()}/>
+        </div>
+    <hr/>
+    </div>
+</div>
+
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">People Explorer</h5>
-        <div class="card">
-            <div>
-                Subject: {$subjectNameKey}
-                <SylvanSubjectSelector sylvan={getSylvan()}/>
-            </div>
-            <!-- <div>
-                Root: {$rootNameKey}
-                <RootSelector />
-            </div> -->
-        </div>
+        <h5 class="card-title">People Explorer: {$subjectNameKey}
+            <button class="btn btn-primary" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#subject-settings">
+            Change Subject
+            </button>
+            </h5>
         <hr>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">

@@ -65,6 +65,7 @@
             {/each}
         </div>
         <hr/>
+<!-- 
         <div class="row">
             <h5>Display Sheet</h5>
             {#each sheetValues as sheetValue, i}
@@ -79,6 +80,7 @@
             {/each}
         </div>
         <hr/>
+         -->
     </div>
 </div>
 

@@ -12,15 +12,21 @@
         : '👉'
 
     const shortList = [
-        {key: 'CollinDouglasBevins1952', label: 'Collin'},
-        {key: 'BarbaraJeanneRiley1953', label: 'Barbie'},
-        {key: 'WilliamCollinsBevins1931', label: 'William'},
-        {key: 'MeartiaMargaretHeddens1933', label: 'Meartia'},
-        {key: 'SheldonJuniorRiley1926', label: 'Sheldon'},
-        {key: 'DorothyMayTrombley1927', label: 'Dotty'},
-        {key: 'DrewallynBevinsRiley1982', label: 'Drewallyn'},
-        {key: 'WilliamLongfordBevins1815', label: 'William Longford Bevins'},
-        {key: 'HannahHunter1753', label: 'Hannah Hunter'}
+        {key: 'CollinDouglasBevins1952', label: 'Bevins, Collin Douglas'},
+        {key: 'WilliamCollinsBevins1931', label: 'Bevins, William Collins'},
+        {key: 'WilliamLongfordBevins1815', label: 'Bevins, William Longford'},
+        {key: 'SamuelBevins1878', label: 'Bevins, Samuel'},
+        {key: 'HattieJaneCollins1889', label: 'Collins, Hattie Jane'},
+        {key: 'GeorgeWashingtonCollins1870', label: 'Collins, George Washignton'},
+        {key: 'MeartiaMargaretHeddens1933', label: 'Heddens, Meartia Margaret'},
+        {key: 'RalphVernonHeddens1909', label: 'Heddens, Ralph Vernon'},
+        {key: 'HannahHunter1753', label: 'Hunter, Hannah'},
+        {key: 'MargaretEvaNattrass1914', label: 'Nattrass, Margaret Eva'},
+        {key: 'BarbaraJeanneRiley1953', label: 'Riley, Barbara Jeanne'},
+        {key: 'DrewallynBevinsRiley1982', label: 'Riley, Drewallyn Bevins'},
+        {key: 'SheldonJuniorRiley1926', label: 'Riley, Sheldon Junior'},
+        {key: 'FrancesMarieShofner1871', label: 'Schofner, Frances Marie'},
+        {key: 'DorothyMayTrombley1927', label: 'Trombley, Dorothy May'},
     ]
 
     // PICK A FULL OR SHORT LIST OF PEOPLE
