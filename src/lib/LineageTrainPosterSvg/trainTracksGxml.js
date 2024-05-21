@@ -4,9 +4,9 @@ export function trainTracksGxml(path, trackWidth, color='blue') {
     const w1 = 0.6 * trackWidth
     const w2 = 0.4 * trackWidth
     return [
-       // Wide blue line that becomes rails when overlaid by the thinner white line
+       // Wide colored line that becomes rails when overlaid by the narrower white line
         {el: 'path', d: path, stroke: color, 'stroke-width': w1, fill: 'none'},
-        // White line running inside the wider blue line
+        // Narrow white line running inside the wider color line
         {el: 'path', d: path, stroke: 'white', 'stroke-width': w2, fill: 'none'},
         // Third dashed line
         {el: 'path', d: path, stroke: color, 'stroke-width': w3, fill: 'none',

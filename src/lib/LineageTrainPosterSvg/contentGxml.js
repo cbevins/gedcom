@@ -31,7 +31,9 @@ function trackPath(geom, year1, chan1, year2, chan2) {
     const y1 = geom.chanY(chan1)
     const x2 = geom.yearX(year2)
     const y2 = geom.chanY(chan2)
-    const path = `M ${x1} ${y1} L ${x2} ${y1} L ${x2} ${y2}`
+    const r = geom.radius / 2
+    const path = (y1 === y2) ? `M ${x1} ${y1} L ${x2-r} ${y1} L ${x2} ${y2}`
+        : `M ${x1} ${y1} L ${x2-r} ${y1} A ${r} ${r} 0 0 0 ${x2} ${y1-r} L ${x2} ${y2}`
     return path
 }
 
