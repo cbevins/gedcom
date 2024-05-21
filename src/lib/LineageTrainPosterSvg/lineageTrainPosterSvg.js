@@ -40,7 +40,7 @@ export function lineageTrainPosterSvg(subject, settings) {
     //--------------------------------------------------------------------------
 
     // Get Channels structure for this subject and select the display branch
-    const channels = new Channels(subject, false)
+    const channels = new Channels(subject, true)
     const nodes = channels.nodesBySeq()
 
     // getSheetNodes() returns a *CLONED* sheetDef with:

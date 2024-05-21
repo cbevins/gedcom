@@ -17,7 +17,7 @@
  * - seq: lineage father-descent-first sequence number, where root Persin seq===1
  */
 export class Lineage {
-    constructor(rootPerson) {
+    constructor(rootPerson, startGen=0, startSeq=1) {
         this._data = {
             nodes: [],              // array of lineage {node}s in father-descent-first traversal order
             persons: new Map(),     // Map of Person => {node} instances
@@ -25,7 +25,7 @@ export class Lineage {
             rootNode: null,         // reference to the root's lineage {node} instance
             rootPerson: rootPerson, // reference to the root's Person instance
         }
-        this._data.rootNode = this._construct(rootPerson, 0, 1, null)
+        this._data.rootNode = this._construct(rootPerson, startGen, startSeq, null)
     }
 
     //--------------------------------------------------------------------------

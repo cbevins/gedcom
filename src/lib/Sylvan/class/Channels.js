@@ -6,8 +6,8 @@ import { Lineage } from './Lineage.js'
 import { idGenCount } from './Generations.js'
 
 export class Channels extends Lineage {
-    constructor(rootPerson, centerRoot=true) {
-        super(rootPerson)
+    constructor(rootPerson, centerRoot=true, startGen=0, startSeq=1) {
+        super(rootPerson, startGen, startSeq)
         this._data.channels = 0     // number of channels
         this._data.yearMax = 0      // earliest ancestral birth year
         this._data.yearMin = 9999   // last ancestral birth year
