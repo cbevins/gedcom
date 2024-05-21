@@ -1,13 +1,18 @@
 <script>
     import LineageTrainPosterSvg from '$lib/LineageTrainPosterSvg/LineageTrainPosterSvg.svelte'
+    import { US_History, US_Migrations, US_Wars, World_History } from '$lib/LineageTrainPosterSvg/timelineData.js'
     import { SheetDefs } from '$lib/LineageTrainPosterSvg/sheetDefs.js'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
     import SylvanSubjectSelector from '$lib/Sylvan/svelte/SylvanSubjectSelector.svelte'
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
 
-    $: scale = 1
-    $: guides = false
-    $: sheetNumber = 0
+    $: settings = {
+        guides: false,
+        lowerTimeline: World_History,
+        scale: 1,
+        sheetNumber: 0,
+        upperTimeline: US_History
+    }
 
     const scaleValues = [4.25, 1.8, 1]
     const scaleLabels = [8.5,20, 36]
@@ -25,7 +30,7 @@
     </button>
 </div>
 
-<div class="offcanvas offcanvas-end text-bg-dark" id="train-settings">
+<div class="offcanvas offcanvas-start text-bg-dark" id="train-settings">
     <div class="offcanvas-header">
         <h3 class="offcanvas-title">Settings</h3>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
@@ -44,7 +49,7 @@
                     <input type="radio" class="form-check-input" id="size{i}"
                         name="pageSizes"
                         value={scaleValue}
-                        bind:group={scale} checked>
+                        bind:group={settings.scale} checked>
                     {scaleLabels[i]} inches
                     <label class="form-check-label" for="size{i}"></label>
                 </div>
@@ -58,7 +63,7 @@
                     <input type="radio" class="form-check-input" id="guideopt{i}"
                         name="guides"
                         value={guideValue}
-                        bind:group={guides}>
+                        bind:group={settings.guides}>
                     {guideLabels[i]}
                     <label class="form-check-label" for="guideopt{i}"></label>
                 </div>
@@ -84,4 +89,4 @@
     </div>
 </div>
 
-<LineageTrainPosterSvg subjectNameKey={$subjectNameKey} {scale} {guides} sheetNumber={sheetNumber} />
+<LineageTrainPosterSvg subjectNameKey={$subjectNameKey} {settings} />

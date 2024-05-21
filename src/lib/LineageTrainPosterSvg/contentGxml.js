@@ -3,6 +3,7 @@ import { timelineGxml } from './timelineGxml.js'
 import { trackNameGxml } from './trackNameGxml.js'
 import { trainStationGxml } from './trainStationGxml.js'
 import { trainTracksGxml } from './trainTracksGxml.js'
+import { US_History, US_Migrations, US_Wars, World_History } from './timelineData.js'
 // import { gridGxml } from './gridGxml.js'
 // import SamuelBevins from '$lib/LineageTrainPosterSvg/Samuel Bevins.jpg'
 import GB from '$lib/data/maps/edited/gb.svg'
@@ -71,7 +72,7 @@ function countryStates(nodes) {
 
 export function contentGxml(nodes, geom, pageScale) {
     // const main = gridGxml(geom)
-    const main = timelineGxml(geom, pageScale)
+    const main = timelineGxml(geom, US_Migrations, US_Wars, pageScale)
 
     // 1: Lay the TrainTracks
     const trackWidth = 16
@@ -120,7 +121,7 @@ export function contentGxml(nodes, geom, pageScale) {
     // Report country-state occurrence
     const smap = countryStates(nodes)
     const sar = Array.from(smap).sort()
-    sar.forEach((state) => console.log(state[0]))
+    // sar.forEach((state) => console.log(state[0]))
 
     // Flag legend
     // main.push(flagLegendGxml(100, 200, 100, 0.5))
