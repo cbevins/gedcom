@@ -79,14 +79,17 @@ export function contentGxml(nodes, geom, settings) {
     const trackWidth = 16
     for(let i=0; i<nodes.length; i++) {
         const node = nodes[i]
+        const year1 = node.birthYear
+        const chan1 = node.channel
+        const color = geom.color(node)
         if (node.child) {
-            const year1 = node.birthYear
-            const chan1 = node.channel
             const year2 = node.child.birthYear
             const chan2 = node.child.channel
-            const color = geom.color(node)
             // console.log(`${node.label} [${year1}, ${chan1}] to ${node.child.label} [${year2}, ${chan2}]`)
             const path = trackPath(geom, year1, chan1, year2, chan2)
+            main.push(trainTracksGxml(path, trackWidth, color))
+        } else {
+            const path = trackPath(geom, year1, chan1, year1+geom.addYears, chan1)
             main.push(trainTracksGxml(path, trackWidth, color))
         }
     }
