@@ -8,10 +8,10 @@
 
     $: settings = {
         guides: false,
-        lowerTimeline: World_History,
+        lowerTimeline: US_History,
         scale: 1,
         sheetNumber: 0,
-        upperTimeline: US_History
+        upperTimeline: US_Migrations,
     }
 
     const scaleValues = [4.25, 1.8, 1]
@@ -70,6 +70,27 @@
             {/each}
         </div>
         <hr/>
+        <div class="row">
+            <h5>Upper TimeLine</h5>
+            <select class="form-select"
+                bind:value={settings.upperTimeline}>
+                <option value={US_Migrations}>US_Migrations</option>
+                <option value={US_History}>US_History</option>
+                <option value={US_Wars}>US_Wars</option>
+                <option value={World_History}>World_History</option>
+            </select>
+        </div>
+        <hr />
+        <div class="row">
+            <h5>Lower TimeLine</h5>
+            <select class="form-select"
+                bind:value={settings.lowerTimeline}>
+                <option value={US_Migrations}>US_Migrations</option>
+                <option value={US_History}>US_History</option>
+                <option value={US_Wars}>US_Wars</option>
+                <option value={World_History}>World_History</option>
+            </select>
+        </div>
 <!-- 
         <div class="row">
             <h5>Display Sheet</h5>

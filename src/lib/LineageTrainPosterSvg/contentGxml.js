@@ -70,9 +70,10 @@ function countryStates(nodes) {
     return locs
 }
 
-export function contentGxml(nodes, geom, pageScale) {
+export function contentGxml(nodes, geom, settings) {
     // const main = gridGxml(geom)
-    const main = timelineGxml(geom, US_Migrations, US_Wars, pageScale)
+    const main = timelineGxml(geom, settings.upperTimeline, settings.lowerTimeline,
+        settings.scale)
 
     // 1: Lay the TrainTracks
     const trackWidth = 16

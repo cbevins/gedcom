@@ -8,7 +8,7 @@
         lowerTimeline: World_History,
         scale: 1,
         sheetNumber: 0,
-        upperTimeline: US_History
+        upperTimeline: World_History
     }
 
     function html (subjectNameKey, settings) {
