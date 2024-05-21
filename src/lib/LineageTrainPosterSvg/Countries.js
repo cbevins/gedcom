@@ -1,5 +1,5 @@
 export const Countries = new Map([
-    ['',  {abbr: 'Unk', flag: 'UNK', label: 'Unknown'}],
+    ['Belgium', {abbr: 'Bel', flag: 'BEL', label: 'Belgium'}],
     ['Canada', {abbr: 'Can', flag: 'CAN', label: 'Canada'}],
     ['England', {abbr: 'Eng', flag: 'ENG', label: 'England'}],
     ['France', {abbr: 'FRA', flag: 'FRA', label: 'France'}],
@@ -11,6 +11,8 @@ export const Countries = new Map([
     ['Sweden',  {abbr: 'SWE', flag: 'SWE', label: 'Sweden'}],
     ['USA',  {abbr: 'USA', flag: 'USA', label: 'United States'}],
     ['Wales',  {abbr: 'WAL', flag: 'WAL', label: 'Wales'}],
+    ['',  {abbr: 'Unk', flag: 'UNK', label: 'Unknown'}],
+    ['Unknown',  {abbr: 'Unk', flag: 'UNK', label: 'Unknown'}],
 ])
 
 export function countryAbbr(country) {

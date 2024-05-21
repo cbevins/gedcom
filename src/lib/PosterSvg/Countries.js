@@ -1,5 +1,6 @@
 export const Countries = new Map([
     ['',  {abbr: 'Unk', flag: 'UNK', label: 'Unknown'}],
+    ['Belgium', {abbr: 'Bel', flag: 'BEL', label: 'Belgium'}],
     ['Canada', {abbr: 'Can', flag: 'CAN', label: 'Canada'}],
     ['England', {abbr: 'Eng', flag: 'ENG', label: 'England'}],
     ['France', {abbr: 'FRA', flag: 'FRA', label: 'France'}],

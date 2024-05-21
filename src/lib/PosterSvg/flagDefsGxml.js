@@ -9,6 +9,12 @@ export function flagDefsGxml() {
         {el: 'circle', cx: w/2, cy: h/2, r: w/2}
     ]}
 
+    const bel ={el: 'svg', id: 'BEL', els: [
+        {...flag, fill: '#fdda24'},
+        {...rect, x: 0, y: 0, width: w/3, height: h, fill: "#000000"},
+        {...rect, x: 2*w/3, y: 0, width: w/3, height: h, fill: "#ef3340"},
+    ]}
+
     const can ={el: 'svg', id: 'CAN', els: [
         {...flag, fill: 'white'},
         {...rect, x: 0, y: 0, width: 25, fill: 'red'},
@@ -134,7 +140,7 @@ export function flagDefsGxml() {
 
     const defs = {el: 'defs', els: [
         arrowhead, clip, tpath1, tpath2, shadow,
-        usaStar, can, eng, fra, ger, ire, net, nor, sco, swe, unk, usa, wal
+        usaStar, bel, can, eng, fra, ger, ire, net, nor, sco, swe, unk, usa, wal
     ]}
 
     // Lighting filter for flag buttons

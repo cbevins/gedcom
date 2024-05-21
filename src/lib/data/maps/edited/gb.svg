@@ -1041,13 +1041,14 @@
     <tspan  x="677.8" y="781.4" id="GBWOR" text-anchor="end">Worcestershire</tspan>
     <tspan  x="704.7" y="627.2" id="GBNYK">North Yorkshire</tspan>
     <tspan  x="753.9" y="651.4" id="GBERY">East Riding of Yorkshire</tspan>
-    <tspan  x="594.9" y="552.9" id="GBDGY">Dumfries and Galloway</tspan>
-    <tspan  x="594.9" y="562.9" id="GBDGY">(Kirkcudbrughtshire)</tspan>
-    <tspan  x="575.7" y="500.7" id="GBERW" text-anchor="end">East Renfrewshire"</tspan>
+    <tspan  x="605" y="552.9" id="GBDGY">Dumfries and Galloway</tspan>
+    <tspan  x="600" y="562.9" id="GBDGY">(Kirkcudbrughtshire)</tspan>
+    <tspan  x="575.7" y="500.7" id="GBERW" text-anchor="end">East Renfrewshire</tspan>
     <tspan  x="613.1" y="487.5" id="GBWLN" text-anchor="start">West Lothian (Linlithgowshire)</tspan>
     <tspan  x="594" y="499.5" id="GBNLK" text-anchor="start">North Lanarkshire</tspan>
     <tspan  x="567.7" y="493.1" id="GBRFW" text-anchor="end">Renfrewshire</tspan>
-    <tspan  x="651.1" y="524.2" id="GBSCB" text-anchor="start">Scottish Borders (Roxburghshire)</tspan>
+    <tspan  x="648" y="518" id="GBSCB">Scottish Borders</tspan>
+    <tspan  x="648" y="526" id="GBSCB">(Roxburghshire)</tspan>
     <tspan  x="600.7" y="513.7" id="GBSLK" text-anchor="end">South Lanarkshire</tspan>
     </text>
     
@@ -1078,4 +1079,10 @@
 <text class="London city" x="859" y="832" text-anchor="start">London</text>
 </g>
 
+<text class="title" x="630" y="150" text-anchor="middle" font-size="32">
+    England, Wales, Scotland</text>
+
+<text class="title" x="630" y="190" text-anchor="middle" font-size="32">
+    &amp; Northern Ireland</text>
+<rect x="380" y="30" width="500" height="950" stroke="black" stroke-width="5" fill="none"/>
 </svg>

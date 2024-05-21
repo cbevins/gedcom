@@ -6,8 +6,8 @@ import { trainTracksGxml } from './trainTracksGxml.js'
 // import { gridGxml } from './gridGxml.js'
 // import SamuelBevins from '$lib/LineageTrainPosterSvg/Samuel Bevins.jpg'
 import GB from '$lib/data/maps/edited/gb.svg'
-// import MT from '$lib/data/usa-mt.svg'
-// import UKlow from '$lib/data/unitedKingdomLow.svg'
+// import NL from '$lib/data/maps/edited/nl.svg'
+// import MN from '$lib/data/maps/mapSvg/usa-mn.svg'
 
 const Country = new Map([
     ['', 'UNK'],
@@ -48,10 +48,11 @@ function genLabel(node) {
 }
 
 function countries(nodes) {
-    const locs = new Map()
+    const locs = new Map()  // birthCountry() => count
     nodes.forEach((node) => {
-        const key = node.person.birthCountry()
-        // if (key==='' || key===null) console.log(node.label, 'has no country')
+        let key = node.person.birthCountry()
+        if (key==='' || key===null || key === 'unknown country')
+            key = 'Unknown'
         if (!locs.has(key)) locs.set(key, 0)
         locs.set(key, locs.get(key)+1)
     })
@@ -110,16 +111,17 @@ export function contentGxml(nodes, geom, pageScale) {
     }
 
     // Example of adding an image
-    main.push({el: 'image', x: -200, y: 100, width: 2000, height: 2000,
-        // href: SamuelBevins,
-        href: GB,
+    main.push({el: 'image', x: -400, y: 100, width: 2000, height: 2000,
+        href:GB,
         // opacity: 0.3,
         preserveAspectRation: 'xMidYMid',   // 'xMidYMid', 'meet' or 'slice'
     })
 
+    // Report country-state occurrence
     const smap = countryStates(nodes)
     const sar = Array.from(smap).sort()
     sar.forEach((state) => console.log(state[0]))
+
     // Flag legend
     // main.push(flagLegendGxml(100, 200, 100, 0.5))
     const cmap = countries(nodes)

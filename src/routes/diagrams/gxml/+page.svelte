@@ -18,7 +18,7 @@
     SheetDefs.forEach((sheet, idx) => {sheetLabels[idx] = sheet.name})
 </script>
     
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-3" style="position: fixed;">
     <button class="btn btn-primary" type="button"
         data-bs-toggle="offcanvas" data-bs-target="#train-settings">
         Settings
