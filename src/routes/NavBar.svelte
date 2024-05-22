@@ -11,12 +11,10 @@
         ['/dev', 'Dev Tools', [
             ['/dev/diagnostics', 'Diagnostics'],
             ['/diagrams/postersvg', 'PosterSvg'],
-            ['/diagrams/poster', 'Poster Framework DEP'],
             ['/diagrams/scale', 'Nested SVG *Landscape* Example'],
-            ['/diagrams/river', 'Lineage River Chart BOMBS'],
         ]],
         ['/diagrams', 'Diagrams', [
-            ['/diagrams/gxml', 'Lineage Train Routes'],
+            ['/diagrams/gxml', 'Lineage Train Routes - Master'],
             ['/diagrams/genchartl2r', 'Generation Chart (L2R)'],
             ['/diagrams/yearchartl2r', 'Birth Year Chart(L2R)'],
             ['/diagrams/originsdisc', 'Ancestral Origins Disc'],
