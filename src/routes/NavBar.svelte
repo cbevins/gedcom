@@ -9,12 +9,13 @@
             ['/about/tools', 'Tools'],
         ]],
         ['/dev', 'Dev Tools', [
-            ['/dev/diagnostics', 'Diagnostics'],
-            ['/diagrams/postersvg', 'PosterSvg'],
+            ['/dev/diagnostics', 'Gedcom Summary'],
+            ['/diagrams/postersvg', 'PosterSvg Example'],
             ['/diagrams/scale', 'Nested SVG *Landscape* Example'],
+            // ['/sverdle', 'Sverdle'],
         ]],
         ['/diagrams', 'Diagrams', [
-            ['/diagrams/gxml', 'Lineage Train Routes - Master'],
+            ['/diagrams/lineagetrain', 'Lineage Train Routes - Master'],
             ['/diagrams/genchartl2r', 'Generation Chart (L2R)'],
             ['/diagrams/yearchartl2r', 'Birth Year Chart(L2R)'],
             ['/diagrams/originsdisc', 'Ancestral Origins Disc'],
