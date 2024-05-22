@@ -54,7 +54,7 @@ export function headerGxml(layout, scale, title, subtitle='') {
         els: [{el: 'inner', content: subtitle}]
     })
 
-    const screw1 = screw(x1+r, h/2, r/2, 'brown', 'gold')
-    const screw2 = screw(x2-r, h/2, r/2, 'brown', 'gold')
+    const screw1 = screw(x1+r, (y1+y2)/2, r/2, 'brown', 'gold')
+    const screw2 = screw(x2-r, (y1+y2)/2, r/2, 'brown', 'gold')
     return [...els, ...screw1, ...screw2]
 }

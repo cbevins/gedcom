@@ -9,15 +9,14 @@
 
     $: fullId = id + '-settings'
     $: target = '#' + fullId
-
 </script>
 
 <div class="container-fluid mt-3"
-        style="position: fixed; top: 0px; left: 0px;">
+        style="position: fixed; top: 30px; left: -10px;">
     <button class="btn btn-info" type="button"
             data-bs-toggle="offcanvas"
             data-bs-target={target}>
-        <img class="m-image" src={Gears} alt="Settings"/>
+        <img class="gears" src={Gears} alt="Settings"/>
         {label}
     </button>
 </div>
@@ -42,7 +41,7 @@
 </div>
 
 <style>
-    .m-image{
+    .gears{
         width:50px;
         height:auto;
         max-height:50px;
