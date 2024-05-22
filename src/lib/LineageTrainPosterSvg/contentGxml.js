@@ -4,26 +4,13 @@ import { trackNameGxml } from './trackNameGxml.js'
 import { trainStationGxml } from './trainStationGxml.js'
 import { trainTracksGxml } from './trainTracksGxml.js'
 import { US_History, US_Migrations, US_Wars, World_History } from './timelineData.js'
+import { Countries } from './Countries.js'
+
 // import { gridGxml } from './gridGxml.js'
 // import SamuelBevins from '$lib/LineageTrainPosterSvg/Samuel Bevins.jpg'
 import GB from '$lib/data/maps/edited/gb.svg'
 // import NL from '$lib/data/maps/edited/nl.svg'
 // import MN from '$lib/data/maps/mapSvg/usa-mn.svg'
-
-const Country = new Map([
-    ['', 'UNK'],
-    ['Canada', 'CAN'],
-    ['England', 'ENG'],
-    ['France', 'FRA'],
-    ['Germany', 'GER'],
-    ['Ireland', 'IRE'],
-    ['Netherlands', 'NET'],
-    ['Norway', 'NOR'],
-    ['Scotland', 'SCO'],
-    ['Sweden', 'SWE'],
-    ['USA', 'USA'],
-    ['Wales', 'WAL'],
-])
 
 // NOTE - station x,y are for upper left corner; ADJUST FOR CENTER
 function trackPath(geom, year1, chan1, year2, chan2) {
@@ -105,7 +92,7 @@ export function contentGxml(nodes, geom, settings) {
         // NOT for the center, so translate it based on the station scale and rowHt
         const x = geom.yearX(year) - geom.stationScale * geom.rowHt / 2
         const y = geom.chanY(chan) - geom.stationScale * geom.rowHt / 2
-        const flagRef = '#' + Country.get(node.birthCountry)
+        const flagRef = '#' + Countries.get(node.birthCountry)
         const gen = genLabel(node)
         const color = geom.color(node)
         main.push(trainStationGxml(x, y, flagRef, year, gen, color, geom.stationScale))
