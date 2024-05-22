@@ -6,8 +6,9 @@ function birthPlace(node) {
 
 function children(node) {
     let str = ''
+    let n = 0
     if (node.person.isFemale()) {
-        const n = node.person.children().length
+        n = node.person.children().length
         str = (n===1) ? ' (1 child)' : ` (${n} children)`
     }
     return str
@@ -66,15 +67,15 @@ export function trackNameGxml(geom, node) {
         'font-size': 1.2 * geom.fontSize,
         els: [{el: 'inner', content: birthPlace(node)}]
     })
-
+    
     els.push({el: 'text',
         x: x,
-        y: y + 3 * geom.fontSize,
+        y: y + 2.2 * geom.trackWidth,
         'text-anchor': "middle",
         'font-family': "sans-serif",
         'font-weight': "lighter",
-        'font-size': geom.fontSize,
-        else: [{el: 'inner', content: children(node)}]
+        'font-size': 1.2 * geom.fontSize,
+        els: [{el: 'inner', content: children(node)}]
     })
     return els
 }
