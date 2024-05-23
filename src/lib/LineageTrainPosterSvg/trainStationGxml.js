@@ -25,10 +25,13 @@ export function trainStationGxml(x, y, flagRef='#USA', year,
     const flagDisc = flagGxml(flagRef, flagPos, flagPos, flagScale,
         flagDiam/flagScale, flagDiam/flagScale)
 
+    const fontColor = (flagRef==='#GER') ? 'white' : 'black'
     const yearText = {el: 'text',
         'text-anchor': 'middle',
         'font-size': fontSize,
         'font-weight': 'bold',
+        stroke: fontColor,
+        fill: fontColor,
         els: [
             {el: 'textPath', href: '#text-path-upper', startOffset: '50%', els: [ 
                 {el: 'inner', content: `${year}`}

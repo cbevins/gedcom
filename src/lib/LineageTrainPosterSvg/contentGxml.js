@@ -92,7 +92,7 @@ export function contentGxml(nodes, geom, settings) {
         // NOT for the center, so translate it based on the station scale and rowHt
         const x = geom.yearX(year) - geom.stationScale * geom.rowHt / 2
         const y = geom.chanY(chan) - geom.stationScale * geom.rowHt / 2
-        const flagRef = '#' + Countries.get(node.birthCountry)
+        const flagRef = '#' + Countries.get(node.birthCountry).flag
         const gen = genLabel(node)
         const color = geom.color(node)
         main.push(trainStationGxml(x, y, flagRef, year, gen, color, geom.stationScale))
