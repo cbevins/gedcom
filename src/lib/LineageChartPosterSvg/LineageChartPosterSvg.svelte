@@ -5,6 +5,7 @@
     export let subjectNameKey
     export let settings =  {
         guides: false,
+        portrait: true,
         scale: 1,
     }
 

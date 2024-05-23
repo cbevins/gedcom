@@ -9,11 +9,12 @@
  * @returns A 'layout' JSON object
  */
 
-export function portraitLayout(spec, contentSvgWidth, contentSvgHeight, scale=1) {
+export function portraitLayout(spec, contentSvgWidth, contentSvgHeight, scale=1, portrait=true) {
     const layout = {
+        portrait: portrait, // if FALSE, rotated 90 degrees
+        scale: scale,    // when used, is applied against the entire toplevel SVG
         spec: spec,     // the layout spec is in inches
         supi: 100,      // SVG units per specification inch
-        scale: scale    // when used, is applied against the entire toplevel SVG
     }
     layout.factor = layout.supi / layout.scale
     const factor = layout.factor

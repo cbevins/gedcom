@@ -39,13 +39,15 @@ export function lineageChartPosterSvg(subject, settings) {
     const lineage = new Lineage(subject)
     const geom = geometry(lineage, settings)
     const contentEls = contentGxml(geom, settings)
+    console.log(`Generational Chart is ${geom.width} x ${geom.height} (${geom.grid.cols} cols by ${geom.grid.rows} rows)`)
     const nodes = geom.lineage.nodesBySeq()
 
     //--------------------------------------------------------------------------
     // Step 3 - get a completed portrait layout (in SVG units)
     //--------------------------------------------------------------------------
     
-    const layout = portraitLayout(layoutSpec, geom.width, geom.height, settings.scale)
+    const layout = portraitLayout(layoutSpec, geom.width, geom.height,
+        settings.scale, settings.portrait)
 
     //--------------------------------------------------------------------------
     // Step 4 - get the poster Gxml with embedded content Gxml

@@ -8,6 +8,7 @@
     $: settings = {
         guides: false,
         lowerTimeline: US_History,
+        portrait: true,
         scale: 1,
         sheetNumber: 0,
         upperTimeline: US_Migrations,
@@ -17,6 +18,8 @@
     const scaleLabels = [8.5,20, 36]
     const guideValues = [false, true]
     const guideLabels = ['Hide', 'Show']
+    const orientValues = [true, false]
+    const orientLabels = ['Portrait', 'Landscape']
     const sheetValues = [0, 1, 2, 3, 4]
     const sheetLabels = []
     SheetDefs.forEach((sheet, idx) => {sheetLabels[idx] = sheet.name})
@@ -49,6 +52,21 @@
                     bind:group={settings.guides}>
                 {guideLabels[i]}
                 <label class="form-check-label" for="guideopt{i}"></label>
+            </div>
+        {/each}
+    </div>
+
+    <hr/>
+    <div class="row">
+        <h5>Orientation</h5>
+        {#each orientValues as orientValue, i}
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="orienteopt{i}"
+                    name="orient"
+                    value={orientValue}
+                    bind:group={settings.portrait}>
+                {orientLabels[i]}
+                <label class="form-check-label" for="orientopt{i}"></label>
             </div>
         {/each}
     </div>

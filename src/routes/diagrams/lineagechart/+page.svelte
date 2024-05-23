@@ -6,11 +6,14 @@
     $: settings = {
         grid: true,
         guides: false,
+        portrait: true,
         scale: 1,
     }
 
     const scaleValues = [4.25, 1.8, 1]
     const scaleLabels = [8.5,20, 36]
+    const orientValues = [true, false]
+    const orientLabels = ['Portrait', 'Landscape']
     const guideValues = [false, true]
     const guideLabels = ['Hide', 'Show']
 </script>
@@ -42,6 +45,21 @@
                     bind:group={settings.guides}>
                 {guideLabels[i]}
                 <label class="form-check-label" for="guideopt{i}"></label>
+            </div>
+        {/each}
+    </div>
+
+    <hr/>
+    <div class="row">
+        <h5>Orientation</h5>
+        {#each orientValues as orientValue, i}
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="orienteopt{i}"
+                    name="orient"
+                    value={orientValue}
+                    bind:group={settings.portrait}>
+                {orientLabels[i]}
+                <label class="form-check-label" for="orientopt{i}"></label>
             </div>
         {/each}
     </div>

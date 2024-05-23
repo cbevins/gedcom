@@ -1,17 +1,12 @@
 <script>
-    // 36" high by variable width
-    const landscape = {
-        x: 100, y: 100,     // upper left on the browser or sheet
-        wd: 1000, ht: 1000, scale: 1,
-        rotate: 90,
-        fill: "#aaaaaa", stroke: "red", strokeWd: 2 }
-
     // 36" wide with variable height
     const portrait = {
         x: 100, y: 100,     // upper left on the browser or sheet
         wd: 1000, ht: 1000, scale: 1,
         rotate: 0,
         fill: "#aaaaaa", stroke: "red", strokeWd: 2 }
+
+    const landscape = {...portrait, rotate: 90}
 
     // const sheet = portrait
     const sheet = landscape

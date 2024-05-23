@@ -60,7 +60,8 @@ export function lineageTrainPosterSvg(subject, settings) {
     // Step 3 - get a completed portrait layout (in SVG units)
     //--------------------------------------------------------------------------
     
-    const layout = portraitLayout(layoutSpec, geom.width, geom.height, settings.scale)
+    const layout = portraitLayout(layoutSpec, geom.width, geom.height,
+        settings.scale, settings.portrait)
 
     //--------------------------------------------------------------------------
     // Step 4 - get the poster Gxml with embedded content Gxml

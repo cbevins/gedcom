@@ -85,10 +85,18 @@ export function posterGxml(layout, contentEls, preambleEls=[], borderEls=[], hea
         els: []
     }
 
-    const topSvg = {el: 'svg',  xmlns: "http://www.w3.org/2000/svg",
-        width: sheet.width,
-        height: sheet.height,
-        els: [preambleEls, sheetSvg, borderSvg, headerSvg, footerSvg, leftSvg, rightSvg, contentSvg, guidesSvg]}
-
+    const all = [preambleEls, sheetSvg, borderSvg, headerSvg, footerSvg, leftSvg, rightSvg, contentSvg, guidesSvg]
+    let topSvg
+    if (layout.portrait) {
+        topSvg = {el: 'svg',  xmlns: "http://www.w3.org/2000/svg",
+            width: sheet.width,
+            height: sheet.height,
+            els: all}
+    } else {
+        topSvg = {el: 'svg',  xmlns: "http://www.w3.org/2000/svg",
+            width: sheet.height,
+            height: sheet.width,
+            els: [{el: 'g', transform: `translate(${sheet.height},0) rotate(90)`, els: all}]}
+    }
     return [topSvg]
 }
