@@ -12,14 +12,11 @@
 // Gxml and PosterSVG library packages to be used 'as-is'
 import { gxmlStr } from '$lib/Gxml/index.js'
 import { layoutSpecPortraitPoster, imageLayout, portraitLayout } from '../PosterSvg/index.js'
-import { borderGxml, flagDefsGxml, guidesGxml, posterGxml } from '../PosterSvg/index.js'
+import { flagDefsGxml, guidesGxml, posterGxml } from '../PosterSvg/index.js'
 
 // Sylvan-specific packages for content
 import { Lineage } from '../Sylvan/class/Lineage.js'
-import { contentGxml } from './contentGxml.js'
-import { footerGxml } from './footerGxml.js'
-import { geometry } from './geometry.js'
-import { headerGxml } from './headerGxml.js'
+import { borderGxml, contentGxml, footerGxml, geometry, headerGxml } from './index.js'
 
 export function lineageChartPosterSvg(subject, settings) {
 

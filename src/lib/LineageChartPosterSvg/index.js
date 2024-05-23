@@ -1,0 +1,6 @@
+export { borderGxml } from './borderGxml.js'
+export { contentGxml } from './contentGxml.js'
+export { footerGxml } from './footerGxml.js'
+export { geometry } from './geometry.js'
+export { headerGxml } from './headerGxml.js'
+export { unionGxml } from './unionGxml.js'
