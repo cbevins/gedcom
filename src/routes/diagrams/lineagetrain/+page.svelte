@@ -9,17 +9,20 @@
         guides: false,
         lowerTimeline: US_History,
         portrait: true,
+        poster: true,
         scale: 1,
         sheetNumber: 0,
         upperTimeline: US_Migrations,
     }
 
-    const scaleValues = [4.25, 1.8, 1]
-    const scaleLabels = [8.5,20, 36]
+    const scaleValues = [4.25, 1.8, 1, 0.75]
+    const scaleLabels = [8.5,20, 36, 48]
     const guideValues = [false, true]
     const guideLabels = ['Hide', 'Show']
     const orientValues = [true, false]
     const orientLabels = ['Portrait', 'Landscape']
+    const posterValues = [true, false]
+    const posterLabels = ['Poster', 'No Poster']
     const sheetValues = [0, 1, 2, 3, 4]
     const sheetLabels = []
     SheetDefs.forEach((sheet, idx) => {sheetLabels[idx] = sheet.name})
@@ -67,6 +70,21 @@
                     bind:group={settings.portrait}>
                 {orientLabels[i]}
                 <label class="form-check-label" for="orientopt{i}"></label>
+            </div>
+        {/each}
+    </div>
+
+    <hr/>
+    <div class="row">
+        <h5>Poster</h5>
+        {#each posterValues as posterValue, i}
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="posteropt{i}"
+                    name="poster"
+                    value={posterValue}
+                    bind:group={settings.poster}>
+                {posterLabels[i]}
+                <label class="form-check-label" for="posteropt{i}"></label>
             </div>
         {/each}
     </div>

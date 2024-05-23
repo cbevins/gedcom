@@ -1,21 +1,5 @@
 /**
  * Creates an SVG lineage diagram in the style of a railroad route map.
- */
-
-// Library packages to be used 'as-is'
-import { gxmlStr } from '../Gxml/index.js'
-import { layoutSpecPortraitPoster, portraitLayout } from '../PosterSvg/index.js'
-import { borderGxml, flagDefsGxml, footerGxml, guidesGxml, posterGxml } from '../PosterSvg/index.js'
-
-// Sylvan-specific packages for content
-import { SheetDefs } from './sheetDefs.js'
-import { Channels } from '../Sylvan/class/Channels.js'
-import { contentGxml } from './contentGxml.js'
-import { headerGxml } from './headerGxml.js'
-import { trainNodeGeom, logGeom } from './trainNodeGeom.js'
-
-/**
- * Creates an SVG lineage diagram in the style of a railroad route map.
  * @param {} subject Reference to a Sylvan Person who is root of the Channels
  * @param {} settings Object with following settings properties:
  *  - scale Scale passed to portraitLayout(), larger numbers create smaller page size
@@ -27,6 +11,18 @@ import { trainNodeGeom, logGeom } from './trainNodeGeom.js'
  *  - sheetNumber: 0
  * @returns SVG lineage diagram in the style of a railroad route map.
  */
+
+// Gxml and PosterSVG library packages to be used 'as-is'
+import { gxmlStr } from '../Gxml/index.js'
+import { layoutSpecPortraitPoster, imageLayout, portraitLayout } from '../PosterSvg/index.js'
+import { flagDefsGxml, footerGxml, guidesGxml, posterGxml } from '../PosterSvg/index.js'
+
+// Sylvan-specific packages for content
+import { Channels } from '../Sylvan/class/Channels.js'
+import { SheetDefs } from './sheetDefs.js'
+import { borderGxml, contentGxml, headerGxml, trainNodeGeom } from './index.js'
+import { logGeom } from './trainNodeGeom.js'
+
 export function lineageTrainPosterSvg(subject, settings) {
 
     //--------------------------------------------------------------------------
@@ -53,33 +49,29 @@ export function lineageTrainPosterSvg(subject, settings) {
     // Set the content geometry for the node range of years and channels
     // const geom = trainNodeGeom(sheet.nodes, settings.scale)
     const geom = trainNodeGeom(nodes, settings.scale)
-    logGeom(geom)
+    // logGeom(geom)
     const contentEls = contentGxml(geom.nodes, geom, settings)
 
     //--------------------------------------------------------------------------
     // Step 3 - get a completed portrait layout (in SVG units)
     //--------------------------------------------------------------------------
-    
-    const layout = portraitLayout(layoutSpec, geom.width, geom.height,
-        settings.scale, settings.portrait)
+
+    const layout = settings.poster
+        ? portraitLayout(layoutSpec, geom.width, geom.height, settings.scale, settings.portrait)
+        : imageLayout(layoutSpec, geom.width, geom.height, settings.scale, settings.portrait)
 
     //--------------------------------------------------------------------------
     // Step 4 - get the poster Gxml with embedded content Gxml
     //--------------------------------------------------------------------------
     
-    const borderEls = borderGxml(layout)
-    const headerEls = headerGxml(layout, settings.scale,
-        nodes[0].label, `${nodes.length} Ancestors`)
-    const footerEls = footerGxml(layout)
-    const guidesEls = settings.guides ? guidesGxml(layout) : []
     const flagDefsEls = flagDefsGxml()
-    const gxml = posterGxml(layout,
-        contentEls,
-        flagDefsEls,
-        borderEls,
-        headerEls,
-        footerEls,
-        guidesEls)
+    const guidesEls = settings.guides ? guidesGxml(layout) : []
+    const borderEls = settings.poster ? borderGxml(layout) : []
+    const footerEls = settings.poster ? footerGxml(layout) : []
+    const headerEls = settings.poster ? headerGxml(layout, settings.scale,
+        nodes[0].label, `${nodes.length} Ancestors`) : []
+    const gxml = posterGxml(layout, contentEls, flagDefsEls,
+            borderEls, headerEls, footerEls, guidesEls)
 
     //--------------------------------------------------------------------------
     // Step 5 - convert the gxml elements into SVG

@@ -6,6 +6,8 @@
     export let settings =  {
         guides: false,
         lowerTimeline: World_History,
+        portrait: true,
+        poster: true,
         scale: 1,
         sheetNumber: 0,
         upperTimeline: World_History
