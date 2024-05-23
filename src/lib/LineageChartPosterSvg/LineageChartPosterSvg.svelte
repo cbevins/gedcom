@@ -4,8 +4,10 @@
 
     export let subjectNameKey
     export let settings =  {
+        grid: false,
         guides: false,
         portrait: true,
+        poster: true,
         scale: 1,
     }
 

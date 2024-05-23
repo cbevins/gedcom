@@ -44,7 +44,7 @@ export function portraitLayout(spec, contentSvgWidth, contentSvgHeight, scale=1,
         width: border.width - 2 * border.thickness
     }
     const footer = {
-        label: 'RIGHT',
+        label: 'FOOTER',
         x: border.x + border.thickness,
         y: 0,       // TBD = content.x + content.height
         height: factor * spec.footerHt,

@@ -7,15 +7,20 @@
         grid: true,
         guides: false,
         portrait: true,
+        poster: true,
         scale: 1,
     }
 
-    const scaleValues = [4.25, 1.8, 1]
-    const scaleLabels = [8.5,20, 36]
-    const orientValues = [true, false]
-    const orientLabels = ['Portrait', 'Landscape']
+    const gridValues = [true, false]
+    const gridLabels = ['Grid', 'No Grid']
     const guideValues = [false, true]
     const guideLabels = ['Hide', 'Show']
+    const orientValues = [true, false]
+    const orientLabels = ['Portrait', 'Landscape']
+    const posterValues = [true, false]
+    const posterLabels = ['Poster', 'No Poster']
+    const scaleLabels = [8.5, 20, 36, 48]
+    const scaleValues = [4.25, 1.8, 1, 0.75]
 </script>
 
 <Settings id="lineagechart" title="Settings">
@@ -60,6 +65,36 @@
                     bind:group={settings.portrait}>
                 {orientLabels[i]}
                 <label class="form-check-label" for="orientopt{i}"></label>
+            </div>
+        {/each}
+    </div>
+
+    <hr/>
+    <div class="row">
+        <h5>Poster</h5>
+        {#each posterValues as posterValue, i}
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="posteropt{i}"
+                    name="poster"
+                    value={posterValue}
+                    bind:group={settings.poster}>
+                {posterLabels[i]}
+                <label class="form-check-label" for="posteropt{i}"></label>
+            </div>
+        {/each}
+    </div>
+
+    <hr/>
+    <div class="row">
+        <h5>Generation Grid</h5>
+        {#each gridValues as gridValue, i}
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="gridopt{i}"
+                    name="grid"
+                    value={gridValue}
+                    bind:group={settings.grid}>
+                {gridLabels[i]}
+                <label class="form-check-label" for="gridopt{i}"></label>
             </div>
         {/each}
     </div>

@@ -6,6 +6,7 @@
 import { gxmlStr } from '$lib/Gxml/index.js'
 import { layoutSpecPortraitPoster, portraitLayout } from '../PosterSvg/index.js'
 import { borderGxml, flagDefsGxml, guidesGxml, posterGxml } from '../PosterSvg/index.js'
+import { imageGxml, imageLayout } from '../PosterSvg/index.js'
 
 // Sylvan-specific packages for content
 import { Lineage } from '../Sylvan/class/Lineage.js'
@@ -46,26 +47,34 @@ export function lineageChartPosterSvg(subject, settings) {
     // Step 3 - get a completed portrait layout (in SVG units)
     //--------------------------------------------------------------------------
     
-    const layout = portraitLayout(layoutSpec, geom.width, geom.height,
-        settings.scale, settings.portrait)
+    let layout
+    if (settings.poster) {
+        layout = portraitLayout(layoutSpec, geom.width, geom.height,
+            settings.scale, settings.portrait)
+    } else {
+        layout = imageLayout(layoutSpec, geom.width, geom.height,
+            settings.scale, settings.portrait)
+    }
+    console.log('LAYOUT', layout)
 
     //--------------------------------------------------------------------------
     // Step 4 - get the poster Gxml with embedded content Gxml
     //--------------------------------------------------------------------------
     
-    const borderEls = borderGxml(layout)
-    const headerEls = headerGxml(layout, settings.scale,
-        nodes[0].person.label(), `${nodes.length} Ancestors`)
-    const footerEls = footerGxml(layout, settings.scale)
-    const guidesEls = settings.guides ? guidesGxml(layout) : []
     const flagDefsEls = flagDefsGxml()
-    const gxml = posterGxml(layout,
-        contentEls,
-        flagDefsEls,
-        borderEls,
-        headerEls,
-        footerEls,
-        guidesEls)
+    const guidesEls = settings.guides ? guidesGxml(layout) : []
+    
+    let gxml
+    if (settings.poster) {
+        const borderEls = borderGxml(layout)
+        const headerEls = headerGxml(layout, settings.scale,
+            nodes[0].person.label(), `${nodes.length} Ancestors`)
+        const footerEls = footerGxml(layout, settings.scale)
+        gxml = posterGxml(layout, contentEls, flagDefsEls,
+            borderEls, headerEls, footerEls, guidesEls)
+    } else {
+        gxml = posterGxml(layout, contentEls, flagDefsEls, [], [], [], guidesEls)
+    }
 
     //--------------------------------------------------------------------------
     // Step 5 - convert the gxml elements into SVG

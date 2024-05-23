@@ -1,5 +1,5 @@
 /**
- * Returns a gxml object that describes an SVG with
+ * Returns a gxml object that describes an SVG with a poster layout containing a
  * border, header, footer, left, right, and content regions
  * according to the {layout} dimensions passed to it.
  * 
@@ -16,7 +16,8 @@
  * @returns An array with 1 gxml object top-level SVG with nested gxml region objects.
  */
 
-export function posterGxml(layout, contentEls, preambleEls=[], borderEls=[], headerEls=[], footerEls=[], guideEls=[]) {
+export function posterGxml(layout, contentEls, preambleEls=[], borderEls=[],
+        headerEls=[], footerEls=[], guideEls=[]) {
     const {sheet, border, header, footer, left, right, content} = layout
 
     const sheetSvg = {el: 'svg', id: 'sheet-svg',
@@ -86,6 +87,7 @@ export function posterGxml(layout, contentEls, preambleEls=[], borderEls=[], hea
     }
 
     const all = [preambleEls, sheetSvg, borderSvg, headerSvg, footerSvg, leftSvg, rightSvg, contentSvg, guidesSvg]
+
     let topSvg
     if (layout.portrait) {
         topSvg = {el: 'svg',  xmlns: "http://www.w3.org/2000/svg",
