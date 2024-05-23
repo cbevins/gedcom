@@ -1,6 +1,4 @@
 <script>
-    import SylvanSubjectSelector from '$lib/Sylvan/svelte/SylvanSubjectSelector.svelte'
-    import { getSylvan } from '$lib/Sylvan/js/singletons.js'
     import Gears from '$lib/images/svg/settings-54.svg' // -54 or -512
     
     export let id = 'settings'
@@ -31,11 +29,6 @@
     <hr/>
 
     <div class="offcanvas-body">
-        <div class="row">
-            <h5>Subject Person</h5>
-            <SylvanSubjectSelector sylvan={getSylvan()}/>
-        </div>
-        <hr/>
         <slot />
     </div>
 </div>
