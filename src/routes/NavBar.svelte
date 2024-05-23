@@ -8,26 +8,29 @@
             ['/about/notation', 'Notation'],
             ['/about/tools', 'Tools'],
         ]],
-        ['/dev', 'Dev Tools', [
-            ['/dev/diagnostics', 'Gedcom Summary'],
-            ['/diagrams/postersvg', 'PosterSvg Example'],
-            ['/diagrams/scale', 'Nested SVG *Landscape* Example'],
-            // ['/sverdle', 'Sverdle'],
+        ['/people', 'People', [
+            ['/people/explorer', 'Explorer'],
+            ['/people/interest', 'Interesting Notes'],
+            ['/people/immigrants', 'Immigrants'],
+            ['/people/surnames', 'Surnames'],
         ]],
         ['/diagrams', 'Diagrams', [
             ['/diagrams/lineagetrain', 'Lineage Train Routes - Master'],
+            ['/diagrams/lineagechart', 'Lineage Chart - Dev'],
+        ]],
+        ['/diagrams', 'Experimental', [
             ['/diagrams/genchartl2r', 'Generation Chart (L2R)'],
             ['/diagrams/yearchartl2r', 'Birth Year Chart(L2R)'],
             ['/diagrams/originsdisc', 'Ancestral Origins Disc'],
             ['/diagrams/yeardisc', 'Birth Year Disc'],
             ['/diagrams/gendisc', 'Generation Disc'],
         ]],
-        ['/people', 'People', [
-            ['/people/explorer', 'Explorer'],
-            ['/people/interest', 'Interesting Notes'],
-            ['/people/immigrants', 'Immigrants'],
-            ['/people/surnames', 'Surnames'],
-        ]]
+        ['/dev', 'Dev &amp; Examples', [
+            ['/dev/diagnostics', 'Gedcom Summary'],
+            ['/diagrams/postersvg', 'PosterSvg Example'],
+            ['/diagrams/scale', 'Nested SVG *Landscape* Example'],
+            // ['/sverdle', 'Sverdle'],
+        ]],
     ]
 
     function menuHtml(props) {

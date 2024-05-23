@@ -9,7 +9,7 @@ import { file2JsonArray } from '$lib/Sylvan/js/file2JsonArray.js'
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-    const self = 'SERVER: src/routes/diagrams/lineagetrain/+page.server.js:load()'
+    const self = 'SERVER: src/routes/diagrams/lineagechart/+page.server.js:load()'
     const time1 = new Date()
     const fileName = 'src/lib/data/RootsMagicAncestrySync.ged'
     const lines = await file2JsonArray(fileName)

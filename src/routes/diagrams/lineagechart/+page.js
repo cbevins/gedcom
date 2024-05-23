@@ -18,7 +18,7 @@ export const prerender = true
  */
 /** @type {import('./$types').PageLoad} */
 export async function load({ data }) {
-    const self = 'CLIENT: src/routes/diagrams/lineagetrain/+page.js:load() -'
+    const self = 'CLIENT: src/routes/diagrams/lineagechart/+page.js:load() -'
     if (! getSylvan()) {
         const time1 = new Date()
         const sylvan = new Sylvan(data.gedcomLines)
