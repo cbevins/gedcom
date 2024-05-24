@@ -1,3 +1,12 @@
+import { flagGxml } from '../PosterSvg/flagGxml.js'
+import { trainStationGxml } from '../LineageTrainPosterSvg/trainStationGxml.js'
+
+export const UnionLines = {
+    father: {name: 2, tags: 3, born: 4, died: 5},
+    mother: {name: 10, tags: 11, born: 12, died: 13},
+    union: {date: 7, children: 8},
+}
+
 // Displays the *parents* of the node subject
 export function unionGxml(node, geom) {
     const drawBorder = false
@@ -13,11 +22,7 @@ export function unionGxml(node, geom) {
     // Each card has 16 lines
     const lines = 16                                // meta, father, subject, mother, extra
     const lineHt = geom.node.height / lines
-    const line = {
-        father: {name: 2, tags: 3, born: 4, died: 5},
-        mother: {name: 10, tags: 11, born: 12, died: 13},
-        union: {date: 7, children: 8},
-    }
+    const line = UnionLines
 
     // Person tag element sizes adjusted for padding, lines, and lineHt
     const tagWidth = geom.node.width - padLeft - padRight   // 500 - 40 - 20 = 440
@@ -28,15 +33,15 @@ export function unionGxml(node, geom) {
     const unionWidth = tagWidth - 2 * unionPad
     const unionHeight =  2 * lineHt
 
-    const x1 = node.prop.x                  // left edge of node box
+    const x1 = node.prop.x              // left edge of node box
     const x2 = x1 + padLeft             // start of tag box
-    // const x3 = x2 + 50 * factor    // start of tag text
+    // const x3 = x2 + 50 * factor      // start of tag text
     const x4 = x2 + tagWidth            // end of tag box
     // const x5 = x4 + padRight            // right edge of node box
     const cx = (x1 + x2) / 2            // Curved Bezier control point x
     const xmid = node.prop.x + geom.node.width / 2
     const ymid = node.prop.y + geom.node.height / 2
-    const tmid = x2 + tagWidth/2      // x-mid of tag box (for centering text)
+    const tmid = x2 + tagWidth/2        // x-mid of tag box (for centering text)
 
     // The following return the y-coordinate of line index 'idx' [0-15]
     function lineBase(idx) { return lineBot(idx) - 3 * factor }
@@ -67,7 +72,7 @@ export function unionGxml(node, geom) {
     els.push({el: 'rect', x: node.prop.x, y: node.prop.y,
         width: geom.node.width, height: geom.node.height,
         fill: "none", stroke: "red"})
-
+            
     // Connectors
     els.push({el: 'path', d: fatherPath(), 'stroke-width': 10 * factor,
         fill: 'none', stroke: 'grey', 'stroke-linecap': 'flat'})
@@ -106,5 +111,22 @@ export function unionGxml(node, geom) {
             els: [{el: 'inner', content: content}]
         })
     })
+
+    // Flags
+    const flagDiam = 100    // do not change --- this is from the flag <defs>!!!
+    const stationScale = 0.75
+    const flagY = (1-stationScale) * flagDiam / 2
+    const flagX = stationScale * flagDiam
+    const flags = []
+    if (node.father.prop.flag) flags.push(node.father)
+    if (node.mother.prop.flag) flags.push(node.mother)
+    for(let i=0; i<flags.length; i++) {
+        const node = flags[i]
+        const y = (i===0) ? lineMid(1) + flagY : lineMid(9) + flagY
+        els.push(trainStationGxml(x2, y, node.prop.flag.death,
+            '', '', 'red', stationScale))
+        els.push(trainStationGxml(x4-flagX, y, node.prop.flag.birth,
+            '', '', 'red', stationScale))
+    }
     return els
 }

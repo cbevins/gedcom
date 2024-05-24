@@ -27,6 +27,7 @@ export const GenerationsData = [
 // Given an Ancestor id (where subject id===1), returns a parameter of its generation
 //--------------------------------------------------------------------------------------
 
+// Return {gen} for id sequence number
 export function idGen(id) {
     for(let i=0; i<GenerationsData.length; i++) {
         if (id <= GenerationsData[i].thru) return GenerationsData[i]

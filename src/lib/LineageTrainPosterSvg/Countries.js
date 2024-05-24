@@ -13,6 +13,7 @@ export const Countries = new Map([
     ['Wales',  {abbr: 'WAL', flag: 'WAL', label: 'Wales'}],
     ['',  {abbr: 'Unk', flag: 'UNK', label: 'Unknown'}],
     ['Unknown',  {abbr: 'Unk', flag: 'UNK', label: 'Unknown'}],
+    ['unknown country',  {abbr: 'Unk', flag: 'UNK', label: 'Unknown'}],
 ])
 
 export function countryAbbr(country) {
