@@ -66,7 +66,7 @@ export function lineageTrainPosterSvg(subject, settings) {
     //--------------------------------------------------------------------------
     
     const flagDefsEls = flagDefsGxml()
-    const coverEls = settings.poster ? coverGxml(layout) : []
+    const coverEls = settings.poster ? coverGxml(layout, geom) : []
     const guidesEls = settings.guides ? guidesGxml(layout) : []
     const borderEls = settings.poster ? borderGxml(layout) : []
     const footerEls = settings.poster ? footerGxml(layout) : []

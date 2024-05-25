@@ -1,13 +1,4 @@
-import { plaquePath } from '$lib/LineageTrainPosterSvg/plaquePath.js'
-
-export function screw(cx, cy, r, stroke, fill) {
-    const slot = 0.5 * r
-    return [
-        {el: 'circle', cx: cx, cy: cy, r: r, stroke: stroke, fill: fill},
-        {el: 'line', x1: cx-slot, y1: cy, x2: cx+slot, y2: cy, stroke: stroke, 'stroke-width': 1},
-        {el: 'line', x1: cx, y1: cy-slot, x2: cx, y2: cy+slot, stroke: stroke, 'stroke-width': 1},
-    ]
-}
+import { plaqueGxml } from '../LineageTrainPosterSvg/plaqueGxml.js'
 
 export function headerGxml(layout, scale, title, subtitle='') {
     const h = layout.header.height
@@ -20,13 +11,7 @@ export function headerGxml(layout, scale, title, subtitle='') {
     const thickness = 5
 
     const els = []
-    els.push({el: 'path',
-        d: plaquePath(x1, y1, x2, y2, r),
-        stroke: 'black',
-        'stroke-width': thickness,
-        'stroke-linecap': 'square',   // butt, round, square 
-        fill: 'white',
-        filter: "url(#shadow)" })
+    els.push(plaqueGxml(x1, y1, x2, y2, r, thickness))
 
     els.push({el: 'text', id: 'header-title',
         x: layout.header.width/2,
@@ -53,8 +38,5 @@ export function headerGxml(layout, scale, title, subtitle='') {
         fill: 'black',
         els: [{el: 'inner', content: subtitle}]
     })
-
-    const screw1 = screw(x1+r, (y1+y2)/2, r/2, 'brown', 'gold')
-    const screw2 = screw(x2-r, (y1+y2)/2, r/2, 'brown', 'gold')
-    return [...els, ...screw1, ...screw2]
+    return els
 }

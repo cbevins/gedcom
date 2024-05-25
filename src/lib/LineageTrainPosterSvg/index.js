@@ -9,6 +9,7 @@ export { layoutSpecPoster, layoutSpecPortraitPoster} from './posterLayoutSpecs.j
 export { plaqueGxml, plaquePath, plaqueScrew } from './plaqueGxml.js'
 export { posterGxml } from './posterGxml.js'
 export { posterLayout } from './posterLayout.js'
+export { textBegGxml, textEndGxml, textMidGxml } from './textGxml.js'
 export { timelineGxml } from './timelineGxml.js'
 export { trackNameGxml } from './trackNameGxml.js'
 export { trainNodeGeom } from './trainNodeGeom.js'

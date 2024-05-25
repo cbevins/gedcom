@@ -1,4 +1,5 @@
 import { plaqueGxml } from './plaqueGxml.js'
+import { textMidGxml } from './textGxml.js'
 
 export function headerGxml(layout, scale, title, subtitle='') {
     const h = layout.header.height
@@ -13,39 +14,12 @@ export function headerGxml(layout, scale, title, subtitle='') {
     const els = []
     els.push(plaqueGxml(x1, y1, x2, y2, r, thickness))
 
-    // els.push({el: 'path',
-    //     d: plaquePath(x1, y1, x2, y2, r),
-    //     stroke: 'black',
-    //     'stroke-width': thickness,
-    //     'stroke-linecap': 'square',   // butt, round, square 
-    //     fill: 'white',
-    //     filter: "url(#shadow)" })
+    let x = layout.header.width/2
+    let y = 0.5 * layout.header.height
+    els.push(textMidGxml(x, y, 72 / scale, title))
 
-    els.push({el: 'text', id: 'header-title',
-        x: layout.header.width/2,
-        y: 0.5 * layout.header.height,
-        'text-anchor': 'middle',
-        'font-family': 'sans-serif',
-        'font-size': 72 / scale,
-        'font-weight':"lighter",
-        stroke: 'none',
-        'stroke-width': 0,
-        fill: 'black',
-        els: [{el: 'inner', content: title}]
-    })
-    
-    els.push({el: 'text', id: 'header-subtitle',
-        x: layout.header.width/2,
-        y: 0.7 * layout.header.height,
-        'text-anchor': 'middle',
-        'font-family': 'sans-serif',
-        'font-size': 36 / scale,
-        'font-weight':"lighter",
-        stroke: 'none',
-        'stroke-width': 0,
-        fill: 'black',
-        els: [{el: 'inner', content: subtitle}]
-    })
+    y = 0.7 * layout.header.height
+    els.push(textMidGxml(x, y, 36 / scale, subtitle))
 
     return els
 }

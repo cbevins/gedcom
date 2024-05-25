@@ -7,13 +7,15 @@
  */
 import { rectTrackPath } from './borderGxml.js'
 import { trainTracksGxml } from './trainTracksGxml.js'
-import { plaquePath } from './plaquePathDEP.js'
+import { plaqueGxml } from './plaqueGxml.js'
+import { textBegGxml, textEndGxml, textMidGxml } from './textGxml.js'
 
-export function coverGxml(layout) {
+export function coverGxml(layout, geom) {
     const {cover, sheet} = layout
     const panels = 4
     const panelWd = (sheet.width / panels)    // 9"
     const panelOff = sheet.pad.l
+    const scale = layout.scale
 
     let els = []
     for(let i=0; i<panels; i++) {
@@ -26,9 +28,71 @@ export function coverGxml(layout) {
             panelWd-2*panelOff, cover.height-2*panelOff, cover.thickness)
         els = els.concat(trainTracksGxml(path, cover.thickness/2, 'green'))
     }
+    els = els.concat(cover0Gxml(geom, 0*panelWd, 0, panelWd, cover.height, scale))
+    els = els.concat(cover1Gxml(geom, 1*panelWd, 0, panelWd, cover.height, scale))
+    els = els.concat(cover2Gxml(geom, 2*panelWd, 0, panelWd, cover.height, scale))
+    els = els.concat(cover3Gxml(geom, 3*panelWd, 0, panelWd, cover.height, scale))
     return els
 }
 
-function cover2Gxml(x, y, width, height) {
-    const path = plaquePath(x, y, width, height, 50)
+function cover0Gxml(geom, x, y, width, height, scale) {
+    const els = []
+    return els
+}
+
+function filigreeGxml(xm, ym, width, height, color='black') {
+    return [
+        {el: 'line',
+            x1: xm-width/2, y1: ym,
+            x2: xm+width/2, y2: ym,
+            stroke: color, fill: color},
+        {el: 'circle',
+            cx: xm, cy: ym, r:height,
+            stroke: color, fill: color}
+    ]
+}
+function cover1Gxml(geom, x, y, width, height, scale) {
+    const x1 = x + 100
+    const y1 = y + 100
+    const x2 = x + width - 100
+    const y2 = y1 + 260
+    const radius = 20
+    const thickness = 5
+    const els = plaqueGxml(x+100/scale, y+100/scale,
+        x + width - 100/scale,
+        y2/scale, radius/scale, thickness/scale)
+
+    const xm = (x1 + x2)/2
+    const ym = (y1 + y2)/2
+    const text = [
+        {y: 40, fs: 24, color: 'black', content: 'William Collins'},
+        {y: 80, fs: 50, color: 'red', content: 'BEVINS'},
+        {y: 125, fs: 50, color: 'black', content: '&'},
+        {y: 150, fs: 24, color: 'black', content: 'Meartia Margaret'},
+        {y: 190, fs: 50, color: 'red', content: 'HEDDENS'},
+        {y: 240, fs: 50, color: 'black', content: 'LINEAGE MAP'},
+        {y: 360, fs: 36, color: 'black', content: `${geom.genMax} Generations`},
+        {y: 440, fs: 36, color: 'black', content: `${geom.nodes.length} Ancestors`},
+        {y: 520, fs: 36, color: 'black',
+            content: `Born from ${geom.birthMin} through ${geom.birthMax}`},
+    ]
+    for(let i=0; i<text.length; i++) {
+        const t = text[i]
+        els.push(textMidGxml(xm, (y1+t.y)/scale, t.fs/scale, t.content, t.color))
+    }
+    [390,470].forEach((ym) => {
+        els.push(filigreeGxml(xm, (y1+ym)/scale, 100/scale, 10/scale))
+    })
+    return els
+}
+
+function cover2Gxml(geom, x, y, width, height, scale) {
+    const els = []
+    for(let i=0; i<geom.nodes.length; i++) {}
+    return els
+}
+
+function cover3Gxml(geom, x, y, width, height, scale) {
+    const els = []
+    return els
 }

@@ -2,8 +2,8 @@
  * Creates a <path> 'd' string 
  * @param {*} x1 Plaque upper left corner x-coordinate
  * @param {*} y1 Plaque upper left corner y-coordinate
- * @param {*} x2 Plaque lower left corner x-coordinate
- * @param {*} y2 Plaque lower left corner y-coordinate
+ * @param {*} x2 Plaque lower right corner x-coordinate
+ * @param {*} y2 Plaque lower right corner y-coordinate
  * @param {*} radius Radius of the corner cuts
  * @returns A <path> 'd' specification string
  */
