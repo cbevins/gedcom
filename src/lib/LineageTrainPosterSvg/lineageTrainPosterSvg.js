@@ -2,7 +2,7 @@
  * Creates an SVG lineage diagram in the style of a railroad route map.
  * @param {} subject Reference to a Sylvan Person who is root of the Channels
  * @param {} settings Object with following settings properties:
- *  - scale Scale passed to portraitLayout(), larger numbers create smaller page size
+ *  - scale Scale passed to posterLayout(), larger numbers create smaller page size
  *     scale === 1 produces a 36" wide poster, and
  *     scale === 4.2353 produces an 8.5" wide page.
  *  - guides If TRUE, 1" ruler guides are displayed across the entire poster
@@ -14,13 +14,13 @@
 
 // Gxml and PosterSVG library packages to be used 'as-is'
 import { gxmlStr } from '../Gxml/index.js'
-import { layoutSpecPortraitPoster, imageLayout, portraitLayout } from '../PosterSvg/index.js'
-import { flagDefsGxml, footerGxml, guidesGxml, posterGxml } from '../PosterSvg/index.js'
+import { flagDefsGxml, footerGxml, guidesGxml } from '../PosterSvg/index.js'
 
 // Sylvan-specific packages for content
 import { Channels } from '../Sylvan/class/Channels.js'
 import { SheetDefs } from './sheetDefs.js'
-import { borderGxml, contentGxml, headerGxml, trainNodeGeom } from './index.js'
+import { layoutSpecPortraitPoster, imageLayout, posterLayout } from './index.js'
+import { borderGxml, contentGxml, coverGxml, headerGxml, posterGxml, trainNodeGeom } from './index.js'
 import { logGeom } from './trainNodeGeom.js'
 
 export function lineageTrainPosterSvg(subject, settings) {
@@ -30,6 +30,7 @@ export function lineageTrainPosterSvg(subject, settings) {
     //--------------------------------------------------------------------------
     
     const layoutSpec = layoutSpecPortraitPoster()
+    layoutSpec.coverHt = 11
 
     //--------------------------------------------------------------------------
     // Step 2 - create some Gxml content to embed in the portrait layout
@@ -57,7 +58,7 @@ export function lineageTrainPosterSvg(subject, settings) {
     //--------------------------------------------------------------------------
 
     const layout = settings.poster
-        ? portraitLayout(layoutSpec, geom.width, geom.height, settings.scale, settings.portrait)
+        ? posterLayout(layoutSpec, geom.width, geom.height, settings.scale, settings.portrait)
         : imageLayout(layoutSpec, geom.width, geom.height, settings.scale, settings.portrait)
 
     //--------------------------------------------------------------------------
@@ -65,13 +66,14 @@ export function lineageTrainPosterSvg(subject, settings) {
     //--------------------------------------------------------------------------
     
     const flagDefsEls = flagDefsGxml()
+    const coverEls = settings.poster ? coverGxml(layout) : []
     const guidesEls = settings.guides ? guidesGxml(layout) : []
     const borderEls = settings.poster ? borderGxml(layout) : []
     const footerEls = settings.poster ? footerGxml(layout) : []
     const headerEls = settings.poster ? headerGxml(layout, settings.scale,
         nodes[0].label, `${nodes.length} Ancestors`) : []
     const gxml = posterGxml(layout, contentEls, flagDefsEls,
-            borderEls, headerEls, footerEls, guidesEls)
+            borderEls, headerEls, footerEls, coverEls, guidesEls)
 
     //--------------------------------------------------------------------------
     // Step 5 - convert the gxml elements into SVG
