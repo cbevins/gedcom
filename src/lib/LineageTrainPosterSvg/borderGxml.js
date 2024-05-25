@@ -21,5 +21,5 @@ export function borderGxml(layout) {
     const border = layout.border
     const bt = border.thickness / 2
     const path = rectTrackPath(bt/2, bt/2, border.width-bt, border.height-bt, 2*bt)
-    return trainTracksGxml(path, bt, 'green')
+    return trainTracksGxml(path, bt, 'black')
 }

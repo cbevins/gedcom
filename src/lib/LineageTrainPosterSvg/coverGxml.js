@@ -5,7 +5,9 @@
  * @param {layout} layout The layout rturned by posterLayout()
  * @returns An array of Gxml JSON objects
  */
-import { trainTracksGxml, rectTrackPath } from './trainTracksGxml.js'
+import { rectTrackPath } from './borderGxml.js'
+import { trainTracksGxml } from './trainTracksGxml.js'
+import { plaquePath } from './plaquePathDEP.js'
 
 export function coverGxml(layout) {
     const {cover, sheet} = layout
@@ -25,4 +27,8 @@ export function coverGxml(layout) {
         els = els.concat(trainTracksGxml(path, cover.thickness/2, 'green'))
     }
     return els
+}
+
+function cover2Gxml(x, y, width, height) {
+    const path = plaquePath(x, y, width, height, 50)
 }
