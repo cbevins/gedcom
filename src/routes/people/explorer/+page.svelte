@@ -1,5 +1,6 @@
 <script>
-    import Settings from '$lib/Sylvan/svelte/Settings.svelte'
+    import Settings from '$lib/Sylvan/svelte/SettingsOffcanvas/Settings.svelte'
+    import SubjectSelector from '$lib/Sylvan/svelte/SettingsOffcanvas/SubjectSelector.svelte'
 	import SylvanAncestors from '$lib/Sylvan/svelte/SylvanAncestors.svelte'
 	import SylvanDemographics from '$lib/Sylvan/svelte/SylvanDemographics.svelte'
 	import SylvanGenerations from '$lib/Sylvan/svelte/SylvanGenerations.svelte'
@@ -35,7 +36,9 @@
             {/each}
         </ul>
 
-        <Settings id="explorer" title="Settings"></Settings>
+        <Settings id="explorer" title="Settings">
+            <SubjectSelector/>
+        </Settings>
 
         <!-- Tab panes -->
         <div class="tab-content">

@@ -51,8 +51,13 @@
    *
    * path[id*='c35'] {fill:#34A853}
    *
+   *  IL Henry    c17073
+   *  KY Floyd    c21071
+   *  MN Itasca   c27061
+   *
    */
   #counties {fill:#d0d0d0;stroke:#000;stroke-width:.17829;}
+  #c17073, #c21071, #c27061 {fill: red;}
   #borders {fill:none;stroke:#221e1f;stroke-width:.89143;}
   #separator {fill:none;stroke:#a9a9a9;stroke-width:2.3177309;}</style>
  <g id="counties" transform="translate(0 .10698)" style="fill:#d0d0d0;stroke-width:.17829;stroke:#fff">

@@ -27,6 +27,7 @@
         ]],
         ['/dev', 'Dev &amp; Examples', [
             ['/dev/diagnostics', 'Gedcom Summary'],
+            ['/diagrams/uscounties', 'US Counties'],
             ['/diagrams/postersvg', 'PosterSvg Example'],
             ['/diagrams/scale', 'Nested SVG *Landscape* Example'],
             // ['/sverdle', 'Sverdle'],
