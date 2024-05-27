@@ -33,7 +33,7 @@ function lastNames(node) {
         : ''
 }
 
-export function trackNameGxml(geom, node) {
+export function trackNameGxml(geom, node, anchor="middle") {
     const els = []
     const x = geom.nameX(node)
     const y = geom.nameY(node)
@@ -41,7 +41,7 @@ export function trackNameGxml(geom, node) {
     els.push({el: 'text',
         x: x,
         y: y - 1.6 * geom.fontSize,
-        'text-anchor': "middle",
+        'text-anchor': anchor,
         'font-family': "sans-serif",
         'font-weight': "bold",
         'font-size': 1.5 * geom.fontSize,
@@ -51,7 +51,7 @@ export function trackNameGxml(geom, node) {
     els.push({el: 'text',
         x: x,
         y: y - 0.2 * geom.fontSize,
-        'text-anchor': "middle",
+        'text-anchor': anchor,
         'font-family': "sans-serif",
         'font-weight': "bold",
         'font-size': 1.5 * geom.fontSize,
@@ -61,7 +61,7 @@ export function trackNameGxml(geom, node) {
     els.push({el: 'text',
         x: x,
         y: y + 1.6 * geom.trackWidth,
-        'text-anchor': "middle",
+        'text-anchor': anchor,
         'font-family': "sans-serif",
         'font-weight': "lighter",
         'font-size': 1.2 * geom.fontSize,
@@ -71,7 +71,7 @@ export function trackNameGxml(geom, node) {
     els.push({el: 'text',
         x: x,
         y: y + 2.2 * geom.trackWidth,
-        'text-anchor': "middle",
+        'text-anchor': anchor,
         'font-family': "sans-serif",
         'font-weight': "lighter",
         'font-size': 1.2 * geom.fontSize,

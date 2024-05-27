@@ -1,3 +1,5 @@
+import { round2 } from '../Sylvan/js/round2.js'
+
 export function logGeom(geom) {
     const nodes = geom.nodes
     console.log('Subject', nodes[0].person.fullName(),
@@ -76,12 +78,12 @@ export function trainNodeGeom(nodes) { // width=1000, height=2000) {
     geom.contentHt = geom.rows * geom.rowHt
     geom.height = geom.rows * geom.rowHt + 2 * geom.timelineHt
     geom.gens = geom.genMax - geom.genMin + 1
-console.log(`LineageTrain is ${geom.width/100}" by ${geom.height/100}"`)
+
+    console.log(`LineageTrain is ${geom.width/100}" by ${geom.height/100}"`)
+    const h11 = round2(geom.height/1100)
+    console.log(`${h11} 11-in pages`)
 
     geom.cover = {}
-    const w8 = geom.height/800
-    const w6 = geom.height/600
-    console.log(`${w6} 6-in pages or ${w8} 8-in pages`)
     // Function that returns x-coordinate given the calendar year
     geom.yearX = function (year) { return (year - this.yearMin) * this.yearWd }
     // Function that returns y-coordinate of channel index

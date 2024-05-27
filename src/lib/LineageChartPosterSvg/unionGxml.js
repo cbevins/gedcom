@@ -48,8 +48,6 @@ export function unionGxml(node, geom) {
     function lineBot(idx) { return node.prop.y + idx * lineHt + lineHt }
     function lineMid(idx) { return node.prop.y + idx * lineHt + lineHt / 2 }
     function lineTop(idx) { return node.prop.y + idx * lineHt }
-    
-    function round2(num) { return Math.round((num + Number.EPSILON) * 100) / 100 }
 
     function childPath() {
         const child = node.child
