@@ -17,6 +17,7 @@
     import MD from '$lib/data/maps/edited/MD.svg'
     import MN from '$lib/data/maps/edited/MN.svg'
     import US from '$lib/data/maps/edited/Usa_counties_large.svg'
+    import NoEuroImg from '$lib/images/country/NorthEurope_NatGeo.png'
     import { gxmlStr } from '$lib/Gxml/index.js'
 
     const maps = [
@@ -34,7 +35,8 @@
         {value: KY, title: 'Kentucky - CreativeCommons Edited'},
         {value: MD, title: 'Maryland - CreativeCommons Edited'},
         {value: MN, title: 'Minnesota - CreativeCommons Edited'},
-        {value: US, title: 'US Counties - CreativeCommons'}
+        {value: US, title: 'US Counties - CreativeCommons'},
+        {value: NoEuroImg, title: 'Northern Europe - NatGeo'},
     ]
 
     export let mapDisplay = maps[0]

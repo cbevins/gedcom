@@ -1,4 +1,5 @@
 import { flagTableGxml } from './flagLegendGxml.js'
+import { northernEuropeGxml } from './northernEuropeGxml.js'
 import { timelineGxml } from './timelineGxml.js'
 import { trackNameGxml } from './trackNameGxml.js'
 import { trainStationGxml } from './trainStationGxml.js'
@@ -9,6 +10,7 @@ import { Countries } from './Countries.js'
 // import SamuelBevins from '$lib/LineageTrainPosterSvg/Samuel Bevins.jpg'
 import GB from '$lib/data/maps/edited/gb.svg'
 import LadyLiberty from '$lib/images/ladyLiberty.jpg'
+import NoE from '$lib/images/country/NorthEurope_NatGeo.png'
 
 // NOTE - station x,y are for upper left corner; ADJUST FOR CENTER
 function trackPath(geom, year1, chan1, year2, chan2) {
@@ -106,17 +108,20 @@ export function contentGxml(channels, nodes, geom, settings) {
         main.push(trackNameGxml(geom, node))
         if (node.person.nameKey() === 'HannahHunter1753') hannahHunter = node
     }
-    console.log('HannahHunter', hannahHunter)
+    // console.log('HannahHunter', hannahHunter)
 
     // 4: Special handling for subject and siblings
     main = main.concat(subjectGxml(nodes, geom, trackWidth))
 
-    // Example of adding an image
+    // Example of adding an SVG map
     main.push({el: 'image', x: -400, y: 100, width: 2000, height: 2000,
         href: GB,
         // opacity: 0.3,
         preserveAspectRation: 'xMidYMid',   // 'xMidYMid', 'meet' or 'slice'
     })
+
+    // Example of adding an SVG that marks up a map image and scales
+    main.push(northernEuropeGxml(350, 2100, 500))
 
     // Example of adding an image
     main.push({el: 'image',
