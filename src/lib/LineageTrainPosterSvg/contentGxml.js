@@ -8,6 +8,7 @@ import { Countries } from './Countries.js'
 // import { gridGxml } from './gridGxml.js'
 // import SamuelBevins from '$lib/LineageTrainPosterSvg/Samuel Bevins.jpg'
 import GB from '$lib/data/maps/edited/gb.svg'
+import LadyLiberty from '$lib/images/ladyLiberty.jpg'
 
 // NOTE - station x,y are for upper left corner; ADJUST FOR CENTER
 function trackPath(geom, year1, chan1, year2, chan2) {
@@ -60,8 +61,7 @@ function countryStates(nodes) {
     return locs
 }
 
-export function contentGxml(nodes, geom, settings) {
-    // const main = gridGxml(geom)
+export function contentGxml(channels, nodes, geom, settings) {
     let main = timelineGxml(geom, settings.upperTimeline, settings.lowerTimeline,
         settings.scale)
 
@@ -100,18 +100,31 @@ export function contentGxml(nodes, geom, settings) {
     }
 
     // 3: Add track names / signage
+    let hannahHunter = null
     for(let i=1; i<nodes.length; i++) {
         const node = nodes[i]
         main.push(trackNameGxml(geom, node))
+        if (node.person.nameKey() === 'HannahHunter1753') hannahHunter = node
     }
+    console.log('HannahHunter', hannahHunter)
 
     // 4: Special handling for subject and siblings
     main = main.concat(subjectGxml(nodes, geom, trackWidth))
 
     // Example of adding an image
     main.push({el: 'image', x: -400, y: 100, width: 2000, height: 2000,
-        href:GB,
+        href: GB,
         // opacity: 0.3,
+        preserveAspectRation: 'xMidYMid',   // 'xMidYMid', 'meet' or 'slice'
+    })
+
+    // Example of adding an image
+    main.push({el: 'image',
+        x: geom.yearX(hannahHunter.birthYear+8),
+        y: geom.chanY(hannahHunter.channel-1.2),
+        width: 2*geom.radius, height: 2*geom.radius,
+        href: LadyLiberty,
+        opacity: 1,
         preserveAspectRation: 'xMidYMid',   // 'xMidYMid', 'meet' or 'slice'
     })
 

@@ -1,6 +1,16 @@
 <script>
     import Settings from '$lib/Sylvan/svelte/SettingsOffcanvas/Settings.svelte'
 
+    import BEsm from '$lib/data/maps/simpleMaps/be.svg'
+    import DEsm from '$lib/data/maps/simpleMaps/de.svg'
+    import EUsm from '$lib/data/maps/simpleMaps/europe.svg'
+    import FRsm from '$lib/data/maps/simpleMaps/fr.svg'
+    import GBsm from '$lib/data/maps/simpleMaps/gb.svg'
+    import IRsm from '$lib/data/maps/simpleMaps/ir.svg'
+    import NLsm from '$lib/data/maps/simpleMaps/nl.svg'
+    import NOsm from '$lib/data/maps/simpleMaps/no.svg'
+    import SEsm from '$lib/data/maps/simpleMaps/se.svg'
+    import USsm from '$lib/data/maps/simpleMaps/us.svg'
     import IR from '$lib/data/maps/edited/ireland.svg'
     import GB from '$lib/data/maps/edited/gb.svg'
     import KY from '$lib/data/maps/edited/KY.svg'
@@ -9,21 +19,31 @@
     import US from '$lib/data/maps/edited/Usa_counties_large.svg'
     import { gxmlStr } from '$lib/Gxml/index.js'
 
-    export let mapRef = IR
-    export let mapScale = 1
     const maps = [
-        {value: IR, title: 'Ireland Counties'},
-        {value: GB, title: 'Great Britain Counties'},
-        {value: KY, title: 'Kentucky Counties'},
-        {value: MD, title: 'Maryland Counties'},
-        {value: MN, title: 'Minnesota Counties'},
-        {value: US, title: 'US Counties'}
+        {value: BEsm, title: 'BE - SimpleMaps'},
+        {value: DEsm, title: 'DE - SimpleMaps'},
+        {value: EUsm, title: 'EU - SimpleMaps'},
+        {value: FRsm, title: 'FR - SimpleMaps'},
+        {value: IRsm, title: 'IR - SimpleMaps'},
+        {value: NLsm, title: 'NL - SimpleMaps'},
+        {value: NOsm, title: 'NO - SimpleMaps'},
+        {value: SEsm, title: 'SE - SimpleMaps'},
+        {value: USsm, title: 'US - SimpleMaps'},
+        {value: IR, title: 'Ireland Counties - MapSvg'},
+        {value: GB, title: 'Great Britain - SimpleMaps Edited'},
+        {value: KY, title: 'Kentucky - CreativeCommons Edited'},
+        {value: MD, title: 'Maryland - CreativeCommons Edited'},
+        {value: MN, title: 'Minnesota - CreativeCommons Edited'},
+        {value: US, title: 'US Counties - CreativeCommons'}
     ]
+
+    export let mapDisplay = maps[0]
+    export let mapScale = 1
 
     const id = 'map-scale'
 
-    function html(mapRef, mapScale) {
-        const map = {el: 'image', x: 0, y: 0, href: mapRef,
+    function html(mapDisplay, mapScale) {
+        const map = {el: 'image', x: 0, y: 0, href: mapDisplay.value,
             transform: `scale(${mapScale})`,
             // opacity: 0.3,
             preserveAspectRation: 'xMidYMid',   // 'xMidYMid', 'meet' or 'slice'
@@ -41,9 +61,9 @@
     <h5>Maps</h5>
     <select class="form-select"
         id="maps"
-        bind:value={mapRef}>
+        bind:value={mapDisplay}>
         {#each maps as map}
-            <option value={map.value}>{map.title}</option>
+            <option value={map}>{map.title}</option>
         {/each}
     </select>
 </div>
@@ -61,6 +81,10 @@
 {/each}
 </Settings>
 
-<h5>US Counties</h5>
-    {@html html(mapRef, mapScale)}
+<h5>{mapDisplay.title}</h5>
+    {@html html(mapDisplay, mapScale)}
 <h5>Done</h5>
+
+<style>
+    h5 { text-align: center;}
+</style>
