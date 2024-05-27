@@ -9,6 +9,8 @@ import { rectTrackPath } from './borderGxml.js'
 import { trainTracksGxml } from './trainTracksGxml.js'
 import { plaqueGxml } from './plaqueGxml.js'
 import { textBegGxml, textEndGxml, textMidGxml } from './textGxml.js'
+import WCB from '../images/people/WilliamCollinsBevins_cropped.jpg'
+import MMH from '../images/people/MeartiaMargaretHeddens_cropped.png'
 
 export function coverGxml(layout, geom) {
     const {cover, sheet} = layout
@@ -52,15 +54,13 @@ function filigreeGxml(xm, ym, width, height, color='black') {
     ]
 }
 function cover1Gxml(geom, x, y, width, height, scale) {
-    const x1 = x + 100
-    const y1 = y + 100
-    const x2 = x + width - 100
-    const y2 = y1 + 260
-    const radius = 20
-    const thickness = 5
-    const els = plaqueGxml(x+100/scale, y+100/scale,
-        x + width - 100/scale,
-        y2/scale, radius/scale, thickness/scale)
+    const x1 = x + 100/scale
+    const y1 = y + 100/scale
+    const x2 = x + width - 100/scale
+    const y2 = y1 + 260/scale
+    const radius = 20/scale
+    const thickness = 5/scale
+    const els = plaqueGxml(x1, y1, x2, y2, radius, thickness)
 
     const xm = (x1 + x2)/2
     const ym = (y1 + y2)/2
@@ -78,11 +78,19 @@ function cover1Gxml(geom, x, y, width, height, scale) {
     ]
     for(let i=0; i<text.length; i++) {
         const t = text[i]
-        els.push(textMidGxml(xm, (y1+t.y)/scale, t.fs/scale, t.content, t.color))
+        els.push(textMidGxml(xm, (y1+t.y/scale), t.fs/scale, t.content, t.color))
     }
     [390,470].forEach((ym) => {
-        els.push(filigreeGxml(xm, (y1+ym)/scale, 100/scale, 10/scale))
+        els.push(filigreeGxml(xm, (y1+ym/scale), 100/scale, 10/scale))
     })
+
+    const picHt = 160/scale
+    const picWd = 160/scale
+    const picY = ym - 160/scale/2
+    const picX1 = x1 + 20/scale
+    const picX2 = x2 - picWd - 20/scale
+    els.push({el: 'image', x: picX1, y: picY, width: picWd, height: picHt, href: WCB})
+    els.push({el: 'image', x: picX2, y: picY, width: picWd, height: picHt, href: MMH})
     return els
 }
 
