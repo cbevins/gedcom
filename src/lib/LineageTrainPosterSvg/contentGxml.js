@@ -16,9 +16,13 @@ function trackPath(geom, year1, chan1, year2, chan2) {
     const x2 = geom.yearX(year2)
     const y2 = geom.chanY(chan2)
     const r = geom.radius / 2
-    const path = (y1 === y2) ? `M ${x1} ${y1} L ${x2-r} ${y1} L ${x2} ${y2}`
-        : `M ${x1} ${y1} L ${x2-r} ${y1} A ${r} ${r} 0 0 0 ${x2} ${y1-r} L ${x2} ${y2}`
-    return path
+    if (y1 === y2) {
+        return `M ${x1} ${y1} L ${x2-r} ${y1} L ${x2} ${y2}`
+    } else if (y1 > y2) {
+        return `M ${x1} ${y1} L ${x2-r} ${y1} A ${r} ${r} 0 0 0 ${x2} ${y1-r} L ${x2} ${y2}`
+    } else {
+        return `M ${x1} ${y1} L ${x2-r} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y1+r} L ${x2} ${y2}`
+    }
 }
 
 function genLabel(node) {
@@ -141,8 +145,8 @@ function subjectGxml(nodes, geom, trackWidth) {
 
     // Step 2 - diagramming phase
     const els = []
-console.log(`Subject is child ${subjectIdx}`)
-console.log(`Children were born from ${yearMin} - ${yearMax}`)
+// console.log(`Subject is child ${subjectIdx}`)
+// console.log(`Children were born from ${yearMin} - ${yearMax}`)
     for(let i=0; i<children.length; i++) {
         const child = children[i]
         const chan = subject.channel + (i - subjectIdx) 
