@@ -92,7 +92,6 @@ export class Channels extends Lineage {
         node.channel = channel // channel used to connect this {node} with its child {node}
         const count = idGenCount(node.gen) // number of slots in this generation
         const slot = (node.seq - count)    // slot number (base 0) of this {node}
-        node.y = (slot + 0.5) / count      // slot fraction of the way down the chart
         if (node.father) {
             chan = this._traverse(node.father, channel)
             if (node.mother) {

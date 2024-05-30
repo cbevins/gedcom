@@ -1,4 +1,5 @@
 import { round2 } from '../Sylvan/js/round2.js'
+import { positionNodes } from './positionNodes.js'
 
 export function logGeom(geom) {
     const nodes = geom.nodes
@@ -58,7 +59,7 @@ export function trainNodeGeom(nodes) { // width=1000, height=2000) {
         genMax: genMax,
         genMin: genMin,
         maleColor: maleColor,
-        nodes: nodes,
+        nodes: nodes.sort((a, b) => { return a.seq - b.seq }),
         radius: 0.4 * rowHt,
         rows: chanMax - chanMin + 2,     // padding at top and bottom for links
         rowHt: rowHt,
@@ -92,17 +93,7 @@ export function trainNodeGeom(nodes) { // width=1000, height=2000) {
     }
     geom.color = function (node) { return node.person.isFemale() ? geom.femaleColor : geom.maleColor }
     // Function that returns an x-coordinate for the channel/track label
-    geom.nameX = function (node) {
-        if (node ) {
-            const childYear = node.child ? node.child.birthYear : node.birthYear + this.addYears
-            return this.yearX((node.birthYear + childYear) / 2)
-        }
-        return 0
-    }
-    // Function that returns a y-coordinate for the channel/track label
-    geom.nameY = function (node) {
-        return node ? this.chanY(node.channel) - 0.6 * geom.trackWidth : 0
-    }
 
+    positionNodes(geom)
     return geom
 }

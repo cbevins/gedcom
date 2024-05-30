@@ -33,10 +33,24 @@ function lastNames(node) {
         : ''
 }
 
+function nameX(geom, node) {
+    if (node ) {
+        const x2 = node.child ? node.child.x : geom.yearX(geom.yearMax)
+        // const childYear = node.child ? node.child.birthYear : node.birthYear + this.addYears
+        // return this.yearX((node.birthYear + childYear) / 2)
+        return (node.x + x2) / 2
+    }
+    return 0
+}
+
+function nameY(geom, node) {
+    return node ? node.y - 0.6 * geom.trackWidth : 0
+}
+
 export function trackNameGxml(geom, node, anchor="middle") {
     const els = []
-    const x = geom.nameX(node)
-    const y = geom.nameY(node)
+    const x = nameX(geom, node)
+    const y = nameY(geom, node)
 
     els.push({el: 'text',
         x: x,

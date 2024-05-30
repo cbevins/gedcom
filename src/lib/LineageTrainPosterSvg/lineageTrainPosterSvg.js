@@ -51,7 +51,7 @@ export function lineageTrainPosterSvg(subject, settings) {
     // const geom = trainNodeGeom(sheet.nodes, settings.scale)
     const geom = trainNodeGeom(nodes, settings.scale)
     // logGeom(geom)
-    const contentEls = contentGxml(channels, geom.nodes, geom, settings)
+    const contentEls = contentGxml(geom.nodes, geom, settings)
 
     //--------------------------------------------------------------------------
     // Step 3 - get a completed portrait layout (in SVG units)
