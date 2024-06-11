@@ -18,7 +18,6 @@ export function coverGxml(layout, geom) {
     const panelWd = (sheet.width / panels)    // 9"
     const panelOff = sheet.pad.l
     const scale = layout.scale
-
     let els = []
     for(let i=0; i<panels; i++) {
         // Outline for development purposes
@@ -54,13 +53,42 @@ function filigreeGxml(xm, ym, width, height, color='black') {
     ]
 }
 function cover1Gxml(geom, x, y, width, height, scale) {
+    // Photo edge blur
+    const filter = {el: 'filter', id: "f1", x: 0, y:0, xmlns: "http://www.w3.org/2000/svg",
+    els: [{el: 'feGaussianBlur', in: "SourceGraphic", stdDeviation: 15}]}
+
+    // const filter2 = {el: 'filter', id: "border-blur", x: 0, y: 0,
+    //     width: 160/scale, height: 160/scale,
+    //     els: [
+    //         // fill with black
+    //         {el: 'feFlood'},
+    //         // inset the black area by amount radius
+    //         {el: 'feMorphology', radius: 50},
+    //         // flip transparency: now only the border is black, the inner area transparent
+    //         {el: 'feComponentTransfer', result:"border",
+    //             els: [{el: 'feFuncA', tableValues: "1 0", type: "table"}]},
+    //         // show the image in that area
+    //         {el: 'feComposite', operator: "in", in: "SourceGraphic", in2: "border"},
+    //         // blur it by amount stdDeviation
+    //         {el: 'feGaussianBlur', stdDeviation: 2, result: "blur"},
+    //         // stack the blurred on top of the un-blurred
+    //         {el: 'feMerge', els: [
+    //             {el: 'feMergeNode', in: "SourceGraphic"},
+    //             {el: 'feMergeNode', in: "blur"},
+    //             // double better emulates CSS blur -->
+    //             // {el: 'feMergeNode', in: "blur"}
+    //         ]},
+    //     ]}
+    let els = [{el: 'defs', els: [filter]}]
+
+    // Plaque
     const x1 = x + 100/scale
     const y1 = y + 100/scale
     const x2 = x + width - 100/scale
     const y2 = y1 + 260/scale
     const radius = 20/scale
     const thickness = 5/scale
-    const els = plaqueGxml(x1, y1, x2, y2, radius, thickness)
+    els = els.concat(plaqueGxml(x1, y1, x2, y2, radius, thickness))
 
     const xm = (x1 + x2)/2
     const ym = (y1 + y2)/2
