@@ -5,6 +5,8 @@
     // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
     
+    console.log('RUNNING src/routes/diagrams/originsdisc')
+    
     // Diagram elements to enable/disable
     const drawAllPolygons = false
     const drawAncestorPolygons = true
@@ -35,7 +37,6 @@
     // BE SURE TO DE-REFERENCE subjectNameKey STORE VALUE USING '$subjectNameKey'
     $: subject = getSylvan().people().find($subjectNameKey)
     $: anodes = init(subject)
-
     function init(subject) {
         const country = new Set()
         // Create the subject's ancestor nodes

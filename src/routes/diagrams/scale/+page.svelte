@@ -1,4 +1,6 @@
 <script>
+    console.log('RUNNING src/routes/diagrams/scale')
+    
     // 36" wide with variable height
     const portrait = {
         x: 100, y: 100,     // upper left on the browser or sheet

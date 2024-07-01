@@ -19,6 +19,8 @@
     import US from '$lib/data/maps/edited/Usa_counties_large.svg'
     import NoEuroImg from '$lib/images/country/NorthEurope_NatGeo.png'
     import { gxmlStr } from '$lib/Gxml/index.js'
+    
+    console.log('RUNNING src/routes/diagrams/uscounties')
 
     const maps = [
         {value: BEsm, title: 'BE - SimpleMaps'},

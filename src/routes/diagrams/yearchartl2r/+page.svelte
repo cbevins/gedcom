@@ -5,6 +5,8 @@
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
+    console.log('RUNNING src/routes/diagrams/yearchartl2r')
+    
     $: label = getSylvan().people().find($subjectNameKey).label()
 
     onMount(() => {

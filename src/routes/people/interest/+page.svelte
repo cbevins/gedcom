@@ -1,7 +1,9 @@
 <script>
 	import { getSylvan } from '$lib/Sylvan/js/singletons.js'
 	import NotablesPage from '$lib/Sylvan/svelte/NotablesPage.svelte'
-	
+
+    console.log('RUNNING src/routes/people/interest')
+
     const tabs = [
         {id: 'BH', title: 'Bevins-Heddens', c: 'nav-link active', class: 'active'},
         {id: 'RT', title: 'Riley-Trombley', c: 'nav-link', class: 'fade'},

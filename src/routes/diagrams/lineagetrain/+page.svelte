@@ -13,6 +13,8 @@
     // import { SheetDefs } from '$lib/LineageTrainPosterSvg/sheetDefs.js'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
+    console.log('RUNNING src/routes/diagrams/lineagetrain')
+    
     $: settings = {
         guides: false,
         lowerTimeline: US_History,
@@ -22,7 +24,6 @@
         sheetNumber: 0,
         upperTimeline: US_Migrations,
     }
-
     // const sheetValues = [0, 1, 2, 3, 4]
     // const sheetLabels = []
     // SheetDefs.forEach((sheet, idx) => {sheetLabels[idx] = sheet.name})

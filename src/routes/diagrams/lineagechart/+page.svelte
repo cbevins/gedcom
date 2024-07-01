@@ -9,6 +9,8 @@
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
     import LineageChartPosterSvg from '$lib/LineageChartPosterSvg/LineageChartPosterSvg.svelte'
 
+    console.log('RUNNING src/routes/diagrams/lineagechart')
+
     $: settings = {
         grid: true,
         guides: false,

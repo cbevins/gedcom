@@ -4,6 +4,8 @@
     import { getSylvan } from '$lib/Sylvan/js/singletons.js'
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
+    
+    console.log('RUNNING src/routes/diagrams/yeardisc')
 
     // Diagram elements to enable/disable
     const drawCircles = true
