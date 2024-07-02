@@ -12,7 +12,7 @@
     // BE SURE TO DEREFERENCE VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
     
-    console.log('RUNNING src/routes/people/explorer')
+    // console.log('RUNNING src/routes/people/explorer')
 
     const tabs = [
         {href: '#family', title: 'Family Groups', c: 'nav-link active'},

@@ -8,8 +8,7 @@
 import { Sylvan } from '$lib/Sylvan/class/Sylvan.js'
 import { getSylvan, setSylvan, setPersonSelectors } from '$lib/Sylvan/js/singletons.js'
 
-// since there's no dynamic data here, we can prerender
-// it so that it gets served as a static asset in production
+// cannot prerender pages that have tabs
 export const prerender = false
 
 /**

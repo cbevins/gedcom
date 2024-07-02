@@ -4,9 +4,11 @@
     import { genChartAnodes } from './genChartAnodes.js'
     // BE SURE TO DE-REFERENCE THE STORE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
+    
+    // console.log('RUNNING src/routes/diagrams/genchartl2r')
+    
     $: subject = getSylvan().people().find($subjectNameKey)
     $: genData = init(subject)
-    console.log('RUNNING src/routes/diagrams/genchartl2r')
     function init(person) { return genChartAnodes(person) }
 </script>
 <h3>Generational Chart V2 (L2R) for {subject.label()}</h3>

@@ -1,6 +1,5 @@
 <script>
-
-console.log('RUNNING src/routes/dev/page.svelte')
+// console.log('RUNNING src/routes/dev/page.svelte')
 </script>
 
 <h3>routes/dev/+page.svelte</h3>

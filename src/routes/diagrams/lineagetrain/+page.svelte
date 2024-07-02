@@ -13,7 +13,7 @@
     // import { SheetDefs } from '$lib/LineageTrainPosterSvg/sheetDefs.js'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
 
-    console.log('RUNNING src/routes/diagrams/lineagetrain')
+    // console.log('RUNNING src/routes/diagrams/lineagetrain')
     
     $: settings = {
         guides: false,

@@ -1,5 +1,5 @@
 <script>
-    console.log('RUNNING src/routes/diagrams/scale')
+    // console.log('RUNNING src/routes/diagrams/scale')
     
     // 36" wide with variable height
     const portrait = {

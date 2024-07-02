@@ -1,5 +1,5 @@
 <script>
-	console.log('RUNNING src/routes/about/page.svelte')
+	// console.log('RUNNING src/routes/about/page.svelte')
 </script>
 	
 <h3>routes/about/+page.svelte</h3>

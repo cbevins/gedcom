@@ -5,7 +5,7 @@
     // BE SURE TO DE-REFERENCE subjectNameKey VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
     
-    console.log('RUNNING src/routes/diagrams/originsdisc')
+    // console.log('RUNNING src/routes/diagrams/originsdisc')
     
     // Diagram elements to enable/disable
     const drawAllPolygons = false

@@ -20,7 +20,7 @@
     import NoEuroImg from '$lib/images/country/NorthEurope_NatGeo.png'
     import { gxmlStr } from '$lib/Gxml/index.js'
     
-    console.log('RUNNING src/routes/diagrams/uscounties')
+    // console.log('RUNNING src/routes/diagrams/uscounties')
 
     const maps = [
         {value: BEsm, title: 'BE - SimpleMaps'},

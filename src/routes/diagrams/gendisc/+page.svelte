@@ -5,6 +5,8 @@
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     import { subjectNameKey } from '$lib/Sylvan/js/store.js'
     
+    // console.log('RUNNING src/routes/diagrams/gendisc')
+    
     // Diagram elements to enable/disable
     const drawAllPolygons = false
     const drawAncestorPolygons = true
@@ -21,7 +23,6 @@
     // BE SURE TO DE-REFERENCE THE subjectNameKey STORE VALUE USING '$subjectNameKey'
     $: subject = getSylvan().people().find($subjectNameKey)
     $: anodes = init(subject)
-    console.log('RUNNING src/routes/diagrams/gendisc')
     function init(subject) {
         // Create the subject's ancestor nodes
         const a = new Anodes(subject)
